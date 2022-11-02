@@ -121,8 +121,8 @@ set(src_dir ${CMAKE_SOURCE_DIR}/src)
 set(tests_dir ${CMAKE_SOURCE_DIR}/tests)
 set(entry_dir ${CMAKE_SOURCE_DIR}/entry)
 
-# Run CMakeLists in lib_dir to build our required libraries.
-add_subdirectory(${lib_dir})
+## Run CMakeLists in lib_dir to build our required libraries.
+#add_subdirectory(${lib_dir})
 
 # Run CMakeLists in src_dir to build the student's code.
 add_subdirectory(${src_dir})
