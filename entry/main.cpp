@@ -1,5 +1,9 @@
 #include <iostream>
+#include "../src/data_parser.cpp"
 
 int main() {
- return 1; 
+ DataParser d;
+ d.populateAirportRows("../build/airports.dat");
+ std::cout << d.AirportsRows.size() << std::endl;
+ return 1;
 }
