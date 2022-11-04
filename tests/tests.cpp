@@ -42,6 +42,7 @@ TEST_CASE("Graph_Populate_Airport") {
   d.populateRoutesRows("../lib/routes.dat");
   d.populateAirportsDetails();
   d.populateRoutesDetails();
+  d.checkMissingInfo();
   Graph g = Graph(d);
   REQUIRE(g.getAirports().size() == d.AirportsDetails.size());
   REQUIRE(g.getAirports()[0].name_ == "Goroka Airport");
