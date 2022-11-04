@@ -8,33 +8,39 @@
 
 class Graph {
     public:
-        Graph(const std::string& airportFile, const std::string& routeFile);
-
-    private:
+        Graph(DataParser data);
 
         class Airport {
 
             public:
                 Airport();
                 Airport(std::vector<std::string> airport);
-
-            private:
                 std::string name_;
                 std::string city_;
+                std::string country_ ;
                 std::string IATA_;
                 std::string ICAO_;
-                float longitude_;
                 float latitude_;
+                float longitude_;
+            
+            private:    
                 
         };
 
+        std::vector<Airport> getAirports();
 
-    
+    private:
+
     std::map<Airport, std::vector<Airport>> connections_;
     
-    std::vector<Airport> airports_;
     /**
-     * Stores the data that we will use for the graph algorithm
+     * Stores only data relevant to CS225 Final Project
+    **/
+    std::vector<Airport> airports_;
+    
+    /**
+     * Stores the original data of airports 
+     * that we will use for the graph algorithm
     **/
     DataParser data_;
 };

@@ -36,3 +36,13 @@ TEST_CASE("routes_2D_vector_population") {
       REQUIRE(d.RoutesDetails[1].size() == d.RoutesDetails[0].size());
   REQUIRE(d.RoutesDetails[2].size() == d.RoutesDetails[1].size());
 }
+
+TEST_CASE("Graph_Populate_Airport") {
+  d.populateAirportRows("../lib/airports.dat");
+  d.populateRoutesRows("../lib/routes.dat");
+  d.populateAirportsDetails();
+  d.populateRoutesDetails();
+  Graph g = Graph(d);
+  REQUIRE(g.getAirports().size() == d.AirportsDetails.size());
+  REQUIRE(g.getAirports()[1].name_ == "Goroka Airport");
+}
