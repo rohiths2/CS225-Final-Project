@@ -22,7 +22,8 @@ TEST_CASE("populate_airports_lines_data_in_vector")
 TEST_CASE("airports_2D_vector_population") {
   d.populateAirportsDetails();
   REQUIRE(d.AirportsDetails.size() == d.AirportsRows.size());
-  REQUIRE(d.AirportsDetails[0].size() == 14);
+  REQUIRE(d.AirportsDetails[0].size() == 15);
+   REQUIRE(d.AirportsDetails[0][d.AirportsDetails[0].size()-1] == "1");
   REQUIRE(d.AirportsDetails[1].size() == d.AirportsDetails[0].size());
   REQUIRE(d.AirportsDetails[2].size() == d.AirportsDetails[1].size());
 }
@@ -30,6 +31,8 @@ TEST_CASE("airports_2D_vector_population") {
 TEST_CASE("routes_2D_vector_population") {
     d.populateRoutesDetails();
     REQUIRE(d.RoutesDetails.size() == d.RoutesRows.size());
+    REQUIRE(d.RoutesDetails[0].size() == 10);
+    REQUIRE(d.RoutesDetails[0][d.RoutesDetails[0].size()-1] == "1");
       REQUIRE(d.RoutesDetails[1].size() == d.RoutesDetails[0].size());
   REQUIRE(d.RoutesDetails[2].size() == d.RoutesDetails[1].size());
 }

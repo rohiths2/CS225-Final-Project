@@ -49,6 +49,7 @@ std::vector<std::string> Split(const std::string& str, char delimiter) {
 void DataParser::populateAirportsDetails() {
     for (auto row : AirportsRows) {
         std::vector<std::string> splitRow = Split(row, ',');
+        splitRow.push_back("1"); //The usability indicator: 0 if errors, 1 if no errors
         AirportsDetails.push_back(splitRow);
     }
 }
@@ -56,6 +57,7 @@ void DataParser::populateAirportsDetails() {
 void DataParser::populateRoutesDetails() {
     for (auto row : RoutesRows) {
         std::vector<std::string> splitRow = Split(row, ',');
+        splitRow.push_back("1"); //The usability indicator: 0 if errors, 1 if no errors
         RoutesDetails.push_back(splitRow);
     }
 }
