@@ -7,8 +7,8 @@ Graph::Airport::Airport(std::vector<std::string> airport) {
     country_ = airport[3];
     IATA_ = airport[4];
     ICAO_ = airport[5];
-    latitude_ = std::stof(airport[6]);
-    longitude_ = std::stof(airport[7]);
+    //latitude_ = std::stof(airport[6]);
+    //longitude_ = std::stof(airport[7]);
 }
 
 

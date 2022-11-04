@@ -44,5 +44,5 @@ TEST_CASE("Graph_Populate_Airport") {
   d.populateRoutesDetails();
   Graph g = Graph(d);
   REQUIRE(g.getAirports().size() == d.AirportsDetails.size());
-  REQUIRE(g.getAirports()[1].name_ == "Goroka Airport");
+  REQUIRE(g.getAirports()[0].name_ == "Goroka Airport");
 }

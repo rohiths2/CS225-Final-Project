@@ -18,7 +18,5 @@ int main() {
   std::cout << d.RoutesDetails[16].size() << std::endl;
   std::cout << d.RoutesDetails[729].size() << std::endl;
   d.checkMissingInfo();
-std::cout << d.AirportsDetailsInUnitedStates.size();
-std::cout << d.AirportsDetailsInUnitedStates[0][3];
  return 1;
 }
