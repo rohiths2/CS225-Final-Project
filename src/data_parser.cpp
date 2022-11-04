@@ -12,6 +12,8 @@ void DataParser::populateAirportRows(const std::string& filename) {
     }
 }
 
+
+
 void DataParser::populateRoutesRows(const std::string& filename) {
     std::ifstream wordsFile(filename);
     std::string line;
@@ -19,6 +21,72 @@ void DataParser::populateRoutesRows(const std::string& filename) {
         /* Reads a line from `wordsFile` into `word` until the file ends. */
         while (std::getline(wordsFile, line)) {
             RoutesRows.push_back(line);
+        }
+    }
+}
+
+
+std::vector<std::string> Split(const std::string& str, char delimiter) {
+  size_t last = 0;
+  std::vector<std::string> substrs;
+  for (size_t i = 0; i != str.length(); ++i) {
+    if (str.at(i) == delimiter || str.at(i) == '\r') {
+      std::string substr = str.substr(last, i - last);
+      last = i + 1;
+      substrs.push_back(substr);
+    }
+  }
+
+  if (last != str.size()) {
+    std::string substr = str.substr(last, str.length() - last);
+    substrs.push_back(substr);
+  }
+
+  return substrs;
+}
+
+
+void DataParser::populateAirportsDetails() {
+    for (auto row : AirportsRows) {
+        std::vector<std::string> splitRow = Split(row, ',');
+        splitRow.push_back("1"); //The usability indicator: 0 if errors, 1 if no errors
+        AirportsDetails.push_back(splitRow);
+    }
+}
+
+void DataParser::populateRoutesDetails() {
+    for (auto row : RoutesRows) {
+        std::vector<std::string> splitRow = Split(row, ',');
+        splitRow.push_back("1"); //The usability indicator: 0 if errors, 1 if no errors
+        RoutesDetails.push_back(splitRow);
+    }
+}
+
+
+// The U.S. x coordinates are betwen -126 and -66, and y coordinates are between 24 and 50
+
+
+void DataParser::checkMissingInfo() { //iterate through Routes Details
+    for (size_t i = 0; i < AirportsDetails.size(); ++i) {
+        for (auto element : AirportsDetails[i]) {
+            if (element == "") {
+                element = "NULL";
+                AirportsDetails[i][AirportsDetails[i].size()-1] = "0"; //makes this row vector unusable
+            }
+        }
+    }
+    for (size_t i = 0; i < AirportsDetails.size(); ++i) {
+        if (AirportsDetails[i][3] != "NULL" && AirportsDetails[i][3] == "United States") {
+            std::cout << AirportsDetails[i][3] << std::endl;
+            AirportsDetailsInUnitedStates.push_back(AirportsDetails[i]);
+        }
+    }
+    for (size_t i = 0; i < RoutesDetails.size(); ++i) { //iterate through Airports Details
+        for (auto element : RoutesDetails[i]) {
+            if (element == "") {
+                element = "NULL";
+                RoutesDetails[i][RoutesDetails[i].size()-1] = "0"; //makes this row vector unusable
+            }
         }
     }
 }
