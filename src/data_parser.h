@@ -10,6 +10,6 @@ public:
     }
     std::vector<std::string> AirportsRows;
     std::vector<std::string> RoutesRows;
-    void populateAirportRows(std::string filename);
-    void populateRoutesRows(std::string filename);
+    void populateAirportRows(const std::string& filename);
+    void populateRoutesRows(const std::string& filename);
 };
