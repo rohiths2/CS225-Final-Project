@@ -61,3 +61,32 @@ void DataParser::populateRoutesDetails() {
         RoutesDetails.push_back(splitRow);
     }
 }
+
+
+// The U.S. x coordinates are betwen -126 and -66, and y coordinates are between 24 and 50
+
+
+void DataParser::checkMissingInfo() { //iterate through Routes Details
+    for (size_t i = 0; i < AirportsDetails.size(); ++i) {
+        for (auto element : AirportsDetails[i]) {
+            if (element == "") {
+                element = "NULL";
+                AirportsDetails[i][AirportsDetails[i].size()-1] = "0"; //makes this row vector unusable
+            }
+        }
+    }
+    for (size_t i = 0; i < AirportsDetails.size(); ++i) {
+        if (AirportsDetails[i][3] != "NULL" && AirportsDetails[i][3] == "United States") {
+            std::cout << AirportsDetails[i][3] << std::endl;
+            AirportsDetailsInUnitedStates.push_back(AirportsDetails[i]);
+        }
+    }
+    for (size_t i = 0; i < RoutesDetails.size(); ++i) { //iterate through Airports Details
+        for (auto element : RoutesDetails[i]) {
+            if (element == "") {
+                element = "NULL";
+                RoutesDetails[i][RoutesDetails[i].size()-1] = "0"; //makes this row vector unusable
+            }
+        }
+    }
+}
