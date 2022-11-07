@@ -13,7 +13,15 @@ class Graph {
         class Airport {
 
             public:
-                Airport();
+                Airport() {
+                    name_ = "";
+                    city_ = "";
+                    country_ = "";
+                    IATA_ = "";
+                    ICAO_ = "";
+                    latitude_ = 0;
+                    longitude_ = 0;
+                }
                 Airport(std::vector<std::string> airport);
                 std::string name_;
                 std::string city_;
@@ -30,14 +38,7 @@ class Graph {
         std::vector<Airport> getAirports();
          void populateConnections(DataParser d);
 
-         Airport getAirportFromIATA_(std::string iata) {
-            for (auto airport : getAirports()) {
-                if (iata == airport.IATA_) {
-                    return airport;
-                }
-            }
-            return Airport();
-         }
+         Airport getAirportFromIATA_(std::string iata);
 
     private:
 

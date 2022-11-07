@@ -23,12 +23,27 @@ std::vector<Graph::Airport> Graph::getAirports() {
     return airports_;
 }
 
-void Graph::populateConnections(DataParser d) {
+Graph::Airport Graph::getAirportFromIATA_(std::string iata) {
     for (auto airport : getAirports()) {
-        for (auto route : d.RoutesDetails) {
-            if (route[2] == airport.IATA_) {
-
-            }
+        if (iata == airport.IATA_) {
+            return airport;
         }
     }
+    Airport a;
+    return a;
 }
+
+// void Graph::populateConnections(DataParser d) {
+//     for (auto route : d.RoutesDetails) {
+//         Airport currentAirport = getAirportFromIATA_(route[2]);
+//         Airport destination = getAirportFromIATA_(route[4]);
+//         if (connections_.find(currentAirport) != connections_.end()) {
+//             connections_.find(currentAirport)->second.push_back(destination);
+//         } else {
+//             std::pair<Airport, std::vector<Airport>> pair;
+//             pair.first = currentAirport;
+//             pair.second.push_back(destination);
+//             connections_.insert(pair);
+//         }
+//     }
+// }
