@@ -69,7 +69,6 @@ class Graph {
 
     std::vector<std::string> BFS_visited;
     std::vector<std::string> BFS_output;
-    std::queue<std::string> BFS_queue;
 
     std::map<Airport, std::vector<Airport>> connections_;
     

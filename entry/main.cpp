@@ -21,14 +21,6 @@ int main() {
   d.checkMissingInfo();
   Graph g = Graph(d);
     g.populateConnectionsIATA(d);
-    for (auto pair : g.getConnectionsIATA()) {
-        if (pair.first == "ORD" || pair.first == "CLT") {
-            std::cout << g.getAirportFromIATA_(pair.first).city_ << " : {";
-            for (auto part : pair.second) {
-                std::cout << g.getAirportFromIATA_(part).city_ << ",";
-            }
-            std::cout << "}" << std::endl;
-        }
-    }
+    g.BFS("ORD");
  return 1;
 }

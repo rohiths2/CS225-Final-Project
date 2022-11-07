@@ -62,12 +62,34 @@ void Graph::populateConnections(DataParser d) {
 }
 
 
+bool vectContains(std::vector<std::string> v, std::string str) {
+    for (auto s : v) {
+        if (s == str) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
 void Graph::BFS(std::string origin) {
+    BFS_output.clear();
+    BFS_visited.clear();
     std::queue<std::string> q;
     BFS_visited.push_back(origin);
     q.push(origin);
     while (!q.empty()) {
-        
+        std::string current = q.front();
+        std::cout << getAirportFromIATA_(current).name_ << " " << std::endl;
+        BFS_output.push_back(current);
+        q.pop();
+        if (connectionsIATA_.find(current) != connectionsIATA_.end()) {
+            for (auto neighbor : connectionsIATA_.find(current)->second) {
+                if (!(vectContains(BFS_visited, neighbor))) {
+                    BFS_visited.push_back(neighbor);
+                    q.push(neighbor);
+                }
+            }
+        }    
     }
-    
 }
