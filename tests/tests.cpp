@@ -72,3 +72,11 @@ TEST_CASE("Airport_IATA_Conversions") {
   Graph::Airport e_test = g.getAirportFromIATA_(e_iata);
   REQUIRE(e==e_test);
 }
+
+TEST_CASE("Graph_Populate_Connections_IATA_adjacency_list") {
+  Graph g = Graph(d);
+  g.populateConnectionsIATA(d);
+  REQUIRE(g.connectionsIATA_.find("ORD")->second.size() > 100);
+  REQUIRE(g.connectionsIATA_.find("ATL")->second.size() > 100);
+  REQUIRE(g.connectionsIATA_.find("LAX")->second.size() > 100);
+}

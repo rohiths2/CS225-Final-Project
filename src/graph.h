@@ -60,9 +60,11 @@ class Graph {
 
     std::map<std::string, std::vector<int>> getConnectionsIntIndexes() { return connectionsIntIndexes_; }
 
+    std::map<std::string, std::vector<std::string>> connectionsIATA_;
+    
     private:
 
-    std::map<std::string, std::vector<std::string>> connectionsIATA_;
+    
 
     std::map<std::string, std::vector<int>> connectionsIntIndexes_;
 
