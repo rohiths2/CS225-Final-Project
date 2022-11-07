@@ -51,6 +51,7 @@ class Graph {
         };
 
         std::vector<Airport> getAirports();
+        void populateConnections(DataParser d);
          void populateConnectionsIATA(DataParser d);
          void populateConnectionsIntIndexes(DataParser d);
 
@@ -58,15 +59,17 @@ class Graph {
 
     std::map<std::string, std::vector<std::string>> getConnectionsIATA() { return connectionsIATA_; }
 
-    std::map<std::string, std::vector<int>> getConnectionsIntIndexes() { return connectionsIntIndexes_; }
+    std::map<Airport, std::vector<Airport>> getConnections() { return connections_; }
 
     std::map<std::string, std::vector<std::string>> connectionsIATA_;
+
+    void BFS(std::string origin);
     
     private:
 
-    
-
-    std::map<std::string, std::vector<int>> connectionsIntIndexes_;
+    std::vector<std::string> BFS_visited;
+    std::vector<std::string> BFS_output;
+    std::queue<std::string> BFS_queue;
 
     std::map<Airport, std::vector<Airport>> connections_;
     

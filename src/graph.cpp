@@ -1,5 +1,5 @@
 #include "graph.h"
-
+#include <queue>
 
 Graph::Airport::Airport(std::vector<std::string> airport) {
     name_ = airport[1];
@@ -34,6 +34,8 @@ Graph::Airport Graph::getAirportFromIATA_(std::string iata) {
     return a;
 }
 
+
+
 void Graph::populateConnectionsIATA(DataParser d) {
     for (auto airport : getAirports()) {
         std::pair<std::string, std::vector<std::string>> pair;
@@ -48,16 +50,24 @@ void Graph::populateConnectionsIATA(DataParser d) {
     connectionsIATA_.erase("\\N");
 }
 
-void Graph::populateConnectionsIntIndexes(DataParser d) {
-    for (auto airport : getAirports()) {
-        std::pair<std::string, std::vector<int>> pair;
-        pair.first = airport.IATA_;
-        connectionsIntIndexes_.insert(pair);
-    }
-    for (size_t i = 0; i < d.RoutesDetails.size(); ++i) {
-        if (connectionsIntIndexes_.find(d.RoutesDetails[i][2]) != connectionsIntIndexes_.end() && d.RoutesDetails[i][2] != "\\N") {
-            connectionsIntIndexes_.find(d.RoutesDetails[i][2])->second.push_back(i);
+
+void Graph::populateConnections(DataParser d) {
+    for (auto connection : getConnectionsIATA()) {
+        std::pair<Airport, std::vector<Airport>> pair;
+        pair.first = getAirportFromIATA_(connection.first);
+        for (auto part : connection.second) {
+            pair.second.push_back(getAirportFromIATA_(part));
         }
     }
-    connectionsIntIndexes_.erase("\\N");
+}
+
+
+void Graph::BFS(std::string origin) {
+    std::queue<std::string> q;
+    BFS_visited.push_back(origin);
+    q.push(origin);
+    while (!q.empty()) {
+        
+    }
+    
 }
