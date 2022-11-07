@@ -30,6 +30,14 @@ class Graph {
                 std::string ICAO_;
                 float latitude_;
                 float longitude_;
+
+            bool operator==(const Airport &other) const {
+                    if (this->name_ == other.name_ && this->IATA_ == other.IATA_ && this->city_ == other.city_ && this->country_ == other.country_) {
+                        return true;
+                    }
+                    return false;
+            }
+            
             
             private:    
                 
@@ -39,6 +47,17 @@ class Graph {
          void populateConnections(DataParser d);
 
          Airport getAirportFromIATA_(std::string iata);
+
+         bool mapContainsIATA(std::string iata) {
+            for (auto pair : connections_) {
+                if (pair.first.IATA_ == iata) {
+                    return true;
+                }
+            }
+            return false;
+         }
+
+
 
     private:
 
