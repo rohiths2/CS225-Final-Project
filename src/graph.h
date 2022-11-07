@@ -30,6 +30,7 @@ class Graph {
                 std::string ICAO_;
                 float latitude_;
                 float longitude_;
+                std::string usable_;
 
             bool operator==(const Airport &other) const {
                     if (this->name_ == other.name_ && this->IATA_ == other.IATA_ && this->city_ == other.city_ && this->country_ == other.country_) {
@@ -37,14 +38,20 @@ class Graph {
                     }
                     return false;
             }
-            
+
+            bool operator<(const Airport &other) const {
+                    if (this->name_ == other.name_ && this->IATA_ == other.IATA_ && this->city_ == other.city_ && this->country_ == other.country_) {
+                        return false;
+                    }
+                    return true;
+            }
             
             private:    
                 
         };
 
         std::vector<Airport> getAirports();
-         void populateConnections(DataParser d);
+         void populateConnectionsIATA(DataParser d);
 
          Airport getAirportFromIATA_(std::string iata);
 
@@ -57,9 +64,11 @@ class Graph {
             return false;
          }
 
-
+    std::map<std::string, std::vector<std::string>> getConnectionsIATA() { return connectionsIATA_; }
 
     private:
+
+    std::map<std::string, std::vector<std::string>> connectionsIATA_;
 
     std::map<Airport, std::vector<Airport>> connections_;
     

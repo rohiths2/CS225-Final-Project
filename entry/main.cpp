@@ -1,5 +1,6 @@
 #include <iostream>
 #include "../src/data_parser.cpp"
+#include "../src/graph.cpp"
 
 int main() {
  DataParser d;
@@ -18,5 +19,14 @@ int main() {
   std::cout << d.RoutesDetails[16].size() << std::endl;
   std::cout << d.RoutesDetails[729].size() << std::endl;
   d.checkMissingInfo();
+  Graph g = Graph(d);
+    g.populateConnectionsIATA(d);
+    for (auto pair : g.getConnectionsIATA()) {
+        std::cout << pair.first << " : {";
+        for (auto part : pair.second) {
+            std::cout << part << ",";
+        }
+        std::cout << "}" << std::endl;
+    }
  return 1;
 }
