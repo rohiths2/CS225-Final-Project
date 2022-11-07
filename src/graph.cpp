@@ -22,3 +22,13 @@ Graph::Graph(DataParser data): data_(data) {
 std::vector<Graph::Airport> Graph::getAirports() {
     return airports_;
 }
+
+void Graph::populateConnections(DataParser d) {
+    for (auto airport : getAirports()) {
+        for (auto route : d.RoutesDetails) {
+            if (route[2] == airport.IATA_) {
+
+            }
+        }
+    }
+}

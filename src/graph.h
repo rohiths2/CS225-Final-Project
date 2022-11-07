@@ -28,6 +28,16 @@ class Graph {
         };
 
         std::vector<Airport> getAirports();
+         void populateConnections(DataParser d);
+
+         Airport getAirportFromIATA_(std::string iata) {
+            for (auto airport : getAirports()) {
+                if (iata == airport.IATA_) {
+                    return airport;
+                }
+            }
+            return Airport();
+         }
 
     private:
 

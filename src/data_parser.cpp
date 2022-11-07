@@ -87,6 +87,7 @@ void DataParser::checkMissingInfo() { //iterate through Routes Details
                 AirportsDetails[i][AirportsDetails[i].size()-1] = "0"; //makes this row vector unusable
             }
         }
+        //the following two if blocks replace any invalid 6 and 7 with 0
         if (!isNumber(AirportsDetails[i][6])) {
             AirportsDetails[i][6] = '0';
             AirportsDetails[i][AirportsDetails[i].size()-1] = "0";
