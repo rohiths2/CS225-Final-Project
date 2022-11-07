@@ -40,24 +40,24 @@ void Graph::populateConnectionsIATA(DataParser d) {
         pair.first = airport.IATA_;
         connectionsIATA_.insert(pair);
     }
-    int i = 0;
     for (auto route : d.RoutesDetails) {
-        std::cout << i << std::endl;
-        if (connectionsIATA_.find(route[2]) != connectionsIATA_.end()) {
+        if (connectionsIATA_.find(route[2]) != connectionsIATA_.end() && route[2] != "\\N" && route[4] != "\\N") {
             connectionsIATA_.find(route[2])->second.push_back(route[4]);
         }
-        ++i;
     }
-    // for (auto route : d.RoutesDetails) {
-    //     Airport currentAirport = getAirportFromIATA_(route[2]);
-    //     Airport destination = getAirportFromIATA_(route[4]);
-    //     if (connections_.count(currentAirport) > 0) {
-    //        connections_.find(currentAirport)->second.push_back(destination);
-    //     } else {
-    //         std::pair<Airport, std::vector<Airport>> pair;
-    //         pair.first = currentAirport;
-    //         pair.second.push_back(destination);
-    //         connections_.insert(pair);
-    //     }
-    // }
+    connectionsIATA_.erase("\\N");
+}
+
+void Graph::populateConnectionsIntIndexes(DataParser d) {
+    for (auto airport : getAirports()) {
+        std::pair<std::string, std::vector<int>> pair;
+        pair.first = airport.IATA_;
+        connectionsIntIndexes_.insert(pair);
+    }
+    for (size_t i = 0; i < d.RoutesDetails.size(); ++i) {
+        if (connectionsIntIndexes_.find(d.RoutesDetails[i][2]) != connectionsIntIndexes_.end() && d.RoutesDetails[i][2] != "\\N") {
+            connectionsIntIndexes_.find(d.RoutesDetails[i][2])->second.push_back(i);
+        }
+    }
+    connectionsIntIndexes_.erase("\\N");
 }

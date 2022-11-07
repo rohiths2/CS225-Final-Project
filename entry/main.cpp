@@ -20,8 +20,8 @@ int main() {
   std::cout << d.RoutesDetails[729].size() << std::endl;
   d.checkMissingInfo();
   Graph g = Graph(d);
-    g.populateConnectionsIATA(d);
-    for (auto pair : g.getConnectionsIATA()) {
+    g.populateConnectionsIntIndexes(d);
+    for (auto pair : g.getConnectionsIntIndexes()) {
         std::cout << pair.first << " : {";
         for (auto part : pair.second) {
             std::cout << part << ",";

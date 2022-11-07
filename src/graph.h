@@ -52,23 +52,19 @@ class Graph {
 
         std::vector<Airport> getAirports();
          void populateConnectionsIATA(DataParser d);
+         void populateConnectionsIntIndexes(DataParser d);
 
          Airport getAirportFromIATA_(std::string iata);
 
-         bool mapContainsIATA(std::string iata) {
-            for (auto pair : connections_) {
-                if (pair.first.IATA_ == iata) {
-                    return true;
-                }
-            }
-            return false;
-         }
-
     std::map<std::string, std::vector<std::string>> getConnectionsIATA() { return connectionsIATA_; }
+
+    std::map<std::string, std::vector<int>> getConnectionsIntIndexes() { return connectionsIntIndexes_; }
 
     private:
 
     std::map<std::string, std::vector<std::string>> connectionsIATA_;
+
+    std::map<std::string, std::vector<int>> connectionsIntIndexes_;
 
     std::map<Airport, std::vector<Airport>> connections_;
     
