@@ -67,6 +67,12 @@ class Graph {
     
     private:
 
+    //returns a map, each Airport maps to a pair. The first value is the Airports parent, the second value is the distance from the start airport
+    std::map<const Airport*, std::pair<const Airport*, float>> Dijk(Airport& start) const;
+
+    //Find an approximate distance between two airports
+    float distance(const Airport& place1, const Airport& place2) const;
+
     std::vector<std::string> BFS_visited;
     std::vector<std::string> BFS_output;
 

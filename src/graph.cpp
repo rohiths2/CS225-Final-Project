@@ -1,5 +1,6 @@
 #include "graph.h"
 #include <queue>
+#include <cmath>
 
 Graph::Airport::Airport(std::vector<std::string> airport) {
     name_ = airport[1];
@@ -92,4 +93,27 @@ void Graph::BFS(std::string origin) {
             }
         }    
     }
+}
+
+
+std::map<const Graph::Airport*, std::pair<const Graph::Airport*, float>> Graph::Dijk(const Airport& start) const {
+    //TODO
+    std::map<const Airport*, std::pair<const Airport*, float>> map;
+    for (auto airport_iter = connections_.begin(); airport_iter !=  connections_.end(); airport_iter++) {
+        //iterate through keys of connections_ map, populating shortest route map with worstcase data;
+        const Airport* current_airport = &(airport_iter->first);
+        map[current_airport] = std::pair<Airport*, float>(NULL, INFINITY);
+    }
+    
+    return map;
+}
+
+float Graph::distance(const Airport& place1, const Airport& place2) const {
+    //Used the Haversine formula to calculate distance in miles
+    float place1_long = (place1.longitude_ * 3.1415) / 180;
+    float place1_lat = (place1.latitude_ * 3.1415) / 180;
+    float place2_long = (place2.longitude_ * 3.1415) / 180;
+    float place2_lat = (place2.latitude_ * 3.1415) / 180;
+    float distance = 3963 * acos((sin(place1_lat) * sin(place2_lat)) + cos(place1_lat) * cos(place2_lat) * cos(place2_long - place1_long));
+    return distance;
 }
