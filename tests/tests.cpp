@@ -80,3 +80,7 @@ TEST_CASE("Graph_Populate_Connections_IATA_adjacency_list") {
   REQUIRE(g.connectionsIATA_.find("ATL")->second.size() > 100);
   REQUIRE(g.connectionsIATA_.find("LAX")->second.size() > 100);
 }
+
+TEST_CASE("Test distance function") {
+  
+}
