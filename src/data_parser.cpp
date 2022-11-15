@@ -37,41 +37,57 @@ void DataParser::populateRoutesRows(const std::string& filename) {
 
 
 
-std::vector<std::string> Split(const std::string& str, char delimiter) {
-  size_t last = 0;
-  std::vector<std::string> substrs;
-  for (size_t i = 0; i != str.length(); ++i) {
-        if (str.at(i) == delimiter || str.at(i) == '\r') {    
-            std::string substr = str.substr(last, i - last);
-            last = i + 1;
-            substr.erase(std::remove(substr.begin(), substr.end(), '"'), substr.end());
-            substrs.push_back(substr);
-        }
-  }
 
-  if (last != str.size()) {
-    std::string substr = str.substr(last, str.length() - last);
-    substrs.push_back(substr);
-    substr.erase(std::remove(substr.begin(), substr.end(), '"'), substr.end());
-  }
+std::string TrimRight(const std::string & str) {
+    std::string tmp = str;
+    return tmp.erase(tmp.find_last_not_of('"') + 1);
+}
 
-  return substrs;
+std::string TrimLeft(const std::string & str) {
+    std::string tmp = str;
+    return tmp.erase(0, tmp.find_first_not_of('"'));
+}
+
+std::string Trim(const std::string & str) {
+    std::string tmp = str;
+    return TrimLeft(TrimRight(tmp));
+}
+
+int SplitString(const std::string & str1, char sep, std::vector<std::string> &fields) {
+    std::string str = str1;
+    std::string::size_type pos;
+    while((pos=str.find(sep)) != std::string::npos) {
+        fields.push_back(str.substr(0,pos));
+        str.erase(0,pos+1);  
+    }
+    fields.push_back(str);
+    return fields.size();
 }
 
 
 void DataParser::populateAirportsDetails() {
     for (auto row : AirportsRows) {
-        std::vector<std::string> splitRow = Split(row, ',');
-        splitRow.push_back("1"); //The usability indicator: 0 if errors, 1 if no errors
-        AirportsDetails.push_back(splitRow);
+        std::vector<std::string> splitRow;
+        SplitString(row, ',', splitRow);
+        std::vector<std::string> trimmedRow;
+        for (size_t i = 0; i < splitRow.size(); ++i) {
+            trimmedRow.push_back(Trim(splitRow[i]));
+        }
+        trimmedRow.push_back("1"); //The usability indicator: 0 if errors, 1 if no errors
+        AirportsDetails.push_back(trimmedRow);
     }
 }
 
 void DataParser::populateRoutesDetails() {
-    for (auto row : RoutesRows) {
-        std::vector<std::string> splitRow = Split(row, ',');
-        splitRow.push_back("1"); //The usability indicator: 0 if errors, 1 if no errors
-        RoutesDetails.push_back(splitRow);
+   for (auto row : RoutesRows) {
+        std::vector<std::string> splitRow;
+        SplitString(row, ',', splitRow);
+        std::vector<std::string> trimmedRow;
+        for (size_t i = 0; i < splitRow.size(); ++i) {
+            trimmedRow.push_back(Trim(splitRow[i]));
+        }
+        trimmedRow.push_back("1"); //The usability indicator: 0 if errors, 1 if no errors
+        RoutesDetails.push_back(trimmedRow);
     }
 }
 
