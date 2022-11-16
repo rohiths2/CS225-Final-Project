@@ -123,5 +123,21 @@ TEST_CASE("BFS Large") {
 }
 
 TEST_CASE("Test distance function") {
-  
+  Graph g = Graph(d);
+  g.populateConnectionsIATA(d);
+  std::string ord = "ORD"; 
+  std::string mdw = "MDW"; 
+  std::string lax = "LAX"; 
+  std::string ewr = "EWR"; 
+  std::string lhr = "LHR"; 
+  std::string bom = "BOM";
+  REQUIRE(int(g.getDistanceIATA(ord, mdw)) == 15);
+  REQUIRE(int(g.getDistanceIATA(ord, lax)) == 1742);
+  REQUIRE(int(g.getDistanceIATA(ord, lax)) == int(g.getDistanceIATA(lax, ord)));
+  REQUIRE(int(g.getDistanceIATA(ord, ewr)) == int(g.getDistanceIATA(ewr, ord)));
+  REQUIRE((int(g.getDistanceIATA(ord, ewr)) >= 716 && int(g.getDistanceIATA(ord, ewr)) <= 721));
+  REQUIRE((int(g.getDistanceIATA(lax, ewr)) >= 2448 && int(g.getDistanceIATA(lax, ewr)) <= 2453));
+  REQUIRE((int(g.getDistanceIATA(ord, lhr)) >= 3940 && int(g.getDistanceIATA(ord, lhr)) <= 3950));
+  REQUIRE((int(g.getDistanceIATA(lax, lhr)) >= 5440 && int(g.getDistanceIATA(lax, lhr)) <= 5450));
+  REQUIRE((int(g.getDistanceIATA(lhr, bom)) >= 4480 && int(g.getDistanceIATA(lhr, bom)) <= 4490));
 }

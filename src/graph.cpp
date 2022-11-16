@@ -257,6 +257,5 @@ float Graph::DistanceIATA(const std::string& place1, const std::string& place2) 
     float place2_long = (airport2.longitude_ * 3.1415) / 180;
     float place2_lat = (airport2.latitude_ * 3.1415) / 180;
     float distance = 3963 * acos((sin(place1_lat) * sin(place2_lat)) + cos(place1_lat) * cos(place2_lat) * cos(place2_long - place1_long));
-    std::cout << distance << std::endl;
     return distance;
 }

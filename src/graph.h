@@ -52,12 +52,12 @@ class Graph {
                 
         };
 
-        std::vector<Airport> getAirports();
-        void populateConnections(DataParser d);
-         void populateConnectionsIATA(DataParser d);
-         void populateConnectionsIntIndexes(DataParser d);
+    std::vector<Airport> getAirports();
+    void populateConnections(DataParser d);
+    void populateConnectionsIATA(DataParser d);
+    void populateConnectionsIntIndexes(DataParser d);
 
-         Airport getAirportFromIATA_(std::string iata);
+    Airport getAirportFromIATA_(std::string iata);
 
     std::map<std::string, std::vector<std::string>> getConnectionsIATA() { return connectionsIATA_; }
 
@@ -69,6 +69,10 @@ class Graph {
 
     std::vector<std::string> getBFSoutput() {
         return BFS_output;
+    }
+
+    float getDistanceIATA(std::string& place1, std::string& place2) {
+        return DistanceIATA(place1, place2);
     }
 
     //Uses Dijkstra's algorithm to find the shortest path, returns a vector where first value is start and last value is destination
