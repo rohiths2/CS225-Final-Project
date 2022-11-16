@@ -73,7 +73,7 @@ bool vectContains(std::vector<std::string> v, std::string str) {
 }
 
 
-void Graph::BFS(std::string origin) {
+void Graph::BFS(std::string origin, std::string ending) {
     BFS_output.clear();
     BFS_visited.clear();
     std::queue<std::string> q;
@@ -81,7 +81,10 @@ void Graph::BFS(std::string origin) {
     q.push(origin);
     while (!q.empty()) {
         std::string current = q.front();
-        std::cout << getAirportFromIATA_(current).name_ << " " << std::endl;
+        std::cout << current << " --- " << getAirportFromIATA_(current).name_ << " --- " << getAirportFromIATA_(current).city_ << std::endl;
+        if (current == ending) {
+            return;
+        }
         BFS_output.push_back(current);
         q.pop();
         if (connectionsIATA_.find(current) != connectionsIATA_.end()) {

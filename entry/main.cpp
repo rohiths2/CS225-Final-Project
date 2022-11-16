@@ -21,6 +21,6 @@ int main() {
   d.checkMissingInfo();
   Graph g = Graph(d);
     g.populateConnectionsIATA(d);
-    g.BFS("ORD");
+    g.BFS("SAB", "SBH");
  return 1;
 }
