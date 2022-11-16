@@ -21,6 +21,13 @@ int main() {
   d.checkMissingInfo();
   Graph g = Graph(d);
     g.populateConnectionsIATA(d);
-    g.BFS("SAB", "SBH");
+    g.BFS("ORD", "LAX", true);
+    std::cout << std::endl;
+  //   auto ohare = g.getAirportFromIATA_("ORD");
+  //   auto midway = g.getAirportFromIATA_("MDW");
+  // auto a = g.shortestPath(ohare, midway);
+  // for (auto b : a) {
+  //   std::cout << b->name_ << std::endl;
+  // }
  return 1;
 }

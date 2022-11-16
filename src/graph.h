@@ -30,6 +30,8 @@ class Graph {
                 std::string ICAO_;
                 float latitude_;
                 float longitude_;
+                std::string string_latitude_;
+                std::string string_longitude_;
                 std::string usable_;
 
             bool operator==(const Airport &other) const {
@@ -63,7 +65,7 @@ class Graph {
 
     std::map<std::string, std::vector<std::string>> connectionsIATA_;
 
-    void BFS(std::string origin, std::string ending);
+    void BFS(std::string origin, std::string ending, bool only_complete_airports);
 
     std::vector<std::string> getBFSoutput() {
         return BFS_output;

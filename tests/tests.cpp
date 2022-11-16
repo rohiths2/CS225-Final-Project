@@ -84,7 +84,7 @@ TEST_CASE("Graph_Populate_Connections_IATA_adjacency_list") {
 TEST_CASE("BFS Small") {
   Graph g = Graph(d);
   g.populateConnectionsIATA(d);
-  g.BFS("SAB", "SBH");
+  g.BFS("SAB", "SBH", false);
   REQUIRE(g.getBFSoutput().size() > 20);
   REQUIRE(g.getBFSoutput()[0] == "SAB");
   REQUIRE(g.getBFSoutput()[g.getBFSoutput().size()-1] == "SBH");
@@ -105,7 +105,7 @@ TEST_CASE("BFS Small") {
 TEST_CASE("BFS Large") {
   Graph g = Graph(d);
   g.populateConnectionsIATA(d);
-  g.BFS("ORD", "LAX");
+  g.BFS("ORD", "LAX", false);
   REQUIRE(g.getBFSoutput().size() > 50);
   REQUIRE(g.getBFSoutput()[0] == "ORD");
   REQUIRE(g.getBFSoutput()[g.getBFSoutput().size()-1] == "LAX");

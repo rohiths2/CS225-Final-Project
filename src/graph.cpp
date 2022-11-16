@@ -8,6 +8,8 @@ Graph::Airport::Airport(std::vector<std::string> airport) {
     country_ = airport[3];
     IATA_ = airport[4];
     ICAO_ = airport[5];
+    string_latitude_ = airport[6];
+    string_longitude_ = airport[7];
     latitude_ = std::stof(airport[6]);
     longitude_ = std::stof(airport[7]);
     usable_ = (airport[14]);
@@ -73,7 +75,7 @@ bool vectContains(std::vector<std::string> v, std::string str) {
 }
 
 
-void Graph::BFS(std::string origin, std::string ending) {
+void Graph::BFS(std::string origin, std::string ending, bool only_complete_airports) {
     BFS_output.clear();
     BFS_visited.clear();
     std::queue<std::string> q;
@@ -81,8 +83,11 @@ void Graph::BFS(std::string origin, std::string ending) {
     q.push(origin);
     while (!q.empty()) {
         std::string current = q.front();
-        std::cout << current << " --- " << getAirportFromIATA_(current).name_ << " --- " << getAirportFromIATA_(current).city_ << std::endl;
-        BFS_output.push_back(current);
+        Airport ap = getAirportFromIATA_(current);
+       if (only_complete_airports == false || ap.usable_ == "1") {
+            std::cout << current << " --- " << ap.name_ << " --- " << ap.city_ << "---" << ap.string_latitude_ << "---" << ap.string_longitude_ << std::endl;
+            BFS_output.push_back(current);
+       }
         if (current == ending) {
             return;
         }

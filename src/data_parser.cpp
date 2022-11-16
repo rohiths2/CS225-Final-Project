@@ -2,13 +2,8 @@
 #include <iostream>
 #include <algorithm>
 
-bool isNumber(std::string s) {
-    for (char c : s) {
-        if (!isdigit(c) && c != '-') {
-            return false;
-        }
-    }
-    return true;
+bool isNumber(std::string& s) {
+    return s.find_first_not_of("-1234567890");
 }
 
 void DataParser::populateAirportRows(const std::string& filename) {
@@ -105,10 +100,17 @@ void DataParser::checkMissingInfo() { //iterate through Routes Details
         }
         //the following two if blocks replace any invalid 6 and 7 with 0
         if (!isNumber(AirportsDetails[i][6])) {
-            AirportsDetails[i][6] = '0';
-            AirportsDetails[i][AirportsDetails[i].size()-1] = "0";
+            if (isNumber(AirportsDetails[i][7]) && isNumber(AirportsDetails[i][8])) {
+                AirportsDetails[i][6] = AirportsDetails[i][7];
+                AirportsDetails[i][7] = AirportsDetails[i][8];
+            } else {
+                AirportsDetails[i][6] = '0';
+                AirportsDetails[i][AirportsDetails[i].size()-1] = "0";
+            }
         }
         if (!isNumber(AirportsDetails[i][7])) {
+            std::cout << "YES " << AirportsDetails[i][7] << std::endl;
+            std::cout << " " << AirportsDetails[i][8] << std::endl;
             AirportsDetails[i][7] = '0';
             AirportsDetails[i][AirportsDetails[i].size()-1] = "0";
         }
