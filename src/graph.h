@@ -70,21 +70,21 @@ class Graph {
     }
 
     //Uses Dijkstra's algorithm to find the shortest path, returns a vector where first value is start and last value is destination
-    std::vector< Airport*> shortestPath(Airport& start, Airport& destination);
+    std::vector<const Airport*> shortestPath(Airport& start, Airport& destination);
     
     private:
 
     //returns a map, each Airport maps to a pair. The first value is the Airports parent, the second value is the distance from the start airport
-    std::map< Airport*, std::pair< Airport*, float>> Dijk( Airport& start);
+    std::map<const Airport*, std::pair<const Airport*, float>> Dijk( Airport& start);
 
     //Helper for Dijk, finds, removes and returns the Airport with the lowest distance in the inputed vector of Airport pointers
-    Graph::Airport* RemoveSmallest(std::map<const Graph::Airport*, std::pair< Graph::Airport*, float>>& map, std::vector<const Graph::Airport*> airports);
+    const Graph::Airport* RemoveSmallest(std::map<const Graph::Airport*, std::pair<const Graph::Airport*, float>>& map, std::vector<const Graph::Airport*> airports);
 
     //Helper for Dijk, returns the intersection of the two sets as a vector of Airports
     std::vector<const Airport*> AirportIntersection(std::vector<Airport>& connections,  std::vector<const Airport*> airports);
 
     //Find an approximate distance between two airports
-    float Distance( Airport& place1,  Airport& place2);
+    float Distance(const Airport& place1, const Airport& place2);
 
     std::vector<std::string> BFS_visited;
     std::vector<std::string> BFS_output;
