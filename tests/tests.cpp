@@ -81,6 +81,47 @@ TEST_CASE("Graph_Populate_Connections_IATA_adjacency_list") {
   REQUIRE(g.connectionsIATA_.find("LAX")->second.size() > 100);
 }
 
+TEST_CASE("BFS Small") {
+  Graph g = Graph(d);
+  g.populateConnectionsIATA(d);
+  g.BFS("SAB", "SBH");
+  REQUIRE(g.getBFSoutput().size() > 20);
+  REQUIRE(g.getBFSoutput()[0] == "SAB");
+  REQUIRE(g.getBFSoutput()[g.getBFSoutput().size()-1] == "SBH");
+  std::vector<std::string> visited;
+  bool only_visits_once = true;
+  for (auto a : g.getBFSoutput()) {
+    for (auto b : visited) {
+      if (a==b) {
+        only_visits_once = false;
+      }
+    }
+    visited.push_back(a);
+  }
+  REQUIRE(only_visits_once == true);
+}
+
+
+TEST_CASE("BFS Large") {
+  Graph g = Graph(d);
+  g.populateConnectionsIATA(d);
+  g.BFS("ORD", "LAX");
+  REQUIRE(g.getBFSoutput().size() > 50);
+  REQUIRE(g.getBFSoutput()[0] == "ORD");
+  REQUIRE(g.getBFSoutput()[g.getBFSoutput().size()-1] == "LAX");
+  std::vector<std::string> visited;
+  bool only_visits_once = true;
+  for (auto a : g.getBFSoutput()) {
+    for (auto b : visited) {
+      if (a==b) {
+        only_visits_once = false;
+      }
+    }
+    visited.push_back(a);
+  }
+  REQUIRE(only_visits_once == true);
+}
+
 TEST_CASE("Test distance function") {
   
 }

@@ -65,6 +65,10 @@ class Graph {
 
     void BFS(std::string origin, std::string ending);
 
+    std::vector<std::string> getBFSoutput() {
+        return BFS_output;
+    }
+
     //Uses Dijkstra's algorithm to find the shortest path, returns a vector where first value is start and last value is destination
     std::vector< Airport*> shortestPath(Airport& start, Airport& destination) const;
     

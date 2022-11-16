@@ -82,10 +82,10 @@ void Graph::BFS(std::string origin, std::string ending) {
     while (!q.empty()) {
         std::string current = q.front();
         std::cout << current << " --- " << getAirportFromIATA_(current).name_ << " --- " << getAirportFromIATA_(current).city_ << std::endl;
+        BFS_output.push_back(current);
         if (current == ending) {
             return;
         }
-        BFS_output.push_back(current);
         q.pop();
         if (connectionsIATA_.find(current) != connectionsIATA_.end()) {
             for (auto neighbor : connectionsIATA_.find(current)->second) {
