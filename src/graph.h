@@ -87,6 +87,9 @@ class Graph {
     float getDistanceIATA(std::string& place1, std::string& place2) {
         return DistanceIATA(place1, place2);
     }
+    float getDistance(Airport& place1, Airport& place2) {
+        return Distance(place1, place2);
+    }
 
     //Uses Dijkstra's algorithm to find the shortest path, returns a vector where first value is start and last value is destination
     std::vector<const Airport*> shortestPath(Airport& start, Airport& destination);
