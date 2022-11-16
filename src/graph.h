@@ -34,6 +34,7 @@ class Graph {
                 std::string string_longitude_;
                 std::string usable_;
 
+            //Returns if two airports are equal
             bool operator==(const Airport &other) const {
                     if (this->name_ == other.name_ && this->IATA_ == other.IATA_ && this->city_ == other.city_ && this->country_ == other.country_) {
                         return true;
@@ -52,25 +53,37 @@ class Graph {
                 
         };
 
+    //Getter for airports vector
     std::vector<Airport> getAirports();
-    void populateConnections(DataParser d);
-    void populateConnectionsIATA(DataParser d);
-    void populateConnectionsIntIndexes(DataParser d);
 
+    //Populates an adjacency list, with keys being Airport object types, and values being their neighbors
+    void populateConnections(DataParser d);
+
+    //Populates an adjacency list, with keys being airport IATA codes, and values being their neighbors
+    void populateConnectionsIATA(DataParser d);
+
+    //Given an IATA code, search for the airport with the matching IATA in the airports vector, and return the Airport object
     Airport getAirportFromIATA_(std::string iata);
 
+    //Getter for connections (adjacency list with IATA codes)
     std::map<std::string, std::vector<std::string>> getConnectionsIATA() { return connectionsIATA_; }
 
+    //Getter for connections (adjacency list with Airport types)
     std::map<Airport, std::vector<Airport>> getConnections() { return connections_; }
 
+    //Adjacency list, mapping airport codes to neighboring airport codes
     std::map<std::string, std::vector<std::string>> connectionsIATA_;
 
+    //Traverses all airports from origin (airport code) to ending (airport code) using BFS algorithm. 
+    //set only_complete_airports to true to skip airports with incomplete info
     void BFS(std::string origin, std::string ending, bool only_complete_airports);
 
+    //Getter for BFS function: used for testing
     std::vector<std::string> getBFSoutput() {
         return BFS_output;
     }
 
+    //Getter for distance function: used for testing
     float getDistanceIATA(std::string& place1, std::string& place2) {
         return DistanceIATA(place1, place2);
     }
@@ -98,11 +111,13 @@ class Graph {
     std::vector<std::string> BFS_visited;
     std::vector<std::string> BFS_output;
 
+    //Private adjacency list of Airport types, NOT IATA strings
     std::map<Airport, std::vector<Airport>> connections_;
     
     /**
      * Stores only data relevant to CS225 Final Project
     **/
+   //Stores Airport Object types from each row of the data-parsed airports details vector
     std::vector<Airport> airports_;
     
     /**
