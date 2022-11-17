@@ -207,7 +207,5 @@ TEST_CASE("Test Remove Smallest") {
   map.insert(std::pair<const std::string*, std::pair<const std::string*, float>>(&a, std::pair<const std::string*, float>(&a, 0)));
   map.insert(std::pair<const std::string*, std::pair<const std::string*, float>>(&b, std::pair<const std::string*, float>(&b, 1)));
   map.insert(std::pair<const std::string*, std::pair<const std::string*, float>>(&c, std::pair<const std::string*, float>(&c, 2)));
-  std::cout << *(map.find(&a)->second.first) << std::endl;
-  std::cout << map.find(&b)->second.second << std::endl;
-  REQUIRE(*(g.getRemoveSmallest(map, airports)) == "1");
+  REQUIRE(*(g.getRemoveSmallest(map, airports)) == "a");
 }

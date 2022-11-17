@@ -220,14 +220,25 @@ std::vector<const std::string*> Graph::AirportIntersectionIATA(std::vector<std::
 }
 
 const std::string* Graph::RemoveSmallestIATA(std::map<const std::string*, std::pair<const std::string*, float>>& map, std::vector<const std::string*> airports) {
-    auto smallest_itr = airports.begin();
-    for (auto iter = airports.begin() + 1; iter != airports.end(); iter++) {
-        if (map.at(*iter).second < map.at(*smallest_itr).second) {
-            smallest_itr = iter;
+    size_t smallest_idx = 0;
+    float smallest_value = 99999;
+    for (size_t i = 0; i < airports.size(); ++i) {
+        if (map.find(airports[i]) != map.end()) {
+            if (map.find(airports[i])->second.second < smallest_value) {
+                smallest_idx = i;
+            }
         }
     }
-    airports.erase(smallest_itr);
-    return *smallest_itr;
+    airports.erase(airports.begin()+smallest_idx, airports.begin()+smallest_idx+1);
+    // auto smallest_itr = airports.begin();
+    // for (auto iter = airports.begin() + 1; iter != airports.end(); iter++) {
+    //     if (map.find(*iter) != map.end()) {
+    //         if (map.find(*iter)->second.second < map.find(*smallest_itr)->second.second) {
+    //             smallest_itr = iter;
+    //         }
+    //     }
+    // }
+    return (airports[smallest_idx]);
 }
 
 std::vector<const std::string*> Graph::shortestPathIATA(std::string& start, std::string& destination) {
