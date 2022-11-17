@@ -185,6 +185,7 @@ std::map<const std::string*, std::pair<const std::string*, float>> Graph::DijkIA
     std::map<const std::string*, std::pair<const std::string*, float>> map;
     std::vector<const std::string*> airports;
     int i = 0;
+    std::cout << "here2" << std::endl;
     for (auto airport_iter = connectionsIATA_.begin(); airport_iter !=  connectionsIATA_.end(); airport_iter++) {
         //iterate through keys of connections_ map, populating shortest route map with worstcase data;
         const std::string* current_airport = &(airport_iter->first);
@@ -192,8 +193,10 @@ std::map<const std::string*, std::pair<const std::string*, float>> Graph::DijkIA
         airports.push_back(current_airport);
         ++i;
     }
+    std::cout << "here2" << std::endl;
     map[&start] = std::pair< std::string*, float>(NULL, 0);
     while(!airports.empty()) {
+        std::cout << airports.size() << std::endl;
          const std::string* closest_airport = RemoveSmallestIATA(map, airports);
         for (auto airport : AirportIntersectionIATA(connectionsIATA_.find(*closest_airport)->second, airports)) {
             float possible_distance = map[closest_airport].second + DistanceIATA(*closest_airport, *airport);
@@ -203,6 +206,7 @@ std::map<const std::string*, std::pair<const std::string*, float>> Graph::DijkIA
             }
         }
     }
+    std::cout << "here2" << std::endl;
     return map;
 }
 
@@ -219,36 +223,33 @@ std::vector<const std::string*> Graph::AirportIntersectionIATA(std::vector<std::
     return in_both;
 }
 
-const std::string* Graph::RemoveSmallestIATA(std::map<const std::string*, std::pair<const std::string*, float>>& map, std::vector<const std::string*> airports) {
+const std::string* Graph::RemoveSmallestIATA(std::map<const std::string*, std::pair<const std::string*, float>>& map, std::vector<const std::string*>& airports) {
     size_t smallest_idx = 0;
     float smallest_value = 99999;
     for (size_t i = 0; i < airports.size(); ++i) {
         if (map.find(airports[i]) != map.end()) {
             if (map.find(airports[i])->second.second < smallest_value) {
+                smallest_value = map.find(airports[i])->second.second;
                 smallest_idx = i;
             }
         }
     }
+    const std::string* toreturn = airports[smallest_idx];
     airports.erase(airports.begin()+smallest_idx, airports.begin()+smallest_idx+1);
-    // auto smallest_itr = airports.begin();
-    // for (auto iter = airports.begin() + 1; iter != airports.end(); iter++) {
-    //     if (map.find(*iter) != map.end()) {
-    //         if (map.find(*iter)->second.second < map.find(*smallest_itr)->second.second) {
-    //             smallest_itr = iter;
-    //         }
-    //     }
-    // }
-    return (airports[smallest_idx]);
+    return toreturn;
 }
 
 std::vector<const std::string*> Graph::shortestPathIATA(std::string& start, std::string& destination) {
     std::vector<const std::string*> shortest_path = {&start};
+    std::cout << "here" << std::endl;
     std::map<const std::string*, std::pair<const std::string*, float>> shortest_map = DijkIATA(start);
     const std::string* current = &destination;
+        std::cout << "here" << std::endl;
     while (current != &start) {
         shortest_path.insert(shortest_path.begin() + 1, current);
         current = shortest_map[current].first; //Sets current to parent
     }
+        std::cout << "here" << std::endl;
     return shortest_path;
 }
 

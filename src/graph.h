@@ -114,7 +114,7 @@ class Graph {
 
     //Helper for Dijk, finds, removes and returns the Airport with the lowest distance in the inputed vector of Airport pointers
     //const Graph::Airport* RemoveSmallest(std::map<const Graph::Airport*, std::pair<const Graph::Airport*, float>>& map, std::vector<const Graph::Airport*> airports);
-    const std::string* RemoveSmallestIATA(std::map<const std::string*, std::pair<const std::string*, float>>& map, std::vector<const std::string*> airports);
+    const std::string* RemoveSmallestIATA(std::map<const std::string*, std::pair<const std::string*, float>>& map, std::vector<const std::string*>& airports);
     //Helper for Dijk, returns the intersection of the two sets as a vector of Airports
     //std::vector<const Airport*> AirportIntersection(std::vector<Airport>& connections,  std::vector<const Airport*> airports);
     std::vector<const std::string*> AirportIntersectionIATA(std::vector<std::string>& connections,  std::vector<const std::string*> airports);

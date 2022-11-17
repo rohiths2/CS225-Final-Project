@@ -47,20 +47,20 @@ std::cout << std::endl;
 std::cout << std::endl;
 std::cout << "BFS Traversal from SAB to SBH" << std::endl;
 g.populateConnectionsIATA(d);
-g.BFS("SAB", "SBH", false);
+//g.BFS("SAB", "SBH", false);
 std::cout << std::endl;
 std::cout << std::endl;
 std::cout << "BFS Traversal from ORD to LAX" << std::endl;
 g.populateConnectionsIATA(d);
-g.BFS("ORD", "LAX", false);
+//g.BFS("ORD", "LAX", false);
 
-//     auto ohare = g.getAirportFromIATA_("ORD");
-//     auto midway = g.getAirportFromIATA_("MDW");
-//     std::string str1 = "ORD";
-//     std::string str2 = "MDW";
-//   auto a = g.shortestPathIATA(str1, str2);
-//   // for (auto b : a) {
-//   //   std::cout << b << std::endl;
-//   // }
+    auto ohare = g.getAirportFromIATA_("ORD");
+    auto midway = g.getAirportFromIATA_("MDW");
+    std::string str1 = "ORD";
+    std::string str2 = "MDW";
+  auto a = g.shortestPathIATA(str1, str2);
+  for (auto b : a) {
+    std::cout << b << std::endl;
+  }
  return 1;
 }

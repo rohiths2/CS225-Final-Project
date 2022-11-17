@@ -194,15 +194,13 @@ TEST_CASE("Airport Intersection 3") {
 
 TEST_CASE("Test Remove Smallest") {
   Graph g = Graph(d);
-    std::vector<std::string> connections = {"a", "c", "e", "g"};
-  std::vector<std::string> connections2 = {"b", "e", "u", "o"};
-  std::vector<const std::string*> airports;
-  for (auto s : connections2) {
-    airports.push_back(&s);
-  }
   std::string a = "a";
   std::string b = "b";
   std::string c = "c";
+  std::vector<const std::string*> airports;
+  airports.push_back(&a);
+  airports.push_back(&b);
+  airports.push_back(&c);
   std::map<const std::string*, std::pair<const std::string*, float>> map;
   map.insert(std::pair<const std::string*, std::pair<const std::string*, float>>(&a, std::pair<const std::string*, float>(&a, 0)));
   map.insert(std::pair<const std::string*, std::pair<const std::string*, float>>(&b, std::pair<const std::string*, float>(&b, 1)));
