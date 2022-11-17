@@ -106,75 +106,75 @@ void Graph::BFS(std::string origin, std::string ending, bool only_complete_airpo
 }
 
 
-std::map<const Graph::Airport*, std::pair<const Graph::Airport*, float>> Graph::Dijk( Airport& start) {
-    std::map<const Graph::Airport*, std::pair<const Graph::Airport*, float>> map;
-    std::vector<const Graph::Airport*> airports;
-    int i = 0;
-    for (auto airport_iter = connections_.begin(); airport_iter !=  connections_.end(); airport_iter++) {
-        //iterate through keys of connections_ map, populating shortest route map with worstcase data;
-        const Airport* current_airport = &(airport_iter->first);
-        map[current_airport] = std::pair<Airport*, float>(NULL, INFINITY);
-        airports.push_back(current_airport);
-        ++i;
-    }
-    map[&start] = std::pair< Graph::Airport*, float>(NULL, 0);
-    while(!airports.empty()) {
-         const Airport* closest_airport = RemoveSmallest(map, airports);
-        for (auto airport : AirportIntersection(connections_.find(*closest_airport)->second, airports)) {
-            float possible_distance = map[closest_airport].second + Distance(*closest_airport, *airport);
-            if (possible_distance < map[airport].second) {
-                map[airport].first = closest_airport;
-                map[airport].second = possible_distance;
-            }
-        }
-    }
-    return map;
-}
+// std::map<const Graph::Airport*, std::pair<const Graph::Airport*, float>> Graph::Dijk( Airport& start) {
+//     std::map<const Graph::Airport*, std::pair<const Graph::Airport*, float>> map;
+//     std::vector<const Graph::Airport*> airports;
+//     int i = 0;
+//     for (auto airport_iter = connections_.begin(); airport_iter !=  connections_.end(); airport_iter++) {
+//         //iterate through keys of connections_ map, populating shortest route map with worstcase data;
+//         const Airport* current_airport = &(airport_iter->first);
+//         map[current_airport] = std::pair<Airport*, float>(NULL, INFINITY);
+//         airports.push_back(current_airport);
+//         ++i;
+//     }
+//     map[&start] = std::pair< Graph::Airport*, float>(NULL, 0);
+//     while(!airports.empty()) {
+//          const Airport* closest_airport = RemoveSmallest(map, airports);
+//         for (auto airport : AirportIntersection(connections_.find(*closest_airport)->second, airports)) {
+//             float possible_distance = map[closest_airport].second + Distance(*closest_airport, *airport);
+//             if (possible_distance < map[airport].second) {
+//                 map[airport].first = closest_airport;
+//                 map[airport].second = possible_distance;
+//             }
+//         }
+//     }
+//     return map;
+// }
 
-std::vector<const Graph::Airport*> Graph::AirportIntersection(std::vector<Graph::Airport>& connections, std::vector<const Graph::Airport*> airports) {
-    std::vector<const Graph::Airport*> in_both;
-    for (Graph::Airport airport1 : connections) {
-        for (const Graph::Airport* airport2 : airports) {
-            if (airport1 == *airport2) {
-                in_both.push_back(airport2);
-                break;
-            }
-        }
-    }
-    return in_both;
-}
+// std::vector<const Graph::Airport*> Graph::AirportIntersection(std::vector<Graph::Airport>& connections, std::vector<const Graph::Airport*> airports) {
+//     std::vector<const Graph::Airport*> in_both;
+//     for (Graph::Airport airport1 : connections) {
+//         for (const Graph::Airport* airport2 : airports) {
+//             if (airport1 == *airport2) {
+//                 in_both.push_back(airport2);
+//                 break;
+//             }
+//         }
+//     }
+//     return in_both;
+// }
 
-const Graph::Airport* Graph::RemoveSmallest(std::map<const Graph::Airport*, std::pair<const Graph::Airport*, float>>& map, std::vector<const Graph::Airport*> airports) {
-    auto smallest_itr = airports.begin();
-    for (auto iter = airports.begin() + 1; iter != airports.end(); iter++) {
-        if (map.at(*iter).second < map.at(*smallest_itr).second) {
-            smallest_itr = iter;
-        }
-    }
-    airports.erase(smallest_itr);
-    return *smallest_itr;
-}
+// const Graph::Airport* Graph::RemoveSmallest(std::map<const Graph::Airport*, std::pair<const Graph::Airport*, float>>& map, std::vector<const Graph::Airport*> airports) {
+//     auto smallest_itr = airports.begin();
+//     for (auto iter = airports.begin() + 1; iter != airports.end(); iter++) {
+//         if (map.at(*iter).second < map.at(*smallest_itr).second) {
+//             smallest_itr = iter;
+//         }
+//     }
+//     airports.erase(smallest_itr);
+//     return *smallest_itr;
+// }
 
-std::vector<const Graph::Airport*> Graph::shortestPath(Airport& start, Airport& destination) {
-    std::vector<const Airport*> shortest_path = {&start};
-    std::map<const Graph::Airport*, std::pair<const Graph::Airport*, float>> shortest_map = Dijk(start);
-    const Airport* current = &destination;
-    while (current != &start) {
-        shortest_path.insert(shortest_path.begin() + 1, current);
-        current = shortest_map[current].first; //Sets current to parent
-    }
-    return shortest_path;
-}
+// std::vector<const Graph::Airport*> Graph::shortestPath(Airport& start, Airport& destination) {
+//     std::vector<const Airport*> shortest_path = {&start};
+//     std::map<const Graph::Airport*, std::pair<const Graph::Airport*, float>> shortest_map = Dijk(start);
+//     const Airport* current = &destination;
+//     while (current != &start) {
+//         shortest_path.insert(shortest_path.begin() + 1, current);
+//         current = shortest_map[current].first; //Sets current to parent
+//     }
+//     return shortest_path;
+// }
 
-float Graph::Distance(const Airport& place1, const Airport& place2) {
-    //Used the Haversine formula to calculate distance in miles
-    float place1_long = (place1.longitude_ * 3.1415) / 180;
-    float place1_lat = (place1.latitude_ * 3.1415) / 180;
-    float place2_long = (place2.longitude_ * 3.1415) / 180;
-    float place2_lat = (place2.latitude_ * 3.1415) / 180;
-    float distance = 3963 * acos((sin(place1_lat) * sin(place2_lat)) + cos(place1_lat) * cos(place2_lat) * cos(place2_long - place1_long));
-    return distance;
-}
+// float Graph::Distance(const Airport& place1, const Airport& place2) {
+//     //Used the Haversine formula to calculate distance in miles
+//     float place1_long = (place1.longitude_ * 3.1415) / 180;
+//     float place1_lat = (place1.latitude_ * 3.1415) / 180;
+//     float place2_long = (place2.longitude_ * 3.1415) / 180;
+//     float place2_lat = (place2.latitude_ * 3.1415) / 180;
+//     float distance = 3963 * acos((sin(place1_lat) * sin(place2_lat)) + cos(place1_lat) * cos(place2_lat) * cos(place2_long - place1_long));
+//     return distance;
+// }
 
 
 //IATA alternative functions

@@ -140,21 +140,6 @@ TEST_CASE("Test distance function") {
   REQUIRE((int(g.getDistanceIATA(ord, lhr)) >= 3940 && int(g.getDistanceIATA(ord, lhr)) <= 3950));
   REQUIRE((int(g.getDistanceIATA(lax, lhr)) >= 5440 && int(g.getDistanceIATA(lax, lhr)) <= 5450));
   REQUIRE((int(g.getDistanceIATA(lhr, bom)) >= 4480 && int(g.getDistanceIATA(lhr, bom)) <= 4490));
-  Graph::Airport ord1 = g.getAirportFromIATA_("ORD");
-  Graph::Airport mdw1 = g.getAirportFromIATA_("MDW");
-  Graph::Airport lax1 = g.getAirportFromIATA_("LAX");
-  Graph::Airport ewr1 = g.getAirportFromIATA_("EWR");
-  Graph::Airport lhr1 = g.getAirportFromIATA_("LHR");
-  Graph::Airport bom1 = g.getAirportFromIATA_("BOM");
-  REQUIRE(int(g.getDistance(ord1, mdw1)) == 15);
-  REQUIRE(int(g.getDistance(ord1, lax1)) == 1742);
-  REQUIRE(int(g.getDistance(ord1, lax1)) == int(g.getDistance(lax1, ord1)));
-  REQUIRE(int(g.getDistance(ord1, ewr1)) == int(g.getDistance(ewr1, ord1)));
-  REQUIRE((int(g.getDistance(ord1, ewr1)) >= 716 && int(g.getDistance(ord1, ewr1)) <= 721));
-  REQUIRE((int(g.getDistance(lax1, ewr1)) >= 2448 && int(g.getDistance(lax1, ewr1)) <= 2453));
-  REQUIRE((int(g.getDistance(ord1, lhr1)) >= 3940 && int(g.getDistance(ord1, lhr1)) <= 3950));
-  REQUIRE((int(g.getDistance(lax1, lhr1)) >= 5440 && int(g.getDistance(lax1, lhr1)) <= 5450));
-  REQUIRE((int(g.getDistance(lhr1, bom1)) >= 4480 && int(g.getDistance(lhr1, bom1)) <= 4490));
 }
 
 TEST_CASE("Airport Intersection 1") {
@@ -207,3 +192,22 @@ TEST_CASE("Airport Intersection 3") {
   }
 }
 
+TEST_CASE("Test Remove Smallest") {
+  Graph g = Graph(d);
+    std::vector<std::string> connections = {"a", "c", "e", "g"};
+  std::vector<std::string> connections2 = {"b", "e", "u", "o"};
+  std::vector<const std::string*> airports;
+  for (auto s : connections2) {
+    airports.push_back(&s);
+  }
+  std::string a = "a";
+  std::string b = "b";
+  std::string c = "c";
+  std::map<const std::string*, std::pair<const std::string*, float>> map;
+  map.insert(std::pair<const std::string*, std::pair<const std::string*, float>>(&a, std::pair<const std::string*, float>(&a, 0)));
+  map.insert(std::pair<const std::string*, std::pair<const std::string*, float>>(&b, std::pair<const std::string*, float>(&b, 1)));
+  map.insert(std::pair<const std::string*, std::pair<const std::string*, float>>(&c, std::pair<const std::string*, float>(&c, 2)));
+  std::cout << *(map.find(&a)->second.first) << std::endl;
+  std::cout << map.find(&b)->second.second << std::endl;
+  REQUIRE(*(g.getRemoveSmallest(map, airports)) == "1");
+}
