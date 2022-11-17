@@ -109,8 +109,6 @@ void DataParser::checkMissingInfo() { //iterate through Routes Details
             }
         }
         if (!isNumber(AirportsDetails[i][7])) {
-            std::cout << "YES " << AirportsDetails[i][7] << std::endl;
-            std::cout << " " << AirportsDetails[i][8] << std::endl;
             AirportsDetails[i][7] = '0';
             AirportsDetails[i][AirportsDetails[i].size()-1] = "0";
         }

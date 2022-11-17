@@ -91,6 +91,11 @@ class Graph {
         return Distance(place1, place2);
     }
 
+    //Getter for AirportIntersectionIATA function: used for testing
+    std::vector<const std::string*> GetAirInt(std::vector<std::string>& connections,  std::vector<const std::string*> airports) {
+        return AirportIntersectionIATA(connections, airports);
+    }
+
     //Uses Dijkstra's algorithm to find the shortest path, returns a vector where first value is start and last value is destination
     std::vector<const Airport*> shortestPath(Airport& start, Airport& destination);
     std::vector<const std::string*> shortestPathIATA(std::string& start, std::string& destination);

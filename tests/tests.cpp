@@ -156,3 +156,53 @@ TEST_CASE("Test distance function") {
   REQUIRE((int(g.getDistance(lax1, lhr1)) >= 5440 && int(g.getDistance(lax1, lhr1)) <= 5450));
   REQUIRE((int(g.getDistance(lhr1, bom1)) >= 4480 && int(g.getDistance(lhr1, bom1)) <= 4490));
 }
+
+TEST_CASE("Airport Intersection 1") {
+  Graph g = Graph(d);
+  g.populateConnectionsIATA(d);
+  std::vector<std::string> connections = {"a", "c", "e", "g"};
+  std::vector<std::string> connections2 = {"b", "c", "g", "z"};
+  std::vector<const std::string*> airports;
+  std::vector<std::string> answer = {"c", "g"};
+  for (auto s : connections2) {
+    airports.push_back(&s);
+  }
+  std::vector<const std::string*> AirInt = g.GetAirInt(connections, airports);
+  int i = 0;
+  for (auto s : AirInt) {
+    REQUIRE(*s == answer[i]);
+    ++i;
+  }
+}
+
+TEST_CASE("Airport Intersection 2") {
+  Graph g = Graph(d);
+  g.populateConnectionsIATA(d);
+  std::vector<std::string> connections = {"a", "c", "e", "g"};
+  std::vector<std::string> connections2 = {"b", "e", "u", "o"};
+  std::vector<const std::string*> airports;
+  for (auto s : connections2) {
+    airports.push_back(&s);
+  }
+  std::vector<const std::string*> AirInt = g.GetAirInt(connections, airports);
+  REQUIRE(AirInt.size() == 0);
+}
+
+TEST_CASE("Airport Intersection 3") {
+  Graph g = Graph(d);
+  g.populateConnectionsIATA(d);
+  
+  std::vector<std::string> connections = g.getConnectionsIATA().find("SAB")->second;
+  std::vector<std::string> connections2 = {"SXM", "SBH", "ORD"};
+  std::vector<std::string> answer = {"SXM", "SBH"};
+  std::vector<const std::string*> airports;
+  for (auto s : connections2) {
+    airports.push_back(&s);
+  }
+  std::vector<const std::string*> AirInt = g.GetAirInt(connections, airports);
+  int i = 0;
+  for (auto s : AirInt) {
+    REQUIRE(*s == answer[i]);
+    ++i;
+  }
+}

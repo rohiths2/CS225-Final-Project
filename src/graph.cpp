@@ -56,9 +56,7 @@ void Graph::populateConnectionsIATA(DataParser d) {
 
 void Graph::populateConnections(DataParser d) {
     int i = 0;
-    std::cout << "goeshere" << std::endl;
     for (auto connection : getConnectionsIATA()) {
-        std::cout << i << "/" << getConnectionsIATA().size() << std::endl;
         std::pair<Airport, std::vector<Airport>> pair;
         pair.first = getAirportFromIATA_(connection.first);
         for (auto part : connection.second) {
@@ -112,9 +110,7 @@ std::map<const Graph::Airport*, std::pair<const Graph::Airport*, float>> Graph::
     std::map<const Graph::Airport*, std::pair<const Graph::Airport*, float>> map;
     std::vector<const Graph::Airport*> airports;
     int i = 0;
-    std::cout << connections_.size() << std::endl;
     for (auto airport_iter = connections_.begin(); airport_iter !=  connections_.end(); airport_iter++) {
-        std::cout << i << "/" << connections_.size() << std::endl;
         //iterate through keys of connections_ map, populating shortest route map with worstcase data;
         const Airport* current_airport = &(airport_iter->first);
         map[current_airport] = std::pair<Airport*, float>(NULL, INFINITY);
@@ -123,7 +119,6 @@ std::map<const Graph::Airport*, std::pair<const Graph::Airport*, float>> Graph::
     }
     map[&start] = std::pair< Graph::Airport*, float>(NULL, 0);
     while(!airports.empty()) {
-        std::cout << airports.size() << std::endl;
          const Airport* closest_airport = RemoveSmallest(map, airports);
         for (auto airport : AirportIntersection(connections_.find(*closest_airport)->second, airports)) {
             float possible_distance = map[closest_airport].second + Distance(*closest_airport, *airport);
@@ -178,7 +173,6 @@ float Graph::Distance(const Airport& place1, const Airport& place2) {
     float place2_long = (place2.longitude_ * 3.1415) / 180;
     float place2_lat = (place2.latitude_ * 3.1415) / 180;
     float distance = 3963 * acos((sin(place1_lat) * sin(place2_lat)) + cos(place1_lat) * cos(place2_lat) * cos(place2_long - place1_long));
-    std::cout << distance << std::endl;
     return distance;
 }
 
@@ -192,7 +186,6 @@ std::map<const std::string*, std::pair<const std::string*, float>> Graph::DijkIA
     std::vector<const std::string*> airports;
     int i = 0;
     for (auto airport_iter = connectionsIATA_.begin(); airport_iter !=  connectionsIATA_.end(); airport_iter++) {
-        std::cout << i << "/" << connections_.size() << std::endl;
         //iterate through keys of connections_ map, populating shortest route map with worstcase data;
         const std::string* current_airport = &(airport_iter->first);
         map[current_airport] = std::pair<std::string*, float>(NULL, INFINITY);
