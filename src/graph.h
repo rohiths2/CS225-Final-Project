@@ -61,6 +61,7 @@ class Graph {
 
     //Populates an adjacency list, with keys being airport IATA codes, and values being their neighbors
     void populateConnectionsIATA(DataParser d);
+    void populateConnectionsIATA_country(DataParser d, std::string country_);
 
     //Given an IATA code, search for the airport with the matching IATA in the airports vector, and return the Airport object
     Airport getAirportFromIATA_(std::string iata);
@@ -123,7 +124,7 @@ class Graph {
     float DistanceIATA(const std::string& place1, const std::string& place2);
 
     // Betweeness centrality, returns a vector of IATA strings and their Centralities. MAY BE RESOURCE HEAVY ONCE IMPL.
-    std::vector<std::pair<std::string, float>> Graph::BetweenessCentrality();
+    std::vector<std::pair<std::string, float>> BetweenessCentrality();
 
     std::vector<std::string> BFS_visited;
     std::vector<std::string> BFS_output;

@@ -55,6 +55,24 @@ void Graph::populateConnectionsIATA(DataParser d) {
 }
 
 
+void Graph::populateConnectionsIATA_country(DataParser d, std::string country_) {
+    connectionsIATA_.clear();
+    for (auto airport : getAirports()) {
+        if (airport.country_ == country_) {
+            std::pair<std::string, std::vector<std::string>> pair;
+            pair.first = airport.IATA_;
+            connectionsIATA_.insert(pair);
+        }
+    }
+    for (auto route : d.RoutesDetails) {
+        if (connectionsIATA_.find(route[2]) != connectionsIATA_.end() && route[2] != "\\N" && route[4] != "\\N") {
+            connectionsIATA_.find(route[2])->second.push_back(route[4]);
+        }
+    }
+    connectionsIATA_.erase("\\N");
+}
+
+
 void Graph::populateConnections(DataParser d) {
     int i = 0;
     for (auto connection : getConnectionsIATA()) {
@@ -269,7 +287,8 @@ std::vector<std::pair<std::string, float>> Graph::BetweenessCentrality(){
     //         }
     //     }
     // }
-
+    std::vector<std::pair<std::string, float>> v;
+    return v;
 }
 
 

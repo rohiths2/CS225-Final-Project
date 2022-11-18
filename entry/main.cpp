@@ -30,7 +30,7 @@ std::cout << "Name: " << lax.name_ << " --- City: " << lax.city_ << " --- Countr
 
 std::cout << std::endl;
 std::cout << "Adjacency List" << std::endl;
-g.populateConnectionsIATA(d);
+g.populateConnectionsIATA_country(d, "United States");
 std::cout << "Connections From MDW" << std::endl;
 std::vector<std::string> v = g.getConnectionsIATA().find("MDW")->second;
 for (auto a : v) {
@@ -47,7 +47,7 @@ std::cout << std::endl;
 std::cout << std::endl;
 std::cout << "BFS Traversal from SAB to SBH" << std::endl;
 g.populateConnectionsIATA(d);
-//g.BFS("SAB", "SBH", false);
+g.BFS("SAB", "SBH", false);
 std::cout << std::endl;
 std::cout << std::endl;
 std::cout << "BFS Traversal from ORD to LAX" << std::endl;
