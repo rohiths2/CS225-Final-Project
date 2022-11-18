@@ -1,5 +1,6 @@
 #include "graph.h"
 #include <queue>
+#include <stack>
 #include <cmath>
 
 Graph::Airport::Airport(std::vector<std::string> airport) {
@@ -209,6 +210,69 @@ std::map<const std::string*, std::pair<const std::string*, float>> Graph::DijkIA
     std::cout << "here2" << std::endl;
     return map;
 }
+
+// Draft Code for Betweenness centrality
+// would love advice on this 
+std::vector<std::pair<std::string, float>> Graph::BetweenessCentrality(){
+
+    /***
+     * @TODO: compare 2008 paper vs 2001 paper effectivity
+     * Discuss limitations
+     * Impl.
+    */
+    // https://pdodds.w3.uvm.edu/research/papers/others/2001/brandes2001a.pdf BRANDES' ORIGINAL PAPER
+    // https://www.cl.cam.ac.uk/teaching/1718/MLRD/handbook/brandes.html BRANDES' 2008 DISCUSSION (UPDATED 2008 IS BEHIND PAYWALL)
+
+    //Tried to keep return type similar to code above for Djikstra's --
+    // returns a map, each Airport maps to a pair. 
+    //The first value is the Airports parent, the second value is the distance from the start airport
+    std::vector<float> sigma; //https://en.wikipedia.org/wiki/Betweenness_centrality Each sigma is a shortest path. 
+                              // this should be of N size.    
+
+    // Algorithim:
+    // Essentially, we perform a BFS again. This can be improved by unifying both the BFS and this code together, maybe adding a switch? 
+    // regardless, we perform a BFS, and then put the sigma values into a queue.
+    // then, we can go through the sigma values and then get the BtwCnt. 
+
+    // We can use Brandes' with this approach: https://pdodds.w3.uvm.edu/research/papers/others/2001/brandes2001a.pdf
+    // depending on time, both algos can be very time consuming. I haven't tried it out, but I 
+    // recommend a timeout (probably at 3000ms), or a stop limit.
+    size_t stop_size = -1; 
+
+    // to make things easier, assumes only complete airports.
+    std::vector<std::pair<std::string, float>> betweeness_centrality; // this is what will end up returning the centralities.  
+    std::vector<std::string> predecessors; // nodes that precede w in shortest path
+    std::queue<std::string> q;
+    std::stack<std::string> s;
+    while (!q.empty()){
+        std::string last_visited = q.back();
+        q.pop();
+        s.push(last_visited); // psuedocode time  
+        //For each neighbor (w) of v,  
+        // if dist(w) == -1  (distance not found yet)
+            //pushback w to q
+            //distance(w) = distance(v) + 1 
+        // if dist(w) == distance(v) + 1, 
+            // sigma[w] = sigma[w] + sigma[v];
+            // predecessors.push_back(v);
+    }
+    // Commented out for sake of clarity.
+    // std::vector<float> delta; // init to be of size V 
+    // while (!s.empty()){
+    //     std::string current = s.top();
+    //     s.pop();
+    //     for (vertex in adjacency_list(current)){
+    //         delta(vertex) = delta(vertex) * (
+    //             (sigma(vertex)/sigma(current)) * (1 + delta(current))); // This is where Brandes' Algo comes in.
+    //         if (w not in s){
+    //             Btw_c[w] = Btw_c[w] + delta(w); 
+    //         }
+    //     }
+    // }
+
+}
+
+
 
 std::vector<const std::string*> Graph::AirportIntersectionIATA(std::vector<std::string>& connections, std::vector<const std::string*> airports) {
     std::vector<const std::string*> in_both;

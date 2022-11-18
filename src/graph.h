@@ -122,6 +122,9 @@ class Graph {
     //float Distance(const Airport& place1, const Airport& place2);
     float DistanceIATA(const std::string& place1, const std::string& place2);
 
+    // Betweeness centrality, returns a vector of IATA strings and their Centralities. MAY BE RESOURCE HEAVY ONCE IMPL.
+    std::vector<std::pair<std::string, float>> Graph::BetweenessCentrality();
+
     std::vector<std::string> BFS_visited;
     std::vector<std::string> BFS_output;
 
@@ -133,6 +136,8 @@ class Graph {
     **/
    //Stores Airport Object types from each row of the data-parsed airports details vector
     std::vector<Airport> airports_;
+    
+
     
     /**
      * Stores the original data of airports 
