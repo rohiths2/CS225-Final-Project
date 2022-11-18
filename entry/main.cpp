@@ -60,9 +60,8 @@ g.populateConnectionsIATA_country(d, "China");
     std::string str1 = "SHE";
     std::string str2 = "DOY";
   auto a = g.shortestPathIATA(str1, str2);
-  std::cout << a.size() << std::endl;
-  // for (auto b : a) {
-  //   std::cout << b << std::endl;
-  // }
+  for (auto b : a) {
+    std::cout << b << std::endl;
+  }
  return 1;
 }

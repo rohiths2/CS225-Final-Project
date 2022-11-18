@@ -139,18 +139,15 @@ std::map< std::string, std::pair< std::string, float>> Graph::DijkIATA( std::str
     std::map< std::string, std::pair< std::string, float>> map;
     std::vector< std::string> airports;
     int i = 0;
-    std::cout << "here2" << std::endl;
     for (auto airport_iter = connectionsIATA_.begin(); airport_iter !=  connectionsIATA_.end(); airport_iter++) {
         //iterate through keys of connections_ map, populating shortest route map with worstcase data;
          std::string current_airport = (airport_iter->first);
-        map[current_airport] = std::pair<std::string, float>("null", INFINITY);
+        map[current_airport] = std::pair<std::string, float>("", INFINITY);
         airports.push_back(current_airport);
         ++i;
     }
-    std::cout << "here2" << std::endl;
-    map[start] = std::pair< std::string, float>(NULL, 0);
+    map[start] = std::pair< std::string, float>("", 0);
     while(!airports.empty()) {
-        std::cout << airports.size() << std::endl;
           std::string closest_airport = RemoveSmallestIATA(map, airports);
         for (auto airport : AirportIntersectionIATA(connectionsIATA_.find(closest_airport)->second, airports)) {
             float possible_distance = map[closest_airport].second + DistanceIATA(closest_airport, airport);
@@ -160,7 +157,6 @@ std::map< std::string, std::pair< std::string, float>> Graph::DijkIATA( std::str
             }
         }
     }
-    std::cout << "here2" << std::endl;
     return map;
 }
 
@@ -259,22 +255,12 @@ const std::string Graph::RemoveSmallestIATA(std::map< std::string, std::pair< st
 
 std::vector< std::string> Graph::shortestPathIATA(std::string& start, std::string& destination) {
     std::vector< std::string> shortest_path = {start};
-    std::cout << "here" << std::endl;
     std::map< std::string, std::pair< std::string, float>> shortest_map = DijkIATA(start);
-    for (auto a : shortest_map) {
-        std::cout << a.first << a.second.first << a.second.second << std::endl;
-
-    }
      std::string current = destination;
-        std::cout << "hereeeeeeee" << std::endl;
-        int i = 0;
     while (current != start) {
-        std::cout << i << std::endl;
         shortest_path.insert(shortest_path.begin() + 1, current);
         current = shortest_map[current].first; //Sets current to parent
-            ++i;
     }
-        std::cout << "here" << std::endl;
     return shortest_path;
 }
 
