@@ -147,15 +147,11 @@ TEST_CASE("Airport Intersection 1") {
   g.populateConnectionsIATA(d);
   std::vector<std::string> connections = {"a", "c", "e", "g"};
   std::vector<std::string> connections2 = {"b", "c", "g", "z"};
-  std::vector<const std::string*> airports;
   std::vector<std::string> answer = {"c", "g"};
-  for (auto s : connections2) {
-    airports.push_back(&s);
-  }
-  std::vector<const std::string*> AirInt = g.GetAirInt(connections, airports);
+  std::vector< std::string> AirInt = g.GetAirInt(connections, connections2);
   int i = 0;
   for (auto s : AirInt) {
-    REQUIRE(*s == answer[i]);
+    REQUIRE(s == answer[i]);
     ++i;
   }
 }
@@ -164,30 +160,23 @@ TEST_CASE("Airport Intersection 2") {
   Graph g = Graph(d);
   g.populateConnectionsIATA(d);
   std::vector<std::string> connections = {"a", "c", "e", "g"};
-  std::vector<std::string> connections2 = {"b", "e", "u", "o"};
-  std::vector<const std::string*> airports;
-  for (auto s : connections2) {
-    airports.push_back(&s);
-  }
-  std::vector<const std::string*> AirInt = g.GetAirInt(connections, airports);
+  std::vector<std::string> connections2 = {"b", "v", "u", "o"};
+  std::vector< std::string> airports;
+  std::vector< std::string> AirInt = g.GetAirInt(connections, connections2);
   REQUIRE(AirInt.size() == 0);
 }
 
 TEST_CASE("Airport Intersection 3") {
   Graph g = Graph(d);
   g.populateConnectionsIATA(d);
-  
-  std::vector<std::string> connections = g.getConnectionsIATA().find("SAB")->second;
-  std::vector<std::string> connections2 = {"SXM", "SBH", "ORD"};
-  std::vector<std::string> answer = {"SXM", "SBH"};
-  std::vector<const std::string*> airports;
-  for (auto s : connections2) {
-    airports.push_back(&s);
-  }
-  std::vector<const std::string*> AirInt = g.GetAirInt(connections, airports);
+  std::vector<std::string> connections = g.getConnectionsIATA()["SBH"];
+  std::cout << std::endl;
+  std::vector<std::string> connections2 = {"SXM", "SAB", "ORD"};
+  std::vector<std::string> answer = {"SXM", "SAB"};
+  std::vector< std::string> AirInt = g.GetAirInt(connections, connections2);
   int i = 0;
   for (auto s : AirInt) {
-    REQUIRE(*s == answer[i]);
+    REQUIRE(s == answer[i]);
     ++i;
   }
 }
@@ -197,13 +186,13 @@ TEST_CASE("Test Remove Smallest") {
   std::string a = "a";
   std::string b = "b";
   std::string c = "c";
-  std::vector<const std::string*> airports;
-  airports.push_back(&a);
-  airports.push_back(&b);
-  airports.push_back(&c);
-  std::map<const std::string*, std::pair<const std::string*, float>> map;
-  map.insert(std::pair<const std::string*, std::pair<const std::string*, float>>(&a, std::pair<const std::string*, float>(&a, 0)));
-  map.insert(std::pair<const std::string*, std::pair<const std::string*, float>>(&b, std::pair<const std::string*, float>(&b, 1)));
-  map.insert(std::pair<const std::string*, std::pair<const std::string*, float>>(&c, std::pair<const std::string*, float>(&c, 2)));
-  REQUIRE(*(g.getRemoveSmallest(map, airports)) == "a");
+  std::vector< std::string> airports;
+  airports.push_back(a);
+  airports.push_back(b);
+  airports.push_back(c);
+  std::map< std::string, std::pair< std::string, float>> map;
+  map.insert(std::pair< std::string, std::pair< std::string, float>>(a, std::pair< std::string, float>(a, 0)));
+  map.insert(std::pair< std::string, std::pair< std::string, float>>(b, std::pair< std::string, float>(b, 1)));
+  map.insert(std::pair< std::string, std::pair< std::string, float>>(c, std::pair< std::string, float>(c, 2)));
+  REQUIRE((g.getRemoveSmallest(map, airports)) == "a");
 }
