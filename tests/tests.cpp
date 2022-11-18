@@ -196,3 +196,29 @@ TEST_CASE("Test Remove Smallest") {
   map.insert(std::pair< std::string, std::pair< std::string, float>>(c, std::pair< std::string, float>(c, 2)));
   REQUIRE((g.getRemoveSmallest(map, airports)) == "a");
 }
+
+TEST_CASE("Test Remove Smallest 2") {
+  Graph g = Graph(d);
+  std::string a = "a";
+  std::string b = "b";
+  std::string c = "c";
+  std::vector< std::string> airports;
+  airports.push_back(a);
+  airports.push_back(b);
+  airports.push_back(c);
+  std::map< std::string, std::pair< std::string, float>> map;
+  map.insert(std::pair< std::string, std::pair< std::string, float>>(a, std::pair< std::string, float>(a, 6)));
+  map.insert(std::pair< std::string, std::pair< std::string, float>>(b, std::pair< std::string, float>(b, 3)));
+  map.insert(std::pair< std::string, std::pair< std::string, float>>(c, std::pair< std::string, float>(c, 3)));
+  REQUIRE((g.getRemoveSmallest(map, airports)) == "b");
+}
+
+TEST_CASE("Test Dijkstra's Algorithm 1") {
+  Graph g = Graph(d);
+  g.populateConnectionsIATA_country(d, "China");
+    std::string str1 = "SHE";
+    std::string str2 = "DOY";
+  auto a = g.shortestPathIATA(str1, str2);
+  REQUIRE((a[0] == "SHE" && a[a.size()-1] == "DOY"));
+  REQUIRE(a[1] == "PEK");
+}

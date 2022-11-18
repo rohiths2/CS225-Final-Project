@@ -47,21 +47,11 @@ std::cout << std::endl;
 std::cout << std::endl;
 //std::cout << "BFS Traversal from SAB to SBH" << std::endl;
 g.populateConnectionsIATA(d);
-//g.BFS("SAB", "SBH", false);
+g.BFS("SAB", "SBH", false);
 std::cout << std::endl;
 std::cout << std::endl;
-//std::cout << "BFS Traversal from ORD to LAX" << std::endl;
+std::cout << "BFS Traversal from ORD to LAX" << std::endl;
 g.populateConnectionsIATA(d);
-//g.BFS("ORD", "LAX", false);
-
-g.populateConnectionsIATA_country(d, "China");
-
-
-    std::string str1 = "SHE";
-    std::string str2 = "DOY";
-  auto a = g.shortestPathIATA(str1, str2);
-  for (auto b : a) {
-    std::cout << b << std::endl;
-  }
+g.BFS("ORD", "LAX", false);
  return 1;
 }
