@@ -30,7 +30,7 @@ std::cout << "Name: " << lax.name_ << " --- City: " << lax.city_ << " --- Countr
 
 std::cout << std::endl;
 std::cout << "Adjacency List" << std::endl;
-g.populateConnectionsIATA(d);
+g.populateConnectionsIATA_country(d, "United States");
 std::cout << "Connections From MDW" << std::endl;
 std::vector<std::string> v = g.getConnectionsIATA().find("MDW")->second;
 for (auto a : v) {
@@ -45,22 +45,13 @@ for (auto a : w) {
 }
 std::cout << std::endl;
 std::cout << std::endl;
-std::cout << "BFS Traversal from SAB to SBH" << std::endl;
+//std::cout << "BFS Traversal from SAB to SBH" << std::endl;
 g.populateConnectionsIATA(d);
-//g.BFS("SAB", "SBH", false);
+g.BFS("SAB", "SBH", false);
 std::cout << std::endl;
 std::cout << std::endl;
 std::cout << "BFS Traversal from ORD to LAX" << std::endl;
 g.populateConnectionsIATA(d);
 g.BFS("ORD", "LAX", false);
-
-  //   auto ohare = g.getAirportFromIATA_("ORD");
-  //   auto midway = g.getAirportFromIATA_("MDW");
-  //   std::string str1 = "ORD";
-  //   std::string str2 = "MDW";
-  // auto a = g.shortestPathIATA(str1, str2);
-  // for (auto b : a) {
-  //   std::cout << b << std::endl;
-  // }
  return 1;
 }
