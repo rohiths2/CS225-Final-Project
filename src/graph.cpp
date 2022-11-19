@@ -24,7 +24,7 @@ Graph::Graph(DataParser data): data_(data) {
     }
 }
 
-std::vector<Graph::Airport> Graph::getAirports() {
+const std::vector<Graph::Airport>& Graph::getAirports() {
     return airports_;
 }
 

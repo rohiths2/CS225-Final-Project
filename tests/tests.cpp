@@ -169,7 +169,7 @@ TEST_CASE("Airport Intersection 2") {
 TEST_CASE("Airport Intersection 3") {
   Graph g = Graph(d);
   g.populateConnectionsIATA(d);
-  std::vector<std::string> connections = g.getConnectionsIATA()["SBH"];
+  std::vector<std::string> connections = g.getConnectionsIATA().at("SBH");
   std::cout << std::endl;
   std::vector<std::string> connections2 = {"SXM", "SAB", "ORD"};
   std::vector<std::string> answer = {"SXM", "SAB"};

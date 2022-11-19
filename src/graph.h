@@ -54,7 +54,7 @@ class Graph {
         };
 
     //Getter for airports vector
-    std::vector<Airport> getAirports();
+    const std::vector<Graph::Airport>& getAirports();
 
     //Populates an adjacency list, with keys being Airport object types, and values being their neighbors
     void populateConnections(DataParser d);
@@ -67,10 +67,10 @@ class Graph {
     Airport getAirportFromIATA_(std::string iata);
 
     //Getter for connections (adjacency list with IATA codes)
-    std::map<std::string, std::vector<std::string>> getConnectionsIATA() { return connectionsIATA_; }
+    const std::map<std::string, std::vector<std::string>>& getConnectionsIATA() { return connectionsIATA_; }
 
     //Getter for connections (adjacency list with Airport types)
-    std::map<Airport, std::vector<Airport>> getConnections() { return connections_; }
+    const std::map<Airport, std::vector<Airport>>& getConnections() { return connections_; }
 
     //Adjacency list, mapping airport codes to neighboring airport codes
     std::map<std::string, std::vector<std::string>> connectionsIATA_;
