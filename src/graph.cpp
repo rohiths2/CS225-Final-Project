@@ -21,24 +21,9 @@ Graph::Graph(DataParser data): data_(data) {
     for (size_t i = 0; i < data_.AirportsDetails.size(); i++) {
         Airport toAdd = Airport(data_.AirportsDetails[i]);
         airports_.push_back(toAdd);
+        mapIATA[toAdd.IATA_] = toAdd; 
     }
 }
-
-const std::vector<Graph::Airport>& Graph::getAirports() {
-    return airports_;
-}
-
-Graph::Airport Graph::getAirportFromIATA_(std::string iata) {
-    for (auto airport : getAirports()) {
-        if (iata == airport.IATA_) {
-            return airport;
-        }
-    }
-    Airport a;
-    return a;
-}
-
-
 
 void Graph::populateConnectionsIATA(DataParser d) {
     for (auto airport : getAirports()) {

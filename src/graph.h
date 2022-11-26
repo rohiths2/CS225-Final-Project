@@ -54,7 +54,7 @@ class Graph {
         };
 
     //Getter for airports vector
-    const std::vector<Graph::Airport>& getAirports();
+    const std::vector<Graph::Airport>& getAirports() const {return airports_;}
 
     //Populates an adjacency list, with keys being Airport object types, and values being their neighbors
     void populateConnections(DataParser d);
@@ -64,13 +64,13 @@ class Graph {
     void populateConnectionsIATA_country(DataParser d, std::string country_);
 
     //Given an IATA code, search for the airport with the matching IATA in the airports vector, and return the Airport object
-    Airport getAirportFromIATA_(std::string iata);
+    const Airport& getAirportFromIATA_(std::string iata) const {return mapIATA.at(iata);}
 
     //Getter for connections (adjacency list with IATA codes)
-    const std::map<std::string, std::vector<std::string>>& getConnectionsIATA() { return connectionsIATA_; }
+    const std::map<std::string, std::vector<std::string>>& getConnectionsIATA() const { return connectionsIATA_; }
 
     //Getter for connections (adjacency list with Airport types)
-    const std::map<Airport, std::vector<Airport>>& getConnections() { return connections_; }
+    const std::map<Airport, std::vector<Airport>>& getConnections() const { return connections_; }
 
     //Adjacency list, mapping airport codes to neighboring airport codes
     std::map<std::string, std::vector<std::string>> connectionsIATA_;
@@ -104,7 +104,6 @@ class Graph {
 
 
     //Uses Dijkstra's algorithm to find the shortest path, returns a vector where first value is start and last value is destination
-    std::vector< Airport> shortestPath(Airport& start, Airport& destination);
     std::vector< std::string> shortestPathIATA(std::string& start, std::string& destination);
     
     private:
@@ -114,10 +113,11 @@ class Graph {
 
     //Helper for Dijk, finds, removes and returns the Airport with the lowest distance in the inputed vector of Airport pointers
     const std::string RemoveSmallestIATA(std::map< std::string, std::pair< std::string, float>>& map, std::vector< std::string>& airports);
+    
     //Helper for Dijk, returns the intersection of the two sets as a vector of Airports
     std::vector< std::string> AirportIntersectionIATA(std::vector<std::string>& connections,  std::vector< std::string> airports);
+    
     //Find an approximate distance between two airports
-    //float Distance(const Airport& place1, const Airport& place2);
     float DistanceIATA( std::string& place1,  std::string& place2);
 
     // Betweeness centrality, returns a vector of IATA strings and their Centralities. MAY BE RESOURCE HEAVY ONCE IMPL.
@@ -135,7 +135,8 @@ class Graph {
    //Stores Airport Object types from each row of the data-parsed airports details vector
     std::vector<Airport> airports_;
     
-
+    //Map for quick access of Airports from IATA strings
+    std::map<std::string, Airport> mapIATA;
     
     /**
      * Stores the original data of airports 
