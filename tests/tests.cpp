@@ -7,7 +7,14 @@
 #include <time.h>
 #include <utility>
 
-
+bool vectContains(std::string s, std::vector<std::string> v) {
+  for (auto a : v) {
+    if (a == s) {
+      return true;
+    }
+  }
+  return false;
+}
 using namespace std;
 DataParser d;
 
@@ -213,7 +220,7 @@ TEST_CASE("Test Remove Smallest 2") {
   REQUIRE((g.getRemoveSmallest(map, airports)) == "b");
 }
 
-TEST_CASE("Test Dijkstra's Algorithm 1") {
+TEST_CASE("Test Dijkstra's Algorithm Small") {
   Graph g = Graph(d);
   g.populateConnectionsIATA_country(d, "China");
     std::string str1 = "SHE";
@@ -222,3 +229,37 @@ TEST_CASE("Test Dijkstra's Algorithm 1") {
   REQUIRE((a[0] == "SHE" && a[a.size()-1] == "DOY"));
   REQUIRE(a[1] == "PEK");
 }
+
+TEST_CASE("Test Dijkstra's Algorithm Medium/Domestic") {
+  Graph g = Graph(d);
+  g.populateConnectionsIATA_country(d, "United States");
+    std::string str1 = "PVD";
+    std::string str2 = "GDV";
+    std::string msp = "MSP";
+    std::string dtw = "DTW";
+  auto a = g.shortestPathIATA(str1, str2);
+  REQUIRE((a[0] == "PVD" && a[a.size()-1] == "GDV"));
+  std::vector<std::string> vect;
+  for (auto element : a) {
+    vect.push_back(element);
+  }
+  REQUIRE(vectContains(msp, vect));
+  REQUIRE(vectContains(dtw, vect));
+  std::string ord = "ORD";
+  std::string clt = "CLT";
+  auto b = g.shortestPathIATA(ord, clt);
+  REQUIRE((b[0] == "ORD" && b[1] == "CLT"));
+}
+
+// TEST_CASE("Test Dijkstra's Algorithm Large/International") {
+//   Graph g = Graph(d);
+//   g.populateConnectionsIATA_country(d, "United States");
+//     std::string str1 = "LAX";
+//     std::string str2 = "BOM";
+//   auto a = g.shortestPathIATA(str1, str2);
+//   REQUIRE((a[0] == "LAX" && a[a.size()-1] == "BOM"));
+//   std::vector<std::string> vect;
+//   for (auto element : a) {
+//     vect.push_back(element);
+//   }
+// }
