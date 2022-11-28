@@ -245,21 +245,41 @@ TEST_CASE("Test Dijkstra's Algorithm Medium/Domestic") {
   }
   REQUIRE(vectContains(msp, vect));
   REQUIRE(vectContains(dtw, vect));
+}
+
+TEST_CASE("Test Dijkstra's Algorithm Medium/Domestic (Direct and Connecting Routes)") {
+  Graph g = Graph(d);
+  g.populateConnectionsIATA_country(d, "United States");
   std::string ord = "ORD";
   std::string clt = "CLT";
   auto b = g.shortestPathIATA(ord, clt);
   REQUIRE((b[0] == "ORD" && b[1] == "CLT"));
+  std::string lax = "LAX";
+  std::string fll = "FLL";
+  auto c = g.shortestPathIATA(lax, fll);
+  REQUIRE((c[0] == "LAX" && c[1] == "FLL"));
+  std::string sna = "SNA";
+  auto d = g.shortestPathIATA(sna, fll);
+  REQUIRE(d[0] == "SNA");
+  REQUIRE(d[1] == "PHX");
+  REQUIRE(d[2] == "FLL");
+  std::cout << "The next test case is an international test case and may take a long time. If no failures are shown above, then all the domestic test cases are passed." << std::endl;
 }
 
-// TEST_CASE("Test Dijkstra's Algorithm Large/International") {
-//   Graph g = Graph(d);
-//   g.populateConnectionsIATA_country(d, "United States");
-//     std::string str1 = "LAX";
-//     std::string str2 = "BOM";
-//   auto a = g.shortestPathIATA(str1, str2);
-//   REQUIRE((a[0] == "LAX" && a[a.size()-1] == "BOM"));
-//   std::vector<std::string> vect;
-//   for (auto element : a) {
-//     vect.push_back(element);
-//   }
-// }
+
+TEST_CASE("Test Dijkstra's Algorithm Large/International") {
+  Graph g = Graph(d);
+  g.populateConnectionsIATA(d);
+    std::string str1 = "LAX";
+    std::string str2 = "LHR";
+  auto a = g.shortestPathIATA(str1, str2);
+  REQUIRE(a.size() == 2);
+  REQUIRE((a[0] == "LAX" && a[1] == "LHR"));
+  str1 = "EWR";
+  str2 = "SYD";
+  auto b = g.shortestPathIATA(str1, str2);
+  REQUIRE(b.size() == 3);
+  REQUIRE(b[0] == "EWR");
+  REQUIRE((b[1] == "SFO" || b[1] == "LAX"));
+  REQUIRE(b[2] == "SYD");
+}

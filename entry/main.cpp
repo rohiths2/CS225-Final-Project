@@ -53,12 +53,5 @@ std::cout << std::endl;
 std::cout << "BFS Traversal from ORD to LAX" << std::endl;
 g.populateConnectionsIATA(d);
 g.BFS("ORD", "LAX", false);
-// std::cout << "testing" << std::endl;
-// std::string ord2 = "LAX";
-// std::string den = "BOM";
-// g.populateConnectionsIATA(d);
-// for (auto i : g.shortestPathIATA(ord2, den)) {
-//   std::cout << i << std::endl;
-// }
  return 1;
 }
