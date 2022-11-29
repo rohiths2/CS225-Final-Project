@@ -95,7 +95,7 @@ void Graph::BFS(std::string origin, std::string ending, bool only_complete_airpo
     q.push(origin);
     while (!q.empty()) {
         std::string current = q.front();
-        Airport ap = getAirportFromIATA_(current); //out of range
+        Airport ap = getAirportFromIATA_(current); 
        if (only_complete_airports == false || ap.usable_ == "1") {
             std::cout << current << " --- Name: " << ap.name_ << " --- City: " << ap.city_ << "--- Location: (" << ap.latitude_ << ", " << ap.longitude_ << ")" << std::endl; 
             BFS_output.push_back(current);
@@ -104,10 +104,6 @@ void Graph::BFS(std::string origin, std::string ending, bool only_complete_airpo
             return;
         }
         q.pop();
-        // if (!q.empty()) {
-        //     std::cout << "next " << q.front() << std::endl;
-        // }
-        //std::cout << (connectionsIATA_.find("WNH") == connectionsIATA_.end()) << std::endl;
         if (connectionsIATA_.find(current) != connectionsIATA_.end()) {
             for (auto neighbor : connectionsIATA_.find(current)->second) {
                 if (!(vectContains(BFS_visited, neighbor))) {

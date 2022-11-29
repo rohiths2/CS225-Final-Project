@@ -64,7 +64,13 @@ class Graph {
     void populateConnectionsIATA_country(DataParser d, std::string country_);
 
     //Given an IATA code, search for the airport with the matching IATA in the airports vector, and return the Airport object
-    const Airport& getAirportFromIATA_(std::string iata) const {return mapIATA.at(iata);}
+    Airport& getAirportFromIATA_(std::string iata) {
+        if (mapIATA.find(iata) == mapIATA.end()){
+            Airport a;
+            mapIATA.insert(std::make_pair(iata, a));
+        }
+        return mapIATA.at(iata);
+    }
 
     //Getter for connections (adjacency list with IATA codes)
     const std::map<std::string, std::vector<std::string>>& getConnectionsIATA() const { return connectionsIATA_; }
