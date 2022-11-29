@@ -155,23 +155,23 @@ void user_control() {
 
 int main() {
 
- DataParser d;
-d.populateAirportRows("../lib/airports.dat");
-d.populateRoutesRows("../lib/routes.dat");
-d.populateAirportsDetails();
-d.populateRoutesDetails();
-d.checkMissingInfo();
-std::cout << "Airports Details for First 20 Airports" << std::endl;
-for (int i = 0; i < 20; ++i) {
-  std::cout << "Name: " << d.AirportsDetails[i][1] << "       --- City: " << d.AirportsDetails[i][2] << "        --- Code: " << d.AirportsDetails[i][4] << std::endl;
-}
-std::cout << std::endl;
-std::cout << "Routes Details for First 20 Routes" << std::endl;
-for (int i = 0; i < 20; ++i) {
-  std::cout << "Source: " << d.RoutesDetails[i][2] << "       --- Dest: " << d.RoutesDetails[i][4] << std::endl;
-}
-// while(true) {
-//   user_control();
+//  DataParser d;
+// d.populateAirportRows("../lib/airports.dat");
+// d.populateRoutesRows("../lib/routes.dat");
+// d.populateAirportsDetails();
+// d.populateRoutesDetails();
+// d.checkMissingInfo();
+// std::cout << "Airports Details for First 20 Airports" << std::endl;
+// for (int i = 0; i < 20; ++i) {
+//   std::cout << "Name: " << d.AirportsDetails[i][1] << "       --- City: " << d.AirportsDetails[i][2] << "        --- Code: " << d.AirportsDetails[i][4] << std::endl;
 // }
+// std::cout << std::endl;
+// std::cout << "Routes Details for First 20 Routes" << std::endl;
+// for (int i = 0; i < 20; ++i) {
+//   std::cout << "Source: " << d.RoutesDetails[i][2] << "       --- Dest: " << d.RoutesDetails[i][4] << std::endl;
+// }
+while(true) {
+  user_control();
+}
 return 1;
 }
