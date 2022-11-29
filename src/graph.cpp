@@ -97,7 +97,7 @@ void Graph::BFS(std::string origin, std::string ending, bool only_complete_airpo
         std::string current = q.front();
         Airport ap = getAirportFromIATA_(current);
        if (only_complete_airports == false || ap.usable_ == "1") {
-            std::cout << current << " --- " << ap.name_ << " --- " << ap.city_ << "---" << ap.latitude_ << "---" << ap.longitude_ << std::endl;
+            std::cout << current << " --- Name: " << ap.name_ << " --- City: " << ap.city_ << "--- Location: (" << ap.latitude_ << ", " << ap.longitude_ << ")" << std::endl;
             BFS_output.push_back(current);
        }
         if (current == ending) {
