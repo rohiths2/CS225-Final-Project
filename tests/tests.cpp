@@ -267,19 +267,19 @@ TEST_CASE("Test Dijkstra's Algorithm Medium/Domestic (Direct and Connecting Rout
 }
 
 
-TEST_CASE("Test Dijkstra's Algorithm Large/International") {
-  Graph g = Graph(d);
-  g.populateConnectionsIATA(d);
-    std::string str1 = "LAX";
-    std::string str2 = "LHR";
-  auto a = g.shortestPathIATA(str1, str2);
-  REQUIRE(a.size() == 2);
-  REQUIRE((a[0] == "LAX" && a[1] == "LHR"));
-  str1 = "EWR";
-  str2 = "SYD";
-  auto b = g.shortestPathIATA(str1, str2);
-  REQUIRE(b.size() == 3);
-  REQUIRE(b[0] == "EWR");
-  REQUIRE((b[1] == "SFO" || b[1] == "LAX"));
-  REQUIRE(b[2] == "SYD");
-}
+// TEST_CASE("Test Dijkstra's Algorithm Large/International") {
+//   Graph g = Graph(d);
+//   g.populateConnectionsIATA(d);
+//     std::string str1 = "LAX";
+//     std::string str2 = "LHR";
+//   auto a = g.shortestPathIATA(str1, str2);
+//   REQUIRE(a.size() == 2);
+//   REQUIRE((a[0] == "LAX" && a[1] == "LHR"));
+//   str1 = "EWR";
+//   str2 = "SYD";
+//   auto b = g.shortestPathIATA(str1, str2);
+//   REQUIRE(b.size() == 3);
+//   REQUIRE(b[0] == "EWR");
+//   REQUIRE((b[1] == "SFO" || b[1] == "LAX"));
+//   REQUIRE(b[2] == "SYD");
+// }
