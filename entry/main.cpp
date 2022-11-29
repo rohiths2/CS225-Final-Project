@@ -106,7 +106,7 @@ void user_control() {
     std::string country;
     std::cout << "Are the two airports located in the same country? If so, type the country, and if not, type no" << std::endl;
     std::cout << "(capitalize the first letter of each word when typing the country)" << std::endl;
-    std::cout << "Typing US also means United States" << std::endl;
+    std::cout << "Typing US (all uppercase) also means United States" << std::endl;
     std::cin >> country;
     if (country == "US") {
       country = "United States";
@@ -144,7 +144,7 @@ void user_control() {
   }
 
   char z;
-  std::cout << std::endl;
+  std::cout << "Your output result is shown above" << std::endl;
   std::cout << "Type in anything and press enter to run the program again. Press CTRL+C to stop." << std::endl;
   std::cin >> z;
 }
@@ -155,21 +155,7 @@ void user_control() {
 
 int main() {
 
-//  DataParser d;
-// d.populateAirportRows("../lib/airports.dat");
-// d.populateRoutesRows("../lib/routes.dat");
-// d.populateAirportsDetails();
-// d.populateRoutesDetails();
-// d.checkMissingInfo();
-// std::cout << "Airports Details for First 20 Airports" << std::endl;
-// for (int i = 0; i < 20; ++i) {
-//   std::cout << "Name: " << d.AirportsDetails[i][1] << "       --- City: " << d.AirportsDetails[i][2] << "        --- Code: " << d.AirportsDetails[i][4] << std::endl;
-// }
-// std::cout << std::endl;
-// std::cout << "Routes Details for First 20 Routes" << std::endl;
-// for (int i = 0; i < 20; ++i) {
-//   std::cout << "Source: " << d.RoutesDetails[i][2] << "       --- Dest: " << d.RoutesDetails[i][4] << std::endl;
-// }
+
 while(true) {
   user_control();
 }
