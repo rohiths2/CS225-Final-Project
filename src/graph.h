@@ -8,7 +8,7 @@
 
 class Graph {
     public:
-        Graph(DataParser data);
+        Graph(const DataParser& data);
 
         class Airport {
 
@@ -60,17 +60,17 @@ class Graph {
     //Populates an adjacency list, with keys being airport IATA codes, and values being their neighbors
     //Input: DataParser object
     //Output: None, but modifies the Connections map
-    void populateConnectionsIATA(DataParser d);
+    void populateConnectionsIATA();
     
     //Only populates connections from a certain country to make domestic traversals faster
     //Input: DataParser object, String representing country to get connections from
     //Output: None, but modifies the Connections map
-    void populateConnectionsIATA_country(DataParser d, std::string country_);
+    void populateConnectionsIATA_country(std::string country_);
 
     //Given an IATA code, search for the airport with the matching IATA in the airports vector, and return the Airport object
     //Input: String containing Airport IATA code
     //Output: Airport object with that IATA code
-    Airport& getAirportFromIATA_(std::string iata) {
+    Airport& getAirportFromIATA_(std::string iata){
         if (mapIATA.find(iata) == mapIATA.end()){
             Airport a;
             mapIATA.insert(std::make_pair(iata, a));
@@ -110,22 +110,22 @@ class Graph {
     }
 
     //Getter for remove smallest: used for testing
-      const std::string getRemoveSmallest(std::map< std::string, std::pair< std::string, float>>& map, std::vector< std::string> airports) {
+    const std::string getRemoveSmallest(std::map< std::string, std::pair< std::string, float>>& map, std::vector< std::string> airports) {
         return RemoveSmallestIATA(map, airports);
-      }
+    }
 
 
     //Uses Dijkstra's algorithm to find the shortest path, returns a vector where first value is start and last value is destination
     //Input: IATA Strings of Starting and Ending airports
     //Output: Vector of IATA strings containing the shortest path from the start to destination airport in the correct order
-    std::vector< std::string> shortestPathIATA(std::string& start, std::string& destination);
+    std::vector<std::string> shortestPathIATA(std::string& start, std::string& destination);
     
     private:
 
     //returns a map, each Airport maps to a pair. The first value is the Airports parent, the second value is the distance from the start airport
     //Input: IATA string of starting airport
     //Output: Map of Strings to Pair<String, Float>, as described above
-    std::map< std::string, std::pair< std::string, float>> DijkIATA( std::string& start);
+    std::map<std::string, std::pair< std::string, float>> DijkIATA( std::string& start);
 
 
     //Helper for Dijk, finds, removes and returns the airport string with the lowest distance in the inputed vector of Airport strings
@@ -137,13 +137,13 @@ class Graph {
     //Helper for Dijk, returns the intersection of the two sets as a vector of Airports
     //Input: 2 vectors of airport strings created in Dijkstra's algorithm
     //Output: Vector of strings representing all airports that are seen in both input vector arguments
-    std::vector< std::string> AirportIntersectionIATA(std::vector<std::string>& connections,  std::vector< std::string> airports);
+    std::vector<std::string> AirportIntersectionIATA(std::vector<std::string>& connections,  std::vector< std::string> airports);
     
 
     //Find an approximate distance between two airports
     //Input: 2 IATA strings representing two airports
     //Output: Float representing the distance between the first and second IATA argument
-    float DistanceIATA( std::string& place1,  std::string& place2);
+    float DistanceIATA(std::string& place1,  std::string& place2);
 
 
     // Betweeness centrality, returns a vector of IATA strings and their Centralities. MAY BE RESOURCE HEAVY ONCE IMPL.
@@ -168,5 +168,5 @@ class Graph {
      * Stores the original data of airports 
      * that we will use for the graph algorithm
     **/
-    DataParser data_;
+    const DataParser& data_;
 };

@@ -56,11 +56,23 @@ std::string Trim(const std::string & str) {
 //SplitString looks for each instance of "sep" character (commas, if there are quotes/numbers around them) and splits it
 //Puts each "part" of the string into the fields vector
 int SplitString(const std::string & str1, char sep, std::vector<std::string> &fields) {
+    /*This will only count the delimiter if there are not quotes on the left or right side
+        ex: {"exam,ple"} will not seperate, but {exam,ple}, {"exam",ple}, {"exam","ple"} will seperate*/
     std::string str = str1;
-    std::string::size_type pos;
-    while((pos=str.find(sep)) != std::string::npos) {
-        fields.push_back(str.substr(0,pos));
-        str.erase(0,pos+1);  
+    size_t index = 0;
+    //std::string::size_type pos;
+    bool encounter_quote = false;
+    while(index < str.size()) {
+        if (str[index] == sep && encounter_quote == false) {
+            fields.push_back(str.substr(0, index));
+            str.erase(0, index+1);
+            index = 0;
+        } else {
+            if (str[index] == '\"') {
+                encounter_quote = !encounter_quote;
+            }
+            index++;
+        }
     }
     fields.push_back(str);
     return fields.size();

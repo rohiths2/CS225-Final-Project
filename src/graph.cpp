@@ -18,22 +18,27 @@ Graph::Airport::Airport(std::vector<std::string> airport) {
 }
 
 //Makes a graph from the data parser's Airport Details vector by populating the Adjacency List map
-Graph::Graph(DataParser data): data_(data) {
+Graph::Graph(const DataParser& data): data_(data) {
     for (size_t i = 0; i < data_.AirportsDetails.size(); i++) {
         Airport toAdd = Airport(data_.AirportsDetails[i]);
         airports_.push_back(toAdd);
-        mapIATA[toAdd.IATA_] = toAdd; 
+        mapIATA[toAdd.IATA_] = toAdd;
+        if (toAdd.IATA_.size() != 3 && toAdd.IATA_ != "\\N") {
+            /*If this error gets throw there is probably a comma in the name of the airport, or something else that has caused
+                the misalignment of the data*/
+            throw(std::runtime_error("Value should not be possible: IATA is " + toAdd.IATA_));
+        }
     }
 }
 
 //Populates the adjacency list map (map from strings (airport IATAs) to vectors of strings (connected airports))
-void Graph::populateConnectionsIATA(DataParser d) {
+void Graph::populateConnectionsIATA() {
     for (auto airport : getAirports()) {
         std::pair<std::string, std::vector<std::string>> pair;
         pair.first = airport.IATA_;
         connectionsIATA_.insert(pair);
     }
-    for (auto route : d.RoutesDetails) {
+    for (auto route : data_.RoutesDetails) {
         if (connectionsIATA_.find(route[2]) != connectionsIATA_.end() && route[2] != "\\N" && route[4] != "\\N") {
             connectionsIATA_.find(route[2])->second.push_back(route[4]);
         }
@@ -42,7 +47,7 @@ void Graph::populateConnectionsIATA(DataParser d) {
 }
 
 //Populates the adjacency list but only with connections/airports from a certain country, to make Dijkstra's faster
-void Graph::populateConnectionsIATA_country(DataParser d, std::string country_) {
+void Graph::populateConnectionsIATA_country(std::string country_) {
     connectionsIATA_.clear();
     for (auto airport : getAirports()) {
         if (airport.country_ == country_) {
@@ -51,7 +56,7 @@ void Graph::populateConnectionsIATA_country(DataParser d, std::string country_) 
             connectionsIATA_.insert(pair);
         }
     }
-    for (auto route : d.RoutesDetails) {
+    for (auto route : data_.RoutesDetails) {
         if (connectionsIATA_.find(route[2]) != connectionsIATA_.end() && route[2] != "\\N" && route[4] != "\\N") {
             connectionsIATA_.find(route[2])->second.push_back(route[4]);
         }
@@ -112,6 +117,7 @@ void Graph::BFS(std::string origin, std::string ending, bool only_complete_airpo
 std::map< std::string, std::pair< std::string, float>> Graph::DijkIATA( std::string& start) {
     if (connectionsIATA_.find(start) == connectionsIATA_.end()) {
         std::cout << start + " is not a valid airport code in the countries selected." << std::endl;
+        return std::map<std::string, std::pair<std::string, float>>();
     }
     std::map< std::string, std::pair< std::string, float>> map;
     std::vector< std::string> airports;
@@ -237,7 +243,11 @@ const std::string Graph::RemoveSmallestIATA(std::map< std::string, std::pair< st
 std::vector< std::string> Graph::shortestPathIATA(std::string& start, std::string& destination) {
     std::vector< std::string> shortest_path = {start};
     std::map< std::string, std::pair< std::string, float>> shortest_map = DijkIATA(start);
-     std::string current = destination;
+    if (shortest_map.begin() == shortest_map.end()) {
+        //If the map is empty, most likely caused by start and destination not being connectable
+        return shortest_path;
+    }
+    std::string current = destination;
     while (current != start) {
         shortest_path.insert(shortest_path.begin() + 1, current);
         current = shortest_map[current].first; //Sets current to parent
@@ -246,10 +256,13 @@ std::vector< std::string> Graph::shortestPathIATA(std::string& start, std::strin
 }
 
 //Calculates the distance between two airports using latitude and longitude
-float Graph::DistanceIATA( std::string& place1,  std::string& place2) {
+float Graph::DistanceIATA(std::string& place1, std::string& place2){
     //Used the Haversine formula to calculate distance in miles
     Airport airport1 = getAirportFromIATA_(place1); //Convert IATA string to Airport object and use latitude/longitude
     Airport airport2 = getAirportFromIATA_(place2);
+    if (airport1 == Airport() || airport2 == Airport()) {
+        return INFINITY;
+    }
     float place1_long = (airport1.longitude_ * 3.1415) / 180;
     float place1_lat = (airport1.latitude_ * 3.1415) / 180;
     float place2_long = (airport2.longitude_ * 3.1415) / 180;

@@ -5,16 +5,7 @@
 
 //The below function represents the terminal command-line user interface 
 //This allows the user to run the program with custom inputs, and is called continuously in main until the program is terminated
-void user_control() {
-  //Prepares AirportsDetails vector, RoutesDetails vector, and Graph immediately
-  std::cout << "Parsing data..." << std::endl;
-  DataParser d;
-  d.populateAirportRows("../lib/airports.dat");
-  d.populateRoutesRows("../lib/routes.dat");
-  d.populateAirportsDetails();
-  d.populateRoutesDetails();
-  d.checkMissingInfo();
-  Graph g = Graph(d);
+void user_control(Graph& graph) {
 
   //Allows user to choose desired task (details, connections, BFS, Dijkstra's, or Betweeness Centrality algorithms)
   char option; //character representing the user's selected option 1, 2, 3, or 4
@@ -40,7 +31,7 @@ void user_control() {
     std::cin >> detail_type;
     std::cout << "Details for " << iata << ":" << std::endl;
 
-    Graph::Airport a = g.getAirportFromIATA_(iata);
+    Graph::Airport a = graph.getAirportFromIATA_(iata);
     if (detail_type == '1') { //prints only the name to standard output
         std::cout << a.name_ << std::endl;
     } else if (detail_type == '2') { //prints only the location (in words, or city/country) to standard output
@@ -64,20 +55,20 @@ void user_control() {
       iata[i] = toupper(iata[i]);
     }
 
-    Graph::Airport a = g.getAirportFromIATA_(iata);
+    Graph::Airport a = graph.getAirportFromIATA_(iata);
     std::string country = a.country_;
-    g.populateConnectionsIATA_country(d, country);
+    graph.populateConnectionsIATA_country(country);
     std::cout << "Connections from " << iata << ":" << std::endl;
-    std::vector<std::string> vect = g.getConnectionsIATA().find(iata)->second;
+    std::vector<std::string> vect = graph.getConnectionsIATA().find(iata)->second;
     for (auto str : vect) {
-        std::cout << str << " (" << g.getAirportFromIATA_(str).name_ << ")" << std::endl;
+        std::cout << str << " (" << graph.getAirportFromIATA_(str).name_ << ")" << std::endl;
     }
     std::cout << std::endl;
 
   //Performs a BFS Traversal from a Starting and Ending airport
   } else if (option == '3') {
     std::string country;
-    g.populateConnectionsIATA(d);
+    graph.populateConnectionsIATA();
 
     std::string source;
     std::string dest;
@@ -99,10 +90,10 @@ void user_control() {
     std::cin >> complete;
     if (complete == '1') {
         std::cout << "BFS Traversal from " << source << " to " << dest << std::endl;
-        g.BFS(source, dest, true);
+        graph.BFS(source, dest, true);
     } else if (complete == '2') {
         std::cout << "BFS Traversal from " << source << " to " << dest << std::endl;
-        g.BFS(source, dest, false);
+        graph.BFS(source, dest, false);
     } else {
         std::cout << "Invalid input" << std::endl;
     }
@@ -120,9 +111,9 @@ void user_control() {
       country = "United States";
     }
     if (country == "no") {
-        g.populateConnectionsIATA(d);
+        graph.populateConnectionsIATA();
     } else {
-        g.populateConnectionsIATA_country(d, country);
+        graph.populateConnectionsIATA_country(country);
     }
 
     std::string source;
@@ -138,11 +129,11 @@ void user_control() {
     for (size_t i = 0; i < dest.size(); ++i) {
       dest[i] = toupper(dest[i]);
     }
-    std::vector<std::string> shortest_path = g.shortestPathIATA(source, dest);
+    std::vector<std::string> shortest_path = graph.shortestPathIATA(source, dest);
     std::cout << std::endl;
     std::cout << "Shortest Path from " << source << " to " << dest << ": " << std::endl;
     for (auto s : shortest_path) {
-      std::cout << s << " (" << g.getAirportFromIATA_(s).name_ << ")" << std::endl;
+      std::cout << s << " (" << graph.getAirportFromIATA_(s).name_ << ")" << std::endl;
     }
 
     std::cout << std::endl;
@@ -163,9 +154,18 @@ void user_control() {
 
 int main() {
 
+  //Prepares AirportsDetails vector, RoutesDetails vector, and Graph immediately
+  std::cout << "Parsing data..." << std::endl;
+  DataParser data;
+  data.populateAirportRows("../lib/airports.dat");
+  data.populateRoutesRows("../lib/routes.dat");
+  data.populateAirportsDetails();
+  data.populateRoutesDetails();
+  data.checkMissingInfo();
+  Graph graph = Graph(data);
 
-while(true) {
-  user_control();
-}
-return 1;
+  while(true) {
+    user_control(graph);
+  }
+  return 1;
 }
