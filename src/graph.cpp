@@ -3,6 +3,7 @@
 #include <stack>
 #include <cmath>
 
+//Creates an Airport object type from a vector of airport's details
 Graph::Airport::Airport(std::vector<std::string> airport) {
     name_ = airport[1];
     city_ = airport[2];
@@ -16,7 +17,7 @@ Graph::Airport::Airport(std::vector<std::string> airport) {
     usable_ = (airport[14]);
 }
 
-
+//Makes a graph from the data parser's Airport Details vector by populating the Adjacency List map
 Graph::Graph(DataParser data): data_(data) {
     for (size_t i = 0; i < data_.AirportsDetails.size(); i++) {
         Airport toAdd = Airport(data_.AirportsDetails[i]);
@@ -25,6 +26,7 @@ Graph::Graph(DataParser data): data_(data) {
     }
 }
 
+//Populates the adjacency list map (map from strings (airport IATAs) to vectors of strings (connected airports))
 void Graph::populateConnectionsIATA(DataParser d) {
     for (auto airport : getAirports()) {
         std::pair<std::string, std::vector<std::string>> pair;
@@ -39,7 +41,7 @@ void Graph::populateConnectionsIATA(DataParser d) {
     connectionsIATA_.erase("\\N");
 }
 
-
+//Populates the adjacency list but only with connections/airports from a certain country, to make Dijkstra's faster
 void Graph::populateConnectionsIATA_country(DataParser d, std::string country_) {
     connectionsIATA_.clear();
     for (auto airport : getAirports()) {
@@ -58,19 +60,7 @@ void Graph::populateConnectionsIATA_country(DataParser d, std::string country_) 
 }
 
 
-void Graph::populateConnections(DataParser d) {
-    int i = 0;
-    for (auto connection : getConnectionsIATA()) {
-        std::pair<Airport, std::vector<Airport>> pair;
-        pair.first = getAirportFromIATA_(connection.first);
-        for (auto part : connection.second) {
-            pair.second.push_back(getAirportFromIATA_(part));
-        }
-        ++i;
-    }
-}
-
-
+//Returns whether a vector v contains a certain string str
 bool vectContains(std::vector<std::string> v, std::string str) {
     for (auto s : v) {
         if (s == str) {
@@ -81,6 +71,8 @@ bool vectContains(std::vector<std::string> v, std::string str) {
 }
 
 
+//Performs a Breadth-First Traversal from the starting airport, stopping at the ending airport
+//Setting the "Only Complete Airports" argument will not print airports that have missing/blank details, if they exist
 void Graph::BFS(std::string origin, std::string ending, bool only_complete_airports) {
     if (connectionsIATA_.find(origin) == connectionsIATA_.end()) {
         std::cout << origin + " is not a valid airport code in the countries selected." << std::endl;
@@ -116,7 +108,7 @@ void Graph::BFS(std::string origin, std::string ending, bool only_complete_airpo
 }
 
 
-
+//Main Dijkstra's algorithm logic using IATA strings (the "start" argument is the origin airport's IATA)
 std::map< std::string, std::pair< std::string, float>> Graph::DijkIATA( std::string& start) {
     if (connectionsIATA_.find(start) == connectionsIATA_.end()) {
         std::cout << start + " is not a valid airport code in the countries selected." << std::endl;
@@ -207,6 +199,8 @@ std::vector<std::pair<std::string, float>> Graph::BetweenessCentrality(){
     return v;
 }
 
+//Used during Dijkstra's algorithm
+//Checks if there is a common airport shared between the Connections and Airports vector arguments
 std::vector< std::string> Graph::AirportIntersectionIATA(std::vector<std::string>& connections, std::vector< std::string> airports) {
     std::vector< std::string> in_both;
 
@@ -222,9 +216,10 @@ std::vector< std::string> Graph::AirportIntersectionIATA(std::vector<std::string
     return in_both;
 }
 
+//Finds the airport with the smallest distance value, removes it from the airports vector, and returns that airport's string IATA
 const std::string Graph::RemoveSmallestIATA(std::map< std::string, std::pair< std::string, float>>& map, std::vector< std::string>& airports) {
     size_t smallest_idx = 0;
-    float smallest_value = 99999;
+    float smallest_value = 9999999;
     for (size_t i = 0; i < airports.size(); ++i) {
         if (map.find(airports[i]) != map.end()) {
             if (map.find(airports[i])->second.second < smallest_value) {
@@ -238,6 +233,7 @@ const std::string Graph::RemoveSmallestIATA(std::map< std::string, std::pair< st
     return toreturn;
 }
 
+//Public function to call Dijkstra's algorithm multiple times to find which shortest path ends with the destination airport
 std::vector< std::string> Graph::shortestPathIATA(std::string& start, std::string& destination) {
     std::vector< std::string> shortest_path = {start};
     std::map< std::string, std::pair< std::string, float>> shortest_map = DijkIATA(start);
@@ -249,9 +245,10 @@ std::vector< std::string> Graph::shortestPathIATA(std::string& start, std::strin
     return shortest_path;
 }
 
+//Calculates the distance between two airports using latitude and longitude
 float Graph::DistanceIATA( std::string& place1,  std::string& place2) {
     //Used the Haversine formula to calculate distance in miles
-    Airport airport1 = getAirportFromIATA_(place1);
+    Airport airport1 = getAirportFromIATA_(place1); //Convert IATA string to Airport object and use latitude/longitude
     Airport airport2 = getAirportFromIATA_(place2);
     float place1_long = (airport1.longitude_ * 3.1415) / 180;
     float place1_lat = (airport1.latitude_ * 3.1415) / 180;

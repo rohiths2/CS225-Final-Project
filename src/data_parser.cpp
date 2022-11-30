@@ -2,10 +2,15 @@
 #include <iostream>
 #include <algorithm>
 
+//checks if all characters of a string are either digits or the - sign
+//helps determine if latitude and longitude values are correct, and if a string can be split with a comma next to a number
+
 bool isNumber(std::string& s) {
     return s.find_first_not_of("-1234567890");
 }
 
+
+//function that takes in the file and pushes each row to the AirportsRows vector
 void DataParser::populateAirportRows(const std::string& filename) {
     std::ifstream wordsFile(filename);
     std::string line;
@@ -18,7 +23,7 @@ void DataParser::populateAirportRows(const std::string& filename) {
 }
 
 
-
+//function that takes in the file and pushes each row to the RoutesRows vector
 void DataParser::populateRoutesRows(const std::string& filename) {
     std::ifstream wordsFile(filename);
     std::string line;
@@ -31,8 +36,8 @@ void DataParser::populateRoutesRows(const std::string& filename) {
 }
 
 
-
-
+//The following functions are similar to ones from MP Schedule
+//Trim functions remove any quotation marks from a string (as the dat file contains quotes which should not be in the vectors)
 std::string TrimRight(const std::string & str) {
     std::string tmp = str;
     return tmp.erase(tmp.find_last_not_of('"') + 1);
@@ -48,6 +53,8 @@ std::string Trim(const std::string & str) {
     return TrimLeft(TrimRight(tmp));
 }
 
+//SplitString looks for each instance of "sep" character (commas, if there are quotes/numbers around them) and splits it
+//Puts each "part" of the string into the fields vector
 int SplitString(const std::string & str1, char sep, std::vector<std::string> &fields) {
     std::string str = str1;
     std::string::size_type pos;
@@ -59,7 +66,7 @@ int SplitString(const std::string & str1, char sep, std::vector<std::string> &fi
     return fields.size();
 }
 
-
+//Splits each string in AirportsRows by comma and puts each string-part into AirportsDetails 2d vector
 void DataParser::populateAirportsDetails() {
     for (auto row : AirportsRows) {
         std::vector<std::string> splitRow;
@@ -73,6 +80,7 @@ void DataParser::populateAirportsDetails() {
     }
 }
 
+//Splits each string in RoutesRows by comma and puts each string-part into RoutesDetails 2d vector
 void DataParser::populateRoutesDetails() {
    for (auto row : RoutesRows) {
         std::vector<std::string> splitRow;
@@ -87,9 +95,9 @@ void DataParser::populateRoutesDetails() {
 }
 
 
-// The U.S. x coordinates are betwen -126 and -66, and y coordinates are between 24 and 50
-
-
+// Used for data cleaning.
+// Checks if there are any blank values in AirportsRows: if so, marks them as null and marks the row as "unusable". 
+// Also checks if latitude and longitude are actually numbers.
 void DataParser::checkMissingInfo() { //iterate through Routes Details
     for (size_t i = 0; i < AirportsDetails.size(); ++i) {
         for (auto element : AirportsDetails[i]) {

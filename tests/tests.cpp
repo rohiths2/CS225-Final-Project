@@ -276,8 +276,14 @@ TEST_CASE("Test Dijkstra's Algorithm Large/International", "[part=2]") {
   auto a = g.shortestPathIATA(str1, str2);
   REQUIRE(a.size() == 2);
   REQUIRE((a[0] == "LAX" && a[1] == "LHR"));
-  str1 = "EWR";
-  str2 = "SYD";
+}
+
+TEST_CASE("Test Dijkstra's Algorithm Large/International 2", "[part=2]") {
+  std::cout << "This test case is an international test case and may take a long time. If no failures are shown above, then all the domestic test cases are passed." << std::endl;
+  Graph g = Graph(d);
+  g.populateConnectionsIATA(d);
+  std::string str1 = "EWR";
+  std::string str2 = "SYD";
   auto b = g.shortestPathIATA(str1, str2);
   REQUIRE(b.size() == 3);
   REQUIRE(b[0] == "EWR");

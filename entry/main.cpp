@@ -3,8 +3,10 @@
 #include "../src/graph.cpp"
 
 
-
+//The below function represents the terminal command-line user interface 
+//This allows the user to run the program with custom inputs, and is called continuously in main until the program is terminated
 void user_control() {
+  //Prepares AirportsDetails vector, RoutesDetails vector, and Graph immediately
   std::cout << "Parsing data..." << std::endl;
   DataParser d;
   d.populateAirportRows("../lib/airports.dat");
@@ -14,15 +16,17 @@ void user_control() {
   d.checkMissingInfo();
   Graph g = Graph(d);
 
-  char x;
+  //Allows user to choose desired task (details, connections, BFS, Dijkstra's, or Betweeness Centrality algorithms)
+  char option; //character representing the user's selected option 1, 2, 3, or 4
   std::cout << "Please type the number corresponding to what you would like to do, then press enter:" << std::endl;
   std::cout << "1 = Find details about an airport" << std::endl; 
   std::cout << "2 = Display connecting airports from a certain airport" << std::endl;
   std::cout << "3 = Run a Breadth-First Traversal (BFS) between two airports" << std::endl;
   std::cout << "4 = Find the Shortest Connection Path between two airports (Dijkstra's algorithm)" << std::endl;
-  std::cin >> x;
+  std::cin >> option;
 
-  if (x == '1') {
+  //Finding details of an airport, given an IATA string
+  if (option == '1') {
     std::string iata;
     std::cout << "Type the 3-letter airport code (IATA), then press enter" << std::endl;
     std::cin >> iata;
@@ -30,20 +34,20 @@ void user_control() {
       iata[i] = toupper(iata[i]);
     }
 
-    char y;
+    char detail_type; //character representing the user's selected detail type 1, 2, 3, or 4
     std::cout << "Type the number corresponding to which detail to find:" << std::endl;
     std::cout << "1 = Airport Name, 2 = Location (city/country), 3 = Location (latitude/longitude), 4 = All Details" << std::endl;
-    std::cin >> y;
-
+    std::cin >> detail_type;
     std::cout << "Details for " << iata << ":" << std::endl;
+
     Graph::Airport a = g.getAirportFromIATA_(iata);
-    if (y == '1') {
+    if (detail_type == '1') { //prints only the name to standard output
         std::cout << a.name_ << std::endl;
-    } else if (y == '2') {
+    } else if (detail_type == '2') { //prints only the location (in words, or city/country) to standard output
         std::cout << "City: " << a.city_ << "; Country: " << a.country_ << std::endl;
-    } else if (y == '3') {
+    } else if (detail_type == '3') { //prints only the numerical location (latitude/longitude) to standard output
         std::cout << "Latitude: " << a.latitude_ << "; Longitude: " << a.longitude_ << std::endl;
-    } else if (y == '4') {
+    } else if (detail_type == '4') { //prints all of the above details to standard output
         std::cout << "Name: " << a.name_ << " --- City: " << a.city_ << " --- Country " << a.country_ << " --- Latitude " << a.latitude_ << " --- Longitude " << a.longitude_ << std::endl;
     } else {
       std::cout << "Invalid input" << std::endl;
@@ -51,13 +55,14 @@ void user_control() {
 
     std::cout << std::endl;
 
-  } else if (x == '2') {
-  std::string iata;
-  std::cout << "Type the 3-letter airport code (IATA), then press enter" << std::endl;
-  std::cin >> iata;
-  for (size_t i = 0; i < iata.size(); ++i) {
-    iata[i] = toupper(iata[i]);
-  }
+  //List the connected airports to a certain airport written into standard input
+  } else if (option == '2') {
+    std::string iata;
+    std::cout << "Type the 3-letter airport code (IATA), then press enter" << std::endl;
+    std::cin >> iata;
+    for (size_t i = 0; i < iata.size(); ++i) {
+      iata[i] = toupper(iata[i]);
+    }
 
     Graph::Airport a = g.getAirportFromIATA_(iata);
     std::string country = a.country_;
@@ -69,7 +74,8 @@ void user_control() {
     }
     std::cout << std::endl;
 
-  } else if (x == '3') {
+  //Performs a BFS Traversal from a Starting and Ending airport
+  } else if (option == '3') {
     std::string country;
     g.populateConnectionsIATA(d);
 
@@ -102,7 +108,9 @@ void user_control() {
     }
     std::cout << std::endl;
 
-  } else if (x == '4') {
+  //Performs a Dijkstra's algorithm and lists the shortest path from a source and destination airport
+  //Allows the user to only involve a certain country in this algorithm to make calculations faster
+  } else if (option == '4') {
     std::string country;
     std::cout << "Are the two airports located in the same country? If so, type the country, and if not, type no" << std::endl;
     std::cout << "(capitalize the first letter of each word when typing the country)" << std::endl;
