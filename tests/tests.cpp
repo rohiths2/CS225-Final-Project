@@ -18,7 +18,7 @@ bool vectContains(std::string s, std::vector<std::string> v) {
 using namespace std;
 DataParser d;
 
-TEST_CASE("populate_airports_lines_data_in_vector")
+TEST_CASE("populate_airports_lines_data_in_vector", "[part=1]")
 {
     d.populateAirportRows("../lib/airports.dat");
     d.populateRoutesRows("../lib/routes.dat");
@@ -26,7 +26,7 @@ TEST_CASE("populate_airports_lines_data_in_vector")
     REQUIRE(d.RoutesRows.size() == 67663);
 }
 
-TEST_CASE("airports_2D_vector_population") {
+TEST_CASE("airports_2D_vector_population", "[part=1]") {
   d.populateAirportsDetails();
   REQUIRE(d.AirportsDetails.size() == d.AirportsRows.size());
   REQUIRE(d.AirportsDetails[0].size() == 15);
@@ -35,7 +35,7 @@ TEST_CASE("airports_2D_vector_population") {
   REQUIRE(d.AirportsDetails[2].size() == d.AirportsDetails[1].size());
 }
 
-TEST_CASE("routes_2D_vector_population") {
+TEST_CASE("routes_2D_vector_population", "[part=1]") {
     d.populateRoutesDetails();
     REQUIRE(d.RoutesDetails.size() == d.RoutesRows.size());
     REQUIRE(d.RoutesDetails[0].size() == 10);
@@ -44,7 +44,7 @@ TEST_CASE("routes_2D_vector_population") {
   REQUIRE(d.RoutesDetails[2].size() == d.RoutesDetails[1].size());
 }
 
-TEST_CASE("Graph_Populate_Airport") {
+TEST_CASE("Graph_Populate_Airport", "[part=1]") {
   d.populateAirportRows("../lib/airports.dat");
   d.populateRoutesRows("../lib/routes.dat");
   d.populateAirportsDetails();
@@ -56,7 +56,7 @@ TEST_CASE("Graph_Populate_Airport") {
 }
 
 
-TEST_CASE("Airport_IATA_Conversions") {
+TEST_CASE("Airport_IATA_Conversions", "[part=1]") {
   Graph g = Graph(d);
   Graph::Airport a = g.getAirports()[0];
   std::string a_iata = g.getAirports()[0].IATA_;
@@ -80,7 +80,7 @@ TEST_CASE("Airport_IATA_Conversions") {
   REQUIRE(e==e_test);
 }
 
-TEST_CASE("Graph_Populate_Connections_IATA_adjacency_list") {
+TEST_CASE("Graph_Populate_Connections_IATA_adjacency_list", "[part=1]") {
   Graph g = Graph(d);
   g.populateConnectionsIATA(d);
   REQUIRE(g.connectionsIATA_.find("ORD")->second.size() > 100);
@@ -88,7 +88,7 @@ TEST_CASE("Graph_Populate_Connections_IATA_adjacency_list") {
   REQUIRE(g.connectionsIATA_.find("LAX")->second.size() > 100);
 }
 
-TEST_CASE("BFS Small") {
+TEST_CASE("BFS Small", "[part=1]") {
   Graph g = Graph(d);
   g.populateConnectionsIATA(d);
   g.BFS("SAB", "SBH", false);
@@ -109,7 +109,7 @@ TEST_CASE("BFS Small") {
 }
 
 
-TEST_CASE("BFS Large") {
+TEST_CASE("BFS Large", "[part=1]") {
   Graph g = Graph(d);
   g.populateConnectionsIATA(d);
   g.BFS("ORD", "LAX", false);
@@ -129,7 +129,7 @@ TEST_CASE("BFS Large") {
   REQUIRE(only_visits_once == true);
 }
 
-TEST_CASE("Test distance function") {
+TEST_CASE("Test distance function", "[part=1]") {
   Graph g = Graph(d);
   g.populateConnectionsIATA(d);
   std::string ord = "ORD"; 
@@ -149,7 +149,7 @@ TEST_CASE("Test distance function") {
   REQUIRE((int(g.getDistanceIATA(lhr, bom)) >= 4480 && int(g.getDistanceIATA(lhr, bom)) <= 4490));
 }
 
-TEST_CASE("Airport Intersection 1") {
+TEST_CASE("Airport Intersection 1", "[part=1]") {
   Graph g = Graph(d);
   g.populateConnectionsIATA(d);
   std::vector<std::string> connections = {"a", "c", "e", "g"};
@@ -163,7 +163,7 @@ TEST_CASE("Airport Intersection 1") {
   }
 }
 
-TEST_CASE("Airport Intersection 2") {
+TEST_CASE("Airport Intersection 2", "[part=1]") {
   Graph g = Graph(d);
   g.populateConnectionsIATA(d);
   std::vector<std::string> connections = {"a", "c", "e", "g"};
@@ -173,7 +173,7 @@ TEST_CASE("Airport Intersection 2") {
   REQUIRE(AirInt.size() == 0);
 }
 
-TEST_CASE("Airport Intersection 3") {
+TEST_CASE("Airport Intersection 3", "[part=1]") {
   Graph g = Graph(d);
   g.populateConnectionsIATA(d);
   std::vector<std::string> connections = g.getConnectionsIATA().at("SBH");
@@ -188,7 +188,7 @@ TEST_CASE("Airport Intersection 3") {
   }
 }
 
-TEST_CASE("Test Remove Smallest") {
+TEST_CASE("Test Remove Smallest", "[part=1]") {
   Graph g = Graph(d);
   std::string a = "a";
   std::string b = "b";
@@ -204,7 +204,7 @@ TEST_CASE("Test Remove Smallest") {
   REQUIRE((g.getRemoveSmallest(map, airports)) == "a");
 }
 
-TEST_CASE("Test Remove Smallest 2") {
+TEST_CASE("Test Remove Smallest 2", "[part=1]") {
   Graph g = Graph(d);
   std::string a = "a";
   std::string b = "b";
@@ -220,7 +220,7 @@ TEST_CASE("Test Remove Smallest 2") {
   REQUIRE((g.getRemoveSmallest(map, airports)) == "b");
 }
 
-TEST_CASE("Test Dijkstra's Algorithm Small") {
+TEST_CASE("Test Dijkstra's Algorithm Small", "[part=1]") {
   Graph g = Graph(d);
   g.populateConnectionsIATA_country(d, "China");
     std::string str1 = "SHE";
@@ -230,7 +230,7 @@ TEST_CASE("Test Dijkstra's Algorithm Small") {
   REQUIRE(a[1] == "PEK");
 }
 
-TEST_CASE("Test Dijkstra's Algorithm Medium/Domestic") {
+TEST_CASE("Test Dijkstra's Algorithm Medium/Domestic", "[part=1]") {
   Graph g = Graph(d);
   g.populateConnectionsIATA_country(d, "United States");
     std::string str1 = "PVD";
@@ -247,7 +247,7 @@ TEST_CASE("Test Dijkstra's Algorithm Medium/Domestic") {
   REQUIRE(vectContains(dtw, vect));
 }
 
-TEST_CASE("Test Dijkstra's Algorithm Medium/Domestic (Direct and Connecting Routes)") {
+TEST_CASE("Test Dijkstra's Algorithm Medium/Domestic (Direct and Connecting Routes)", "[part=1]") {
   Graph g = Graph(d);
   g.populateConnectionsIATA_country(d, "United States");
   std::string ord = "ORD";
@@ -263,23 +263,24 @@ TEST_CASE("Test Dijkstra's Algorithm Medium/Domestic (Direct and Connecting Rout
   REQUIRE(d[0] == "SNA");
   REQUIRE(d[1] == "PHX");
   REQUIRE(d[2] == "FLL");
-  std::cout << "The next test case is an international test case and may take a long time. If no failures are shown above, then all the domestic test cases are passed." << std::endl;
+ 
 }
 
 
-// TEST_CASE("Test Dijkstra's Algorithm Large/International") {
-//   Graph g = Graph(d);
-//   g.populateConnectionsIATA(d);
-//     std::string str1 = "LAX";
-//     std::string str2 = "LHR";
-//   auto a = g.shortestPathIATA(str1, str2);./m
-//   REQUIRE(a.size() == 2);
-//   REQUIRE((a[0] == "LAX" && a[1] == "LHR"));
-//   str1 = "EWR";
-//   str2 = "SYD";
-//   auto b = g.shortestPathIATA(str1, str2);
-//   REQUIRE(b.size() == 3);
-//   REQUIRE(b[0] == "EWR");
-//   REQUIRE((b[1] == "SFO" || b[1] == "LAX"));
-//   REQUIRE(b[2] == "SYD");
-// }
+TEST_CASE("Test Dijkstra's Algorithm Large/International", "[part=2]") {
+   std::cout << "This test case is an international test case and may take a long time. If no failures are shown above, then all the domestic test cases are passed." << std::endl;
+  Graph g = Graph(d);
+  g.populateConnectionsIATA(d);
+    std::string str1 = "LAX";
+    std::string str2 = "LHR";
+  auto a = g.shortestPathIATA(str1, str2);
+  REQUIRE(a.size() == 2);
+  REQUIRE((a[0] == "LAX" && a[1] == "LHR"));
+  str1 = "EWR";
+  str2 = "SYD";
+  auto b = g.shortestPathIATA(str1, str2);
+  REQUIRE(b.size() == 3);
+  REQUIRE(b[0] == "EWR");
+  REQUIRE((b[1] == "SFO" || b[1] == "LAX"));
+  REQUIRE(b[2] == "SYD");
+}
