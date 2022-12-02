@@ -1,12 +1,16 @@
 #include <iostream>
 #include "../src/data_parser.cpp"
 #include "../src/graph.cpp"
+#include <fstream>
 
 
 //The below function represents the terminal command-line user interface 
 //This allows the user to run the program with custom inputs, and is called continuously in main until the program is terminated
 void user_control(Graph& graph) {
-
+  //Prepare file to write output
+  std::ofstream output;
+  output.open("output.txt");
+  output << "Opened Output File\n";
   //Allows user to choose desired task (details, connections, BFS, Dijkstra's, or Betweeness Centrality algorithms)
   char option; //character representing the user's selected option 1, 2, 3, or 4
   std::cout << "Please type the number corresponding to what you would like to do, then press enter:" << std::endl;
@@ -18,6 +22,7 @@ void user_control(Graph& graph) {
 
   //Finding details of an airport, given an IATA string
   if (option == '1') {
+    output << "Finding details of an airport, given an IATA string\n";
     std::string iata;
     std::cout << "Type the 3-letter airport code (IATA), then press enter" << std::endl;
     std::cin >> iata;
@@ -48,6 +53,7 @@ void user_control(Graph& graph) {
 
   //List the connected airports to a certain airport written into standard input
   } else if (option == '2') {
+    output << "Listing the connected airports to a certain airport\n";
     std::string iata;
     std::cout << "Type the 3-letter airport code (IATA), then press enter" << std::endl;
     std::cin >> iata;
@@ -67,6 +73,7 @@ void user_control(Graph& graph) {
 
   //Performs a BFS Traversal from a Starting and Ending airport
   } else if (option == '3') {
+    output << "BFS results \n";
     std::string country;
     graph.populateConnectionsIATA();
 
@@ -102,6 +109,7 @@ void user_control(Graph& graph) {
   //Performs a Dijkstra's algorithm and lists the shortest path from a source and destination airport
   //Allows the user to only involve a certain country in this algorithm to make calculations faster
   } else if (option == '4') {
+    output << "Dijkstra's algorithm \n";
     std::string country;
     std::cout << "Are the two airports located in the same country? If so, type the country, and if not, type no" << std::endl;
     std::cout << "(capitalize the first letter of each word when typing the country)" << std::endl;
@@ -144,6 +152,8 @@ void user_control(Graph& graph) {
 
   char z;
   std::cout << "Your output result is shown above" << std::endl;
+    output << "\n";
+  output.close();
   std::cout << "Type in anything and press enter to run the program again. Press CTRL+C to stop." << std::endl;
   std::cin >> z;
 }
