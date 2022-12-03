@@ -18,6 +18,7 @@ void user_control(Graph& graph) {
   std::cout << "2 = Display connecting airports from a certain airport" << std::endl;
   std::cout << "3 = Run a Breadth-First Traversal (BFS) between two airports" << std::endl;
   std::cout << "4 = Find the Shortest Connection Path between two airports (Dijkstra's algorithm)" << std::endl;
+  std::cout << "5 = Run Betweeness Centrality Algorithm" << std::endl;
   std::cin >> option;
 
   //Finding details of an airport, given an IATA string
@@ -29,21 +30,27 @@ void user_control(Graph& graph) {
     for (size_t i = 0; i < iata.size(); ++i) {
       iata[i] = toupper(iata[i]);
     }
+    
 
     char detail_type; //character representing the user's selected detail type 1, 2, 3, or 4
     std::cout << "Type the number corresponding to which detail to find:" << std::endl;
     std::cout << "1 = Airport Name, 2 = Location (city/country), 3 = Location (latitude/longitude), 4 = All Details" << std::endl;
     std::cin >> detail_type;
     std::cout << "Details for " << iata << ":" << std::endl;
+    output << "Details for " << iata << ":" << "\n";
 
     Graph::Airport a = graph.getAirportFromIATA_(iata);
     if (detail_type == '1') { //prints only the name to standard output
+        output << "Name: " << a.name_ << "\n";
         std::cout << a.name_ << std::endl;
     } else if (detail_type == '2') { //prints only the location (in words, or city/country) to standard output
+        output << "City: " << a.city_ << "; Country: " << a.country_ << "\n";
         std::cout << "City: " << a.city_ << "; Country: " << a.country_ << std::endl;
     } else if (detail_type == '3') { //prints only the numerical location (latitude/longitude) to standard output
+        output << "Latitude: " << a.latitude_ << "; Longitude: " << a.longitude_  << "\n";
         std::cout << "Latitude: " << a.latitude_ << "; Longitude: " << a.longitude_ << std::endl;
     } else if (detail_type == '4') { //prints all of the above details to standard output
+        output << "Name: " << a.name_ << " --- City: " << a.city_ << " --- Country " << a.country_ << " --- Latitude " << a.latitude_ << " --- Longitude " << a.longitude_ << "\n";
         std::cout << "Name: " << a.name_ << " --- City: " << a.city_ << " --- Country " << a.country_ << " --- Latitude " << a.latitude_ << " --- Longitude " << a.longitude_ << std::endl;
     } else {
       std::cout << "Invalid input" << std::endl;
@@ -145,7 +152,13 @@ void user_control(Graph& graph) {
     }
 
     std::cout << std::endl;
-
+  } else if (option == '5') {
+    std::cout << "Betweenness Centrality (Johnson's Algorhithm)" << std::endl;
+    graph.populateConnectionsIATA();
+    auto vect = graph.BetweenessCentrality();
+    for (auto part : vect) {
+      std::cout << part.first << " --- " << part.second << std::endl;
+    }
   } else {
     std::cout << "Invalid input option" << std::endl;
   }

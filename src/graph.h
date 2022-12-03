@@ -119,6 +119,9 @@ class Graph {
     //Input: IATA Strings of Starting and Ending airports
     //Output: Vector of IATA strings containing the shortest path from the start to destination airport in the correct order
     std::vector<std::string> shortestPathIATA(std::string& start, std::string& destination);
+
+     // Betweeness centrality, returns a vector of IATA strings and their Centralities. MAY BE RESOURCE HEAVY ONCE IMPL.
+    std::vector<std::pair<std::string, float>> BetweenessCentrality();
     
     private:
 
@@ -144,10 +147,7 @@ class Graph {
     //Input: 2 IATA strings representing two airports
     //Output: Float representing the distance between the first and second IATA argument
     float DistanceIATA(std::string& place1,  std::string& place2);
-
-
-    // Betweeness centrality, returns a vector of IATA strings and their Centralities. MAY BE RESOURCE HEAVY ONCE IMPL.
-    std::vector<std::pair<std::string, float>> BetweenessCentrality();
+    
 
     std::vector<std::string> BFS_visited;
     std::vector<std::string> BFS_output;
