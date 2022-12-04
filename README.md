@@ -19,15 +19,22 @@ File Structure
 
 ## Documentation:
 Project Proposal: linked here: https://github.com/rohiths2/CS225-Final-Project/blob/main/CS225%20Project%20Proposal.pdf
+
 Team Contract: linked here: https://github.com/rohiths2/CS225-Final-Project/blob/main/Group%20contract%20cs225.pdf
+
 Written Report (contains Development and Results information): linked here:
 
 ## Description:
 This application allows for multiple functions using airports from the OpenFlights airport/route database. These include finding the details of an airport, listing all other airports that have flights connecting to a certain airport, performing a Breadth-First Traversal (BFS) between two airports, finding the shortest connection path between two airports (minimizing both the number of stopovers and the length between one airport to the next) through Dijkstra's algorithm, and finding the likelihood of a person encountering a certain location as a layover between two airports (Betweenness Centrality using Johnson's algorithm). 
  
 ## Installing the Program:
-Clone the repository by clicking the green Code button on the repository's home page, copying the HTTPS link, and pasting it into the code editor (e.g. VSCode). Alternatively, you can download the Git repository as a zip folder and open that folder in VSCode locally with the Docker container running.
-Another way to clone the Git repository is by entering the following command in the VSCode terminal:
+There are 3 ways to install the program:
+
+1. Clone the repository by clicking the green Code button on the repository's home page, copying the HTTPS link, and pasting it into the code editor (e.g. VSCode).
+
+2. Alternatively, you can download the Git repository as a zip folder and open that folder in VSCode locally with the Docker container running.
+
+3. Another way to clone the Git repository is by entering the following command in the VSCode terminal:
 git clone https://github.com/rohiths2/CS225-Final-Project.git
 
 ## Features:
