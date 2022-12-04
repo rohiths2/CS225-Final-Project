@@ -89,18 +89,35 @@ void user_control(Graph& graph, std::string filename) {
     output << "BFS results \n";
     std::string country;
     graph.populateConnectionsIATA();
+    char searchOrTraversal;
 
+    std::cout << "Would you like to do a BFS Search between two airports, or a Breadth-First Traversal (no end point)?" << std::endl;
+    std::cout << "1: Breadth-First Search between two airports. This should finish quickly." << std::endl;
+    std::cout << "2: Breadth-First Traversal (no end point). This may take a longer time." << std::endl;
+    std::cin >> searchOrTraversal;
     std::string source;
     std::string dest;
-    std::cout << "Type the source airport's 3-letter (IATA) code: " << std::endl;
-    std::cin >> source;
-    for (size_t i = 0; i < source.size(); ++i) {
-      source[i] = toupper(source[i]);
-    }
-    std::cout << "Type the destination airport's 3-letter (IATA) code:" << std::endl;
-    std::cin >> dest;
-    for (size_t i = 0; i < dest.size(); ++i) {
-      dest[i] = toupper(dest[i]);
+    if (searchOrTraversal == '1') {
+      std::cout << "Type the source/starting airport's 3-letter (IATA) code: " << std::endl;
+      std::cin >> source;
+      for (size_t i = 0; i < source.size(); ++i) {
+        source[i] = toupper(source[i]);
+      }
+      std::cout << "Type the destination airport's 3-letter (IATA) code:" << std::endl;
+      std::cin >> dest;
+      for (size_t i = 0; i < dest.size(); ++i) {
+        dest[i] = toupper(dest[i]);
+      }
+    } else if (searchOrTraversal == '2') {
+      std::cout << "Type the starting airport's 3-letter (IATA) code: " << std::endl;
+      std::cin >> source;
+      for (size_t i = 0; i < source.size(); ++i) {
+        source[i] = toupper(source[i]);
+      }
+      dest = "(No End Point / Full Traversal)";
+    } else {
+      std::cout << "Invalid Input. Please run ./main again" << std::endl;
+      return;
     }
 
     std::cout << std::endl;
