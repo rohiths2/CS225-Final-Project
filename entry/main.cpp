@@ -71,8 +71,7 @@ void user_control(Graph& graph, std::string filename) {
     }
 
     Graph::Airport a = graph.getAirportFromIATA_(iata);
-    std::string country = a.country_;
-    graph.populateConnectionsIATA_country(country);
+    graph.populateConnectionsIATA();
     std::cout << "Connections from " << iata << ":" << std::endl;
     output << "Connections from " << iata << ": \n";
     output << "\n";

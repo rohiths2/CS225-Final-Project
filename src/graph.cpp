@@ -3,6 +3,16 @@
 #include <stack>
 #include <cmath>
 
+//Returns whether a vector v contains a certain string str
+bool vectContains(std::vector<std::string> v, std::string str) {
+    for (auto s : v) {
+        if (s == str) {
+            return true;
+        }
+    }
+    return false;
+}
+
 //Creates an Airport object type from a vector of airport's details
 Graph::Airport::Airport(std::vector<std::string> airport) {
     name_ = airport[1];
@@ -40,7 +50,9 @@ void Graph::populateConnectionsIATA() {
     }
     for (auto route : data_.RoutesDetails) {
         if (connectionsIATA_.find(route[2]) != connectionsIATA_.end() && route[2] != "\\N" && route[4] != "\\N") {
-            connectionsIATA_.find(route[2])->second.push_back(route[4]);
+            if (!vectContains(connectionsIATA_.find(route[2])->second, route[4])) {
+                connectionsIATA_.find(route[2])->second.push_back(route[4]);
+            }
         }
     }
     connectionsIATA_.erase("\\N");
@@ -58,21 +70,12 @@ void Graph::populateConnectionsIATA_country(std::string country_) {
     }
     for (auto route : data_.RoutesDetails) {
         if (connectionsIATA_.find(route[2]) != connectionsIATA_.end() && route[2] != "\\N" && route[4] != "\\N") {
-            connectionsIATA_.find(route[2])->second.push_back(route[4]);
+            if (!vectContains(connectionsIATA_.find(route[2])->second, route[4])) {
+                connectionsIATA_.find(route[2])->second.push_back(route[4]);
+            }
         }
     }
     connectionsIATA_.erase("\\N");
-}
-
-
-//Returns whether a vector v contains a certain string str
-bool vectContains(std::vector<std::string> v, std::string str) {
-    for (auto s : v) {
-        if (s == str) {
-            return true;
-        }
-    }
-    return false;
 }
 
 
