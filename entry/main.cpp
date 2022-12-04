@@ -6,10 +6,10 @@
 
 //The below function represents the terminal command-line user interface 
 //This allows the user to run the program with custom inputs, and is called continuously in main until the program is terminated
-void user_control(Graph& graph) {
+void user_control(Graph& graph, std::string filename) {
   //Prepare file to write output
   std::ofstream output;
-  output.open("output.txt");
+  output.open(filename);
   output << "Opened Output File\n";
   //Allows user to choose desired task (details, connections, BFS, Dijkstra's, or Betweeness Centrality algorithms)
   char option; //character representing the user's selected option 1, 2, 3, or 4
@@ -37,8 +37,9 @@ void user_control(Graph& graph) {
     std::cout << "1 = Airport Name, 2 = Location (city/country), 3 = Location (latitude/longitude), 4 = All Details" << std::endl;
     std::cin >> detail_type;
     std::cout << "Details for " << iata << ":" << std::endl;
+    output << "\n";
     output << "Details for " << iata << ":" << "\n";
-
+    output << "\n";
     Graph::Airport a = graph.getAirportFromIATA_(iata);
     if (detail_type == '1') { //prints only the name to standard output
         output << "Name: " << a.name_ << "\n";
@@ -60,6 +61,7 @@ void user_control(Graph& graph) {
 
   //List the connected airports to a certain airport written into standard input
   } else if (option == '2') {
+    output << "\n";
     output << "Listing the connected airports to a certain airport\n";
     std::string iata;
     std::cout << "Type the 3-letter airport code (IATA), then press enter" << std::endl;
@@ -72,14 +74,18 @@ void user_control(Graph& graph) {
     std::string country = a.country_;
     graph.populateConnectionsIATA_country(country);
     std::cout << "Connections from " << iata << ":" << std::endl;
+    output << "Connections from " << iata << ": \n";
+    output << "\n";
     std::vector<std::string> vect = graph.getConnectionsIATA().find(iata)->second;
     for (auto str : vect) {
         std::cout << str << " (" << graph.getAirportFromIATA_(str).name_ << ")" << std::endl;
+        output << str << " (" << graph.getAirportFromIATA_(str).name_ << ")" << "\n";
     }
     std::cout << std::endl;
-
+    output << "\n";
   //Performs a BFS Traversal from a Starting and Ending airport
   } else if (option == '3') {
+    output << "\n";
     output << "BFS results \n";
     std::string country;
     graph.populateConnectionsIATA();
@@ -104,10 +110,19 @@ void user_control(Graph& graph) {
     std::cin >> complete;
     if (complete == '1') {
         std::cout << "BFS Traversal from " << source << " to " << dest << std::endl;
+        output << "BFS Traversal from " << source << " to " << dest << ": \n";
+        output << "\n";
         graph.BFS(source, dest, true);
+        for (auto s : graph.getBFSoutput()) {
+          output << s << " --- " << graph.getAirportFromIATA_(s).name_ << "\n";
+        }
     } else if (complete == '2') {
         std::cout << "BFS Traversal from " << source << " to " << dest << std::endl;
+        output << "BFS Traversal from " << source << " to " << dest << ": \n";
         graph.BFS(source, dest, false);
+        for (auto s : graph.getBFSoutput()) {
+          output << s << " --- " << graph.getAirportFromIATA_(s).name_ << "\n";
+        }
     } else {
         std::cout << "Invalid input" << std::endl;
     }
@@ -116,6 +131,7 @@ void user_control(Graph& graph) {
   //Performs a Dijkstra's algorithm and lists the shortest path from a source and destination airport
   //Allows the user to only involve a certain country in this algorithm to make calculations faster
   } else if (option == '4') {
+    output << "\n";
     output << "Dijkstra's algorithm \n";
     std::string country;
     std::cout << "Are the two airports located in the same country? If so, type the country, and if not, type no" << std::endl;
@@ -147,8 +163,11 @@ void user_control(Graph& graph) {
     std::vector<std::string> shortest_path = graph.shortestPathIATA(source, dest);
     std::cout << std::endl;
     std::cout << "Shortest Path from " << source << " to " << dest << ": " << std::endl;
+    output << "Shortest Path from " << source << " to " << dest << ": \n";
+    output << "\n";
     for (auto s : shortest_path) {
       std::cout << s << " (" << graph.getAirportFromIATA_(s).name_ << ")" << std::endl;
+      output << s << " (" << graph.getAirportFromIATA_(s).name_ << ") \n";
     }
 
     std::cout << std::endl;
@@ -164,7 +183,7 @@ void user_control(Graph& graph) {
   }
 
   char z;
-  std::cout << "Your output result is shown above" << std::endl;
+  std::cout << "Your output result is shown above. You may need to scroll up if the output is large." << std::endl;
     output << "\n";
   output.close();
   std::cout << "Type in anything and press enter to run the program again. Press CTRL+C to stop." << std::endl;
@@ -188,7 +207,7 @@ int main() {
   Graph graph = Graph(data);
 
   while(true) {
-    user_control(graph);
+    user_control(graph, "output.txt");
   }
   return 1;
 }
