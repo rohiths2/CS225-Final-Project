@@ -58,9 +58,11 @@ Follow the prompts given in the terminal. To find details of an airport, type 1 
 
 Enter the necessary Airport IATA codes as described on the terminal, then press enter. The IATA is the 3-letter identifying code for an airport (e.g. for O'Hare airport, it is ORD). IATA codes are NOT case-sensitive, except when instructed to type in either uppercase or lowercase. 
 
-After entering the necessary information, the output of the program should be shown immediately (or take around 30 seconds for Dijkstra's algorithm to run).
+After entering the necessary information, the output of the program should be shown immediately (or take around 30 seconds for Dijkstra's algorithm to run), both in the terminal and in an output.txt file (described below).
 
 The output of the program will be shown in the terminal. If this is a long list (e.g. BFS traversal or connection list, which displays one airport per line), you may need to scroll up on the terminal to view the full list.
+
+The output of the most recent (last) program run is ALSO found in the "output.txt" file in the build folder (/build/output.txt). The content of output.txt will be overridden every time the program is run again. 
 
 To run the program again, type in anything and press enter. To stop running the program, press CTRL+C. 
 
@@ -102,6 +104,9 @@ contains the Graph class with the following parts:
 - a BFS function to run a Breadth-First Traversal or Breadth-First Search between two airports
 - the Shortest Path feature (Dijkstra's algorithm implementation and sub-functions, used to find Intersection in airport sets and Distance between airports)
 - Betweenness Centralty feature function
+
+build folder:
+- output.txt: contains the terminal's output of the last run of the program
   
 tests folder:
 
