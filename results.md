@@ -1,7 +1,10 @@
 # Written Report
 
 ## Answer to Leading Question:
-Our leading question asked how we can determine the most efficient way to travel between two airports. From our program's successful results, we determined that **populating a map through Dijkstra's algorithm and iterating through that map can help determine the path with the least number of stop-overs, least distance (and thus least flying time), and best probability of remaining inside a certain country--all of which contribute to the efficiency of a route.** Additionally, a Betweenness-Centrality algorithm (using Dijkstra's) can help solve this problem even in special cases (such as with complex graphs). We learned that these algorithms make it possible to calculate the best route between two airports both domestically and internationally (larger routes), exceeding our original expectation. 
+
+**All our goals (BFS/Dijkstra's Algorithm/Betweenness Centrality) were accomplished.**
+
+Our leading question asked how we can determine the most efficient way to travel between two airports. From our program's successful results, we determined that **using a map populated from Dijkstra's algorithm can help determine the path with the least number of stop-overs, least distance (and thus least flying time), and best probability of remaining inside a certain country--all of which contribute to the efficiency of a route.** Additionally, a Betweenness-Centrality algorithm (using Dijkstra's) can help solve this problem even in special cases (such as with complex graphs). We learned that these algorithms make it possible to calculate the best route between two airports both domestically and internationally (larger routes), exceeding our original expectation. 
 
 ## Results: Data Parsing
 Our data parsing (from a text file to a 2D vector) works correctly as expected. First, our program populates a 1D vector with each element representing a row of the data file. From the first test case in tests.cpp, the number of rows in the Airports/Routes data sets are equal to the sizes of the Airports/Routes Rows vectors, respectively, **proving that this component works**. 
