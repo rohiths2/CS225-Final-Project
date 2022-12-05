@@ -71,7 +71,46 @@ For a larger-scale example, ORD and LAX are IATA codes of two of the U.S.'s larg
 Not including print statements (for displaying the airport and it's details), our BFS function contains a large while loop (iterates until the queue is empty or until the ending airport is reached), which happens E (number of edges) times, as well as a smaller for loop to add all neighbors of the current airport, which happens V (number of vertices) times. So our end result runtime for BFS is O(E+V). 
 
 ## Results: Shortest Path Algorithm (Dijkstra's)
-### Example Output
+### Example Output (Dijkstra's algorithm from SHE to DOY - small): content of "output.txt" file
+`Dijkstra's algorithm `
+
+`Shortest Path from SHE to DOY: `
+
+`SHE (Taoxian Airport) `
+
+`PEK (Beijing Capital International Airport) `
+
+`DOY (Dongying Shengli Airport) `
+
+### Conclusion (Dijkstra's algorithm from SHE to DOY - small)
+From the above output, our Shortest Path feature from two small airports (both within the same country, China) returns the starting airport's IATA string correctly ("SHE") and the ending airport's IATA string correctly ("DOY"). Also, from the original Routes.dat file, there is a route including PEK from both SHE and from DOY, meaning PEK is a common neighbor of both airports and is therefore an appropriate layover location. Also, many online flight booking sites (e.g. Google Flights) suggest routes (from SHE to DOY) with layovers at PEK--demonstrating two ways that prove our program is finding the correct layover location. These assertions are tested in the 15th test case ("Dijkstra's Algorithm Small") in tests.cppAlso, our result only includes one layover (PEK), even though there are routes with two or more layovers possible, which proves our program is correctly calculating the most efficient route between the two airports. 
+
+### Example Output (Dijkstra's algorithm from PVD to GDV - medium): content of "output.txt" file
+
+`PVD (Theodore Francis Green State Airport) `
+
+`DTW (Detroit Metropolitan Wayne County Airport) `
+
+`MSP (Minneapolis-St Paul International/Wold-Chamberlain Airport) `
+
+`BIL (Billings Logan International Airport) `
+
+`GDV (Dawson Community Airport) `
+
+### Conclusion (Dijkstra's algorithm from PVD to DTW - medium)
+In this case, we are finding the shortest path between PVD and GDV: IATA codes for smaller airports both in the United States. This route requires more layovers, so this case tests if our program can handle more complex routes with more calculations (resulting in more layovers). Our program's result includes the correct first airport (PVD) and correct last airport (GDV), along with 3 airports in the middle (DTW, MSP, and BIL), which proves that our program was able to compute a larger Dijkstra's call completely without crashing or aborting. These assertions are tested in the 16th test case in tests.cpp ("Dijkstra's Algorithm Medium). Also, the airports used for layovers (DTW/MSP) are larger airports (making sense for a stopover) and are located in the same country/region, further proving that our algorithm works for this example.
+
+### Conclusion (Other medium-sized Dijkstra's algorithm cases)
+In this case, we are testing whether commonly direct routes (from two major airports) do not include layovers after calculating the shortest path. Testing our algorithm from "ORD" to "CLT" results in output of only those two airports, and testing the algorithm from "LAX" to "FLL" results in output of only those two airports, proving that our function returns the most efficient path (does not include layovers if direct routes are possible). These assertions are tested and passed in the 17th test case.
+
+### Conclusion (Dijkstra's Algorithm Large/International Cases)
+We are testing our algorithm on a large-scale example, from the United States's east coast to Australia ("EWR" to "SYD"). Logically, the best place to stop would be on the west coast of the United States, most likely California (because California has relatively larger airports, such as "LAX" or "SFO"). Our program's output returns a result with one stop at "SFO" (San Francisco airport, which is located in California). Therefore, our program is correctly able to find the shortest path even between two different countries.
+
+### Conclusion (Dijkstra's Algorithm Sub-Functions)
+Our Dijkstra's implementation includes sub-functions that calculate the distance between two airports, find the intersection (common airports) between two vectors, and remove the smallest airport from a vector. Test cases 9 through 14 on tests.cpp test each of these sub-functions. These tests pass, proving that our program is able to calculate the shortest path correctly through Dijkstra's algorithm (as expected) and not through another way. 
+
+### Runtime of Dijkstra's Algorithm function
+
 
 ## Results: Betweenness Centrality Algorithm
 ### Example Output
