@@ -216,16 +216,16 @@ int main() {
   std::string airport_file;
   std::string routes_file;
   std::cout << std::endl;
-  std::cout << "Type the Airports data file path and press enter. OR type 1 to use the DEFAULT airports.dat file (recommended for testing)" << std::endl;
+  std::cout << "Type the Airports data file path and press enter. OR type ''default'' (no quotes) to use the default airports.dat file (recommended for testing)" << std::endl;
   std::cin >> airport_file;
   std::cout << std::endl;
-  if (airport_file == "1") {
+  if (airport_file == "default") {
     airport_file = "../lib/airports.dat";
   }
-  std::cout << "Type the Routes data file path and press enter. OR type 1 to use the DEFAULT routes.dat file (recommended for testing)" << std::endl;
+  std::cout << "Type the Routes data file path and press enter. OR type ''default'' (no quotes) to use the default routes.dat file (recommended for testing)" << std::endl;
   std::cin >> routes_file;
   std::cout << std::endl;
-  if (routes_file == "1") {
+  if (routes_file == "default") {
     routes_file = "../lib/routes.dat";
   }
   std::cout << std::endl;
