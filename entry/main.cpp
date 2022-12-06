@@ -45,7 +45,7 @@ for (auto a : w) {
 }
 std::cout << std::endl;
 std::cout << std::endl;
-//std::cout << "BFS Traversal from SAB to SBH" << std::endl;
+std::cout << "BFS Traversal from SAB to SBH" << std::endl;
 g.populateConnectionsIATA(d);
 g.BFS("SAB", "SBH", false);
 std::cout << std::endl;

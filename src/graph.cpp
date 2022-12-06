@@ -21,24 +21,9 @@ Graph::Graph(DataParser data): data_(data) {
     for (size_t i = 0; i < data_.AirportsDetails.size(); i++) {
         Airport toAdd = Airport(data_.AirportsDetails[i]);
         airports_.push_back(toAdd);
+        mapIATA[toAdd.IATA_] = toAdd; 
     }
 }
-
-std::vector<Graph::Airport> Graph::getAirports() {
-    return airports_;
-}
-
-Graph::Airport Graph::getAirportFromIATA_(std::string iata) {
-    for (auto airport : getAirports()) {
-        if (iata == airport.IATA_) {
-            return airport;
-        }
-    }
-    Airport a;
-    return a;
-}
-
-
 
 void Graph::populateConnectionsIATA(DataParser d) {
     for (auto airport : getAirports()) {
@@ -193,33 +178,17 @@ std::vector<std::pair<std::string, float>> Graph::BetweenessCentrality(){
     std::vector<std::string> predecessors; // nodes that precede w in shortest path
     std::queue<std::string> q;
     std::stack<std::string> s;
-    // for s in v, do:
-    //  S ← empty stack;
-    //  P [w] ← empty list, w ∈ V ;
-    //  σ[t] ← 0, t ∈ V ; σ[s] ← 1;
-    //  d[t] ← −1, t ∈ V ; d[s] ← 0;
-    //  Q ← empty queue;
-    //  enqueue s → Q;
     while (!q.empty()){
         std::string last_visited = q.back();
         q.pop();
         s.push(last_visited); // psuedocode time  
         //For each neighbor (w) of v,  
-        for (std::string & neighbor : connectionsIATA_[last_visited]) {
-            if (DistanceIATA(last_visited, neighbor) == -1) {
-                q.push(neighbor);
-            }
-            // if dist(w) == -1  (distance not found yet)
-                //pushback w to q
-                //distance(w) = distance(v) + 1 
-            if (DistanceIATA(last_visited, neighbor) == -1) {
-
-            }
-            // if dist(w) == distance(v) + 1, 
-                // sigma[w] = sigma[w] + sigma[v];
-                // predecessors.push_back(v);
-        }
-        
+        // if dist(w) == -1  (distance not found yet)
+            //pushback w to q
+            //distance(w) = distance(v) + 1 
+        // if dist(w) == distance(v) + 1, 
+            // sigma[w] = sigma[w] + sigma[v];
+            // predecessors.push_back(v);
     }
     // Commented out for sake of clarity.
     // std::vector<float> delta; // init to be of size V 
