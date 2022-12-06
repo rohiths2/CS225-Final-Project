@@ -1,51 +1,147 @@
-# CS 225 Final Project
+# CS 225 Final Project: Finding Best Connection Path Between Airports
 
-## Members: 
+## Table of Contents:
+Group Members
+
+Documentation
+
+Description
+
+Installing the Program
+
+Features
+
+Running the Program
+
+Output
+
+Testing the Program
+
+File Structure
+
+## Group Members: 
 
 - Michael Garbus (mgarbus2 at illinois dot edu)
-
 - Rohith Sanjay (rohiths2 at illinois dot edu)
-
 - Calvin Deering (deering3 at illinois dot edu)
-
 - Justin Bai (justinb8 at illinois dot edu)
 
-## Leading Question 
-How can we determine the most efficient way to travel from one airport to another within the U.S.? “Efficient” can refer to the shortest trip in terms of distance or flying time, least number of stop-overs, or lowest price for a flight. Thus, using a dataset of almost every flight route and airport in the U.S., we can construct a directed graph (with airports being the nodes, and flight paths being the edges), and determine the shortest length from shortest-path algorithms (and shortest time with some variable manipulations/calculations), the lowest price by adding weights to the edges, and least stopovers by computing walk lengths. Ultimately, a user would choose a custom option(s) (least length/time/stops/price), with the application returning the most efficient flight paths. 
+## Documentation:
+Project Proposal: linked here: https://github.com/rohiths2/CS225-Final-Project/blob/main/CS225%20Project%20Proposal.pdf
 
-## Dataset Acquisition
-## Data Format
-The dataset we plan to utilize is the OpenFlights database, which stores information identifying thousands of airports worldwide (including their 3-letter codes, city location, and latitude/longitude location)--representing the graph’s nodes, along with a separate file containing routes (airline names, source/destination airports, and number of stopovers)--representing the edges. These two files are both in a “.dat” format, with each line containing comma-separated values between the airline, source, destination, and stop count. The Airports file is 1MB (contains 14,000 rows), and the Routes file is 2MB (67,663 rows). While the storage size is minimal, the large number of rows in each file may make our app too complicated to debug, so we will use a subset of this data (containing only airports and routes that stay within the U.S.). 
+Team Contract: linked here: https://github.com/rohiths2/CS225-Final-Project/blob/main/Group%20contract%20cs225.pdf
 
-## Data Correction
-We will write a function to read the Routes CSV file and will store each line in a vector (with commas indicating the next index). We will check the latitude/longitude values to ensure each airport/route stays within the U.S. before creating a vector for that line, and the end result is a 2D vector (with each row corresponding to a line from the Routes data file). We will create a similar 2D vector for airport information. 
-To ensure these data structures are error-free, each line vector should have a usable/unusable indicator element (the last index), so that the program will only include “usable” vectors in the result. If the CSV reader detects nonexistent values (or just a space) between commas, we will instead insert null values for such indexes in the vector, and mark the vector as unusable. If the other file contains conflicting information (e.g. Routes vector contains a null element, but Airports vector contains a usable string for the same information), the non-null value will override both vectors, and if no null values exist in a line vector after correction, the vector will be marked as usable and will be included in future output results. 
+Written Report (contains Results information): linked here: https://github.com/rohiths2/CS225-Final-Project/blob/main/results.md
 
-## Data Storage
-We will ultimately store information in the vector into a weighted+directed graph. Each graph node will point to a certain row in the Airports 2D vector, with information accessed directly through that vector. The graph’s edges will be stored in an adjacency list (with each element’s first index pointing to a graph node, and the element’s second index containing a vector of elements pointing to rows in the Routes 2D vector). Particularly, iterating through rows in the Routes vector, if the first two indexes match available graph nodes, an element will be added to the adjacency list, pointing to that row in the Routes vector. Transferring the CSV contents into 2D vectors will take O(M*N) time (M is the number of rows, or airports/routes, and N is the number of columns, or details per row, in the largest CSV file). Searching for missing information involves iterating through each row, which takes O(M1+M2) time (M1 and M2 are the number of rows in the airports and routes files, respectively). Creating the adjacency list takes O(N) time (N represents a Route, or edge, which is assigned to an Airport, or node). 
+## Description:
+This application allows for multiple functions using airports from the OpenFlights airport/route database. These include finding the details of an airport, listing all other airports that have flights connecting to a certain airport, performing a Breadth-First Traversal (BFS) between two airports, finding the shortest connection path between two airports (minimizing both the number of stopovers and the length between one airport to the next) through Dijkstra's algorithm, and finding the likelihood of a person encountering a certain location as a layover between two airports (Betweenness Centrality using Johnson's algorithm). 
+ 
+## Installing the Program:
+There are 3 ways to install the program:
 
-## Algorithm 
-Data Parser (CSV->Map of vectors of data entries):
-We will need to create a data parser for the CSV file of flight data that will convert it into a map of vectors of data entries. We believe that we will have to use 2 of the datasets on OpenFlights in order to get the names of certain airports associated with airport IATAs, as well as the routes with sources and destinations. This algorithm will take in a CSV file of flight data and should output vectors of data, or specific data entries associated with each route. If using a map, this function can be O(n) time since it only needs to iterate each line once, and add any connections to the adjacency list once. The amount of memory taken up will be O(n).
+1. Clone the repository by clicking the green Code button on the repository's home page, copying the HTTPS link, and pasting it into the code editor (e.g. VSCode).
 
-Dijkstra’s algorithm:
-We will take in two nodes and a graph that the nodes belong to and will output the shortest pathween between the two nodes. The shortest path can be determined by weights put on each edge or number of edges crossed through. Our goal for the time complexity of this algorithm is O(ElogV + VlogV) and a space complexity of O(V).
+2. Alternatively, you can download the Git repository as a zip folder and open that folder in VSCode locally with the Docker container running.
 
-A* search algorithm:
-A* search algorithm is another algorithm that we could use for finding the shortest path between two nodes. The inputs will be a starting node and a desired node along with a graph that contains the nodes. It will output the shortest path between the two nodes. Our goal for the time complexity of this algorithm is O(E) and a space complexity of O(V).
+3. Another way to clone the Git repository is by entering the following command in the VSCode terminal:
+git clone https://github.com/rohiths2/CS225-Final-Project.git
 
-Breadth first traversal:
-Breadth first traversal is a general algorithm for traversing a graph. It’s generally used to find a vertex. The input will be a desired vertex and it will output the location of the desired vertex within the graph. The goal for the time complexity of this algorithm is O(E) and a space complexity of O(V).
+## Features:
+1. Given any airport's IATA code (3-letter abbreviation) as an input, show the details (Name, City, Country, Latitude, and Longitude) for the airport as the output.
+2. Given any airport (IATA code as input), return a list of all possible connections (other airports that offer direct flights to a user's inputed airport)
+3. Performing a Breadth-First Search between any two airports (given their IATA codes as inputs), or a Breadh-First Traversal given a starting airport IATA code as an input
+4. Using Dijkstra's Algorithm, finding the shortest flight path between any two airports (given their IATA codes as inputs), considering the least number of connections and the smallest distance between airports
+5. Using Betweenness Centrality (Johnson's Algorithm) to determine which airports a traveler will likely have a layover in, after computing posible shortest paths from an airport. 
 
+## Running the Program:
+Make sure the terminal is visible in VSCode and the CS225-Final-Project directory is opened. To run the program the first time, enter the following commands in the terminal (these 3 commands only need to be done the first time the program runs):
 
-## Timeline
-By November 4th: Finish Team Contract, Project Proposal, and Github link
+`mkdir build`
 
-By November 11th: Configure CMake (make files), Create Codebase (folders and necessary files), Create Class/Header files (include some function and variable declarations, if possible), begin creating graph from CSV file
+`cd build`
 
-By November 18th (Mid-Project Check in): Finish creating graph from CSV file, implement Dijkstra’s algorithm to find shortest path in graph, and add test cases for this algorithm, and start preparing second algorithm (A* search) if possible
+`cmake .. `
 
-By December 2nd: Finish A* search algorithm, add test cases for A*, and start implementing BFS Traversal
+Then, to run the program, enter these commands in the terminal:
 
-By December 8th (Project due): Finalize project (input/output), finish written report (results.md) and README.md, prepare final presentation video
+`make`
+
+`./main`
+
+Then, type the relative path for the Airports data file name. **OR just type "default" (no quotes) to use the default airports.dat file from OpenFlights (this is recommended)**. Then press enter.
+
+Then, type the relative path for the Routes data file name. **OR just type "default (no quotes) to use the default routes.dat file from OpenFlights (this is recommended)**. Then press enter.
+
+(NOTE: If you're using a different file than the included airports.dat/routes.dat, then make sure the file is located in the CS225-Final-Project folder. Example file path: `"../lib/airports.dat"`)
+
+***Follow the prompts given in the terminal.*** Type either 1, 2, 3, 4, or 5 depending on what you want the program to do ((1) find details about an airport, (2) display connected airports, (3) run BFS, (4) run Dijkstra's, or (5) run Betweenness Centrality)
+
+The terminal will ask to enter IATA codes for airports. These are the 3-letter identification codes. So for O'Hare, it is "ORD". For Champaign, it is "CMI". It doesn't matter if you enter it uppercase/lowercase unless specified otherwise in the terminal. 
+
+Wait for the desired algorithm to run (should finish within just a few seconds, except for Dijkstra's algorithm, which takes around 30 seconds on average, and longer for international queries). 
+
+## Output
+
+Output is displayed in the terminal AND in the output.txt file (CS225-Final-Project/build/output.txt):
+
+- ***Terminal Output:*** The output of the program will be shown in the terminal. If this is a long list (e.g. BFS traversal or connection list, which displays one airport per line), you may need to scroll up on the terminal to view the full list.
+
+- ***Text File Output:*** The output of the algorithms is ALSO found in the "output.txt" file in the build folder (/build/output.txt). Scroll down to find the most recent output. You will see the text "Opened Output File" indicating the start of each program run. To clear the output file, just navigate to output.txt, and use backspace or delete to remove text. 
+
+To run the program again, type in anything and press enter. To stop running the program, press CTRL+C. 
+
+## Testing the Program:
+This application includes Catch Test Cases in the /tests/tests.cpp folder. To run all small-size and medium-size tests (tests for correct data parsing, BFS output, Dijkstra's output, and Betweenness Centrality output with airports from a single country), enter the following commands in the terminal:
+
+`make test`
+
+`./test [part=1]`
+
+All of the domestic (small/medium) tests (part=1) should finish running in less than a minute.
+
+To run ALL tests (including the large test cases involving airports from multiple countries at a time), enter the following commands in the terminal:
+
+`make test`
+
+`./test`
+
+Large/international test cases may take up to one minute for each large/international test case.
+
+## File Structure:
+src folder:
+
+data_parser.h, data_parser.cpp: 
+
+- contains functions required to read the .dat database files in a CSV format
+- contains functions that split the a string by commas, converting a CSV file into 2D vectors
+- contains a function for checking for invalid information (either missing/blank cells, or non-numbers in number attributes), replacing them appropriately.
+
+graph.h, graph.cpp: 
+
+- contains the Airport class with the following parts:
+- variables representing an airport's details (name, city, country, etc.)
+- ==operators to determine whether two Airport objects are the same
+- function that returns an Airport type (with all details) from a string (IATA code) as the input
+
+contains the Graph class with the following parts:
+- the adjacency list (map<string, vector<string>>) representing each airport's connections (direct destinations)
+- a BFS function to run a Breadth-First Traversal or Breadth-First Search between two airports
+- the Shortest Path feature (Dijkstra's algorithm implementation and sub-functions, used to find Intersection in airport sets and Distance between airports)
+- Betweenness Centralty feature function
+
+build folder:
+- output.txt: contains the terminal's output of the last run of the program
+  
+tests folder:
+
+  tests.cpp file:
+  - contains Catch Test Cases which proves that each algorithm works correctly
+  - go to the Testing section of the readme for instructions on how to run the tests
+  
+entry folder:
+  
+  main.cpp file:
+  - Contains the user_control() function which starts the command-line/terminal-based user interface (taking in commands through standard input std::cin, and returning the program's results using standard output std::cout)
+  - Contains the main() function: the executable that runs the program in the terminal
+
 
