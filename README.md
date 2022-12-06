@@ -13,6 +13,8 @@ Features
 
 Running the Program
 
+Output
+
 Testing the Program
 
 File Structure
@@ -78,7 +80,9 @@ The terminal will ask to enter IATA codes for airports. These are the 3-letter i
 
 Wait for the desired algorithm to run (should finish within just a few seconds, except for Dijkstra's algorithm, which takes around 30 seconds on average, and longer for international queries). 
 
-Output is displayed in the terminal AND in the output.txt file (described below):
+## Output
+
+Output is displayed in the terminal AND in the output.txt file (CS225-Final-Project/build/output.txt):
 
 - ***Terminal Output:*** The output of the program will be shown in the terminal. If this is a long list (e.g. BFS traversal or connection list, which displays one airport per line), you may need to scroll up on the terminal to view the full list.
 
