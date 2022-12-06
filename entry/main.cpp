@@ -211,12 +211,26 @@ void user_control(Graph& graph, std::string filename) {
 
 
 int main() {
-
   //Prepares AirportsDetails vector, RoutesDetails vector, and Graph immediately
-  std::cout << "Parsing data..." << std::endl;
   DataParser data;
-  data.populateAirportRows("../lib/airports.dat");
-  data.populateRoutesRows("../lib/routes.dat");
+  std::string airport_file;
+  std::string routes_file;
+  std::cout << std::endl;
+  std::cout << "Type the Airports data file path and press enter. OR type 1 to use the DEFAULT airports.dat file (recommended for testing)" << std::endl;
+  std::cin >> airport_file;
+  std::cout << std::endl;
+  if (airport_file == "1") {
+    airport_file = "../lib/airports.dat";
+  }
+  std::cout << "Type the Routes data file path and press enter. OR type 1 to use the DEFAULT routes.dat file (recommended for testing)" << std::endl;
+  std::cin >> routes_file;
+  std::cout << std::endl;
+  if (routes_file == "1") {
+    routes_file = "../lib/routes.dat";
+  }
+  std::cout << std::endl;
+  data.populateAirportRows(airport_file);
+  data.populateRoutesRows(routes_file);
   data.populateAirportsDetails();
   data.populateRoutesDetails();
   data.checkMissingInfo();
