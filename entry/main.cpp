@@ -9,7 +9,7 @@
 void user_control(Graph& graph, std::string filename) {
   //Prepare file to write output
   std::ofstream output;
-  output.open(filename);
+  output.open(filename, std::ios_base::app);
   output << "Opened Output File\n";
   //Allows user to choose desired task (details, connections, BFS, Dijkstra's, or Betweeness Centrality algorithms)
   char option; //character representing the user's selected option 1, 2, 3, or 4
