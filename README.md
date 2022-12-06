@@ -2,12 +2,19 @@
 
 ## Table of Contents:
 Group Members
+
 Documentation
+
 Description
+
 Installing the Program
+
 Features
+
 Running the Program
+
 Testing the Program
+
 File Structure
 
 ## Group Members: 
@@ -47,46 +54,52 @@ git clone https://github.com/rohiths2/CS225-Final-Project.git
 ## Running the Program:
 Make sure the terminal is visible in VSCode and the CS225-Final-Project directory is opened. To run the program the first time, enter the following commands in the terminal (these 3 commands only need to be done the first time the program runs):
 
-mkdir build
+`mkdir build`
 
-cd build
+`cd build`
 
-cmake .. 
+`cmake .. `
 
 Then, to run the program, enter these commands in the terminal:
 
-make
+`make`
 
-./main
+`./main`
 
-You will see the text "Parsing Data". The program is converting database text files into internal data structures. This will take about 3 seconds.
+Then, type the relative path for the Airports data file name. **OR just type 1 to use the default airports.dat file from OpenFlights (this is recommended)**. Then press enter.
 
-Follow the prompts given in the terminal. To find details of an airport, type 1 and then press enter. To display airports connected to a certain airport, type 2 and press enter. To run a Breadth-First Traversal, type 3 and then press enter. To find the shortest path between 2 airports using Dijkstra's algorithm, type 4 and press enter. To run the Betweenness Centrality algorithm, type 5 and then press enter. 
+Then, type the relative path for the Routes data file name. **OR just type 1 to use the default routes.dat file from OpenFlights (this is recommended)**. Then press enter.
 
-Enter the necessary Airport IATA codes as described on the terminal, then press enter. The IATA is the 3-letter identifying code for an airport (e.g. for O'Hare airport, it is ORD). IATA codes are NOT case-sensitive, except when instructed to type in either uppercase or lowercase. 
+(NOTE: If you're using a different file than the included airports.dat/routes.dat, then make sure the file is located in the CS225-Final-Project folder. Example file path: `"../lib/airports.dat"`)
 
-After entering the necessary information, the output of the program should be shown immediately (or take around 30 seconds for Dijkstra's algorithm to run), both in the terminal and in an output.txt file (described below).
+***Follow the prompts given in the terminal.*** Type either 1, 2, 3, 4, or 5 depending on what you want the program to do ((1) find details about an airport, (2) display connected airports, (3) run BFS, (4) run Dijkstra's, or (5) run Betweenness Centrality)
 
-The output of the program will be shown in the terminal. If this is a long list (e.g. BFS traversal or connection list, which displays one airport per line), you may need to scroll up on the terminal to view the full list.
+The terminal will ask to enter IATA codes for airports. These are the 3-letter identification codes. So for O'Hare, it is "ORD". For Champaign, it is "CMI". It doesn't matter if you enter it uppercase/lowercase unless specified otherwise in the terminal. 
 
-The output of the most recent (last) program run is ALSO found in the "output.txt" file in the build folder (/build/output.txt). The content of output.txt will be overridden every time the program is run again. 
+Wait for the desired algorithm to run (should finish within just a few seconds, except for Dijkstra's algorithm, which takes around 30 seconds on average, and longer for international queries). 
+
+Output is displayed in the terminal AND in the output.txt file (described below):
+
+- ***Terminal Output:*** The output of the program will be shown in the terminal. If this is a long list (e.g. BFS traversal or connection list, which displays one airport per line), you may need to scroll up on the terminal to view the full list.
+
+- ***Text File Output:*** The output of the most recent (last) program run is ALSO found in the "output.txt" file in the build folder (/build/output.txt). The content of output.txt will be overridden every time the program is run again. 
 
 To run the program again, type in anything and press enter. To stop running the program, press CTRL+C. 
 
 ## Testing the Program:
 This application includes Catch Test Cases in the /tests/tests.cpp folder. To run all small-size and medium-size tests (tests for correct data parsing, BFS output, Dijkstra's output, and Betweenness Centrality output with airports from a single country), enter the following commands in the terminal:
 
-make test
+`make test`
 
-./test [part=1]
+`./test [part=1]`
 
 All of the domestic (small/medium) tests (part=1) should finish running in less than a minute.
 
 To run ALL tests (including the large test cases involving airports from multiple countries at a time), enter the following commands in the terminal:
 
-make test
+`make test`
 
-./test
+`./test`
 
 Large/international test cases may take up to one minute for each large/international test case.
 
