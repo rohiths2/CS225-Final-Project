@@ -66,9 +66,9 @@ Then, to run the program, enter these commands in the terminal:
 
 `./main`
 
-Then, type the relative path for the Airports data file name. **OR just type 1 to use the default airports.dat file from OpenFlights (this is recommended)**. Then press enter.
+Then, type the relative path for the Airports data file name. **OR just type "default" (no quotes) to use the default airports.dat file from OpenFlights (this is recommended)**. Then press enter.
 
-Then, type the relative path for the Routes data file name. **OR just type 1 to use the default routes.dat file from OpenFlights (this is recommended)**. Then press enter.
+Then, type the relative path for the Routes data file name. **OR just type "default (no quotes) to use the default routes.dat file from OpenFlights (this is recommended)**. Then press enter.
 
 (NOTE: If you're using a different file than the included airports.dat/routes.dat, then make sure the file is located in the CS225-Final-Project folder. Example file path: `"../lib/airports.dat"`)
 
