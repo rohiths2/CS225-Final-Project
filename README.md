@@ -44,7 +44,8 @@ There are 3 ways to install the program:
 2. Alternatively, you can download the Git repository as a zip folder and open that folder in VSCode locally with the Docker container running.
 
 3. Another way to clone the Git repository is by entering the following command in the VSCode terminal:
-git clone https://github.com/rohiths2/CS225-Final-Project.git
+
+`git clone https://github.com/rohiths2/CS225-Final-Project.git`
 
 ## Features:
 1. Given any airport's IATA code (3-letter abbreviation) as an input, show the details (Name, City, Country, Latitude, and Longitude) for the airport as the output.
