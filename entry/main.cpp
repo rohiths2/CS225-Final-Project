@@ -91,8 +91,9 @@ void user_control(Graph& graph, std::string filename) {
     char searchOrTraversal;
 
     std::cout << "Would you like to do a BFS Search between two airports, or a Breadth-First Traversal (no end point)?" << std::endl;
-    std::cout << "1: Breadth-First Search between two airports. This should finish quickly." << std::endl;
-    std::cout << "2: Breadth-First Traversal (no end point). This may take a longer time." << std::endl;
+    std::cout << "Type the number 1 or 2 depending on the choice, then press enter" << std::endl;
+    std::cout << "1: Breadth-First Search between two airports. " << std::endl;
+    std::cout << "2: Breadth-First Traversal (no end point--may take a longer time)" << std::endl;
     std::cin >> searchOrTraversal;
     std::string source;
     std::string dest;
@@ -122,6 +123,7 @@ void user_control(Graph& graph, std::string filename) {
     std::cout << std::endl;
     char complete;
     std::cout << "Would you like to show only complete airports or all airports in the traversal?" << std::endl;
+    std::cout << "Type the number 1 or 2 depending on the choice, then press enter" << std::endl;
     std::cout << "1 = show only complete airports (those with no missing info), 2 = show all airports (even those with missing details)" << std::endl;
     std::cin >> complete;
     if (complete == '1') {
