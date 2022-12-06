@@ -82,7 +82,7 @@ Output is displayed in the terminal AND in the output.txt file (described below)
 
 - ***Terminal Output:*** The output of the program will be shown in the terminal. If this is a long list (e.g. BFS traversal or connection list, which displays one airport per line), you may need to scroll up on the terminal to view the full list.
 
-- ***Text File Output:*** The output of the most recent (last) program run is ALSO found in the "output.txt" file in the build folder (/build/output.txt). The content of output.txt will be overridden every time the program is run again. 
+- ***Text File Output:*** The output of the algorithms is ALSO found in the "output.txt" file in the build folder (/build/output.txt). Scroll down to find the most recent output. You will see the text "Opened Output File" indicating the start of each program run. 
 
 To run the program again, type in anything and press enter. To stop running the program, press CTRL+C. 
 
