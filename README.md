@@ -34,7 +34,7 @@ Team Contract: linked here: https://github.com/rohiths2/CS225-Final-Project/blob
 Written Report (contains Results information): linked here: https://github.com/rohiths2/CS225-Final-Project/blob/main/results.md
 
 ## Description:
-This application allows for multiple functions using airports from the OpenFlights airport/route database. These include finding the details of an airport, listing all other airports that have flights connecting to a certain airport, performing a Breadth-First Traversal (BFS) between two airports, finding the shortest connection path between two airports (minimizing both the number of stopovers and the length between one airport to the next) through Dijkstra's algorithm, and finding the likelihood of a person encountering a certain location as a layover between two airports (Betweenness Centrality using Johnson's algorithm). 
+This application allows for multiple functions using airports from the OpenFlights airport/route database. These include finding the details of an airport, listing all other airports that have flights connecting to a certain airport, performing a Breadth-First Traversal (BFS) between two airports, finding the shortest connection path between two airports (minimizing both the number of stopovers and the length between one airport to the next) through Dijkstra's algorithm, and finding the likelihood of a person encountering a certain location as a layover between two airports (Betweenness Centrality using Brandes's algorithm). 
  
 ## Installing the Program:
 There are 3 ways to install the program:
@@ -52,7 +52,7 @@ There are 3 ways to install the program:
 2. Given any airport (IATA code as input), return a list of all possible connections (other airports that offer direct flights to a user's inputed airport)
 3. Performing a Breadth-First Search between any two airports (given their IATA codes as inputs), or a Breadh-First Traversal given a starting airport IATA code as an input
 4. Using Dijkstra's Algorithm, finding the shortest flight path between any two airports (given their IATA codes as inputs), considering the least number of connections and the smallest distance between airports
-5. Using Betweenness Centrality (Johnson's Algorithm) to determine which airports a traveler will likely have a layover in, after computing posible shortest paths from an airport. 
+5. Using Betweenness Centrality (Brandes's Algorithm) to determine which airports a traveler will likely have a layover in, after computing posible shortest paths from an airport. 
 
 ## Running the Program:
 Make sure the terminal is visible in VSCode and the CS225-Final-Project directory is opened. To run the program the first time, enter the following commands in the terminal (these 3 commands only need to be done the first time the program runs):
