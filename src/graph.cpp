@@ -267,6 +267,7 @@ std::map<std::string, float> Graph::BetweenessCentrality(std::string input){
         s.pop();
         for (auto i : paths.at(visited)){
             sigmas.at(i) = sigmas.at(i) + getCentrality(visited); 
+            
         }
         if (visited != input){
             between_cents.at(visited) =  between_cents.at(visited) + sigmas.at(visited);
@@ -278,6 +279,7 @@ std::map<std::string, float> Graph::BetweenessCentrality(std::string input){
 
 
 void Graph::Centrality(std::vector<std::vector<std::string>> paths) {
+    //https://www.tandfonline.com/doi/epdf/10.1080/0022250X.2001.9990249?needAccess=true&role=button
     std::map<std::string, float> centralityMap;
     const size_t numPaths = paths.size();
     for (size_t i = 0; i < numPaths; i++) {
@@ -287,7 +289,7 @@ void Graph::Centrality(std::vector<std::vector<std::string>> paths) {
     }
     for (size_t i = 0; i < numPaths; i++) {
         for (size_t j = 0; j < paths[i].size(); j++) {
-            centralityMap[paths[i][j]] += 1.0;
+            centralityMap[paths[i][j]] += 1.0;  
         }
     }
     for (auto & pair : centralityMap) {
