@@ -95,7 +95,10 @@ class Graph {
     //Getter for BFS function: used for testing
     std::vector<std::string> getBFSoutput() {
         return BFS_output;
-    }
+    } 
+
+   std::map<std::string, float> Graph::BetweenessCentrality(std::string input);
+
 
     //Getter for distance function: used for testing
     float getDistanceIATA(std::string& place1, std::string& place2) {
@@ -123,8 +126,15 @@ class Graph {
 
      // Betweeness centrality, returns a vector of IATA strings and their Centralities. MAY BE RESOURCE HEAVY ONCE IMPL.
     std::vector<std::pair<std::string, float>> BetweenessCentrality();
+<<<<<<< Updated upstream
     std::pair<std::string, float> BetweenessCentrality(std::string origin);
     float getCentralityOf(std::string airportIATA);
+=======
+
+
+
+    std::pair<std::string, float> BetweenessCentrality(std::string origin, bool only_complete_airports);
+>>>>>>> Stashed changes
     private:
 
     //returns a map, each Airport maps to a pair. The first value is the Airports parent, the second value is the distance from the start airport
