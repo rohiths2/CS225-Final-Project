@@ -182,10 +182,25 @@ std::map<std::string, std::pair< std::string, float>> Graph::DijkIATA( std::stri
     return map;
 }
 
-std::pair<std::string, float> Graph::BetweenessCentrality(std::string origin, bool only_complete_airports) {
-    // for (std::string airport : mapIATA) {
+std::pair<std::string, float> Graph::BetweenessCentrality(std::string origin) {
+    size_t paths = 0;
+    for (auto airport : connectionsIATA_[origin]) {
         
-    // }
+    }
+}
+
+std::map<std::string, float> Graph::Centrality(std::vector<std::vector<std::string>> paths) {
+    std::map<std::string, float> centralityMap;
+    const size_t numPaths = paths.size();
+    for (size_t i = 0; i < numPaths; i++) {
+        for (size_t j = 0; j < paths[i].size(); j++) {
+            centralityMap[paths[i][j]] += 1.0 ?: 0.0;
+        }
+    }
+    for (auto & pair : centralityMap) {
+        pair.second /= numPaths;
+    }
+    return centralityMap;
 }
 
 // Draft Code for Betweenness centrality
