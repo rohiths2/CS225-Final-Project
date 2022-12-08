@@ -185,8 +185,9 @@ std::map<std::string, std::pair< std::string, float>> Graph::DijkIATA( std::stri
 std::pair<std::string, float> Graph::BetweenessCentrality(std::string origin) {
     size_t paths = 0;
     for (auto airport : connectionsIATA_[origin]) {
-        
+        // do
     }
+    return std::pair<std::string, float>();
 }
 
 void Graph::Centrality(std::vector<std::vector<std::string>> paths) {
@@ -194,7 +195,12 @@ void Graph::Centrality(std::vector<std::vector<std::string>> paths) {
     const size_t numPaths = paths.size();
     for (size_t i = 0; i < numPaths; i++) {
         for (size_t j = 0; j < paths[i].size(); j++) {
-            centralityMap[paths[i][j]] += 1.0 ?: 0.0;
+            centralityMap[paths[i][j]] = 0.0;
+        }
+    }
+    for (size_t i = 0; i < numPaths; i++) {
+        for (size_t j = 0; j < paths[i].size(); j++) {
+            centralityMap[paths[i][j]] += 1.0;
         }
     }
     for (auto & pair : centralityMap) {
