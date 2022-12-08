@@ -189,7 +189,7 @@ std::pair<std::string, float> Graph::BetweenessCentrality(std::string origin) {
     }
 }
 
-std::map<std::string, float> Graph::Centrality(std::vector<std::vector<std::string>> paths) {
+void Graph::Centrality(std::vector<std::vector<std::string>> paths) {
     std::map<std::string, float> centralityMap;
     const size_t numPaths = paths.size();
     for (size_t i = 0; i < numPaths; i++) {
@@ -200,7 +200,11 @@ std::map<std::string, float> Graph::Centrality(std::vector<std::vector<std::stri
     for (auto & pair : centralityMap) {
         pair.second /= numPaths;
     }
-    return centralityMap;
+    central_ = centralityMap;
+}
+
+float Graph::getCentralityOf(std::string airportIATA) {
+    return central_[airportIATA];
 }
 
 // Draft Code for Betweenness centrality

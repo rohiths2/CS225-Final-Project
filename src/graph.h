@@ -124,7 +124,7 @@ class Graph {
      // Betweeness centrality, returns a vector of IATA strings and their Centralities. MAY BE RESOURCE HEAVY ONCE IMPL.
     std::vector<std::pair<std::string, float>> BetweenessCentrality();
     std::pair<std::string, float> BetweenessCentrality(std::string origin);
-    std::map<std::string, float> Centrality(std::vector<std::vector<std::string>> paths);
+    float getCentralityOf(std::string airportIATA);
     private:
 
     //returns a map, each Airport maps to a pair. The first value is the Airports parent, the second value is the distance from the start airport
@@ -155,6 +155,12 @@ class Graph {
 
     //Private adjacency list of Airport types, NOT IATA strings
     std::map<Airport, std::vector<Airport>> connections_;
+    
+    // Assigns central_ the centrality of each node
+    void Centrality(std::vector<std::vector<std::string>> paths);
+
+    // Stores centrality data on a given traversal
+    std::map<std::string, float> central_;
     
     /**
      * Stores only data relevant to CS225 Final Project
