@@ -182,6 +182,12 @@ std::map<std::string, std::pair< std::string, float>> Graph::DijkIATA( std::stri
     return map;
 }
 
+std::pair<std::string, float> Graph::BetweenessCentrality(std::string origin, bool only_complete_airports) {
+    // for (std::string airport : mapIATA) {
+        
+    // }
+}
+
 // Draft Code for Betweenness centrality
 // would love advice on this 
 std::vector<std::pair<std::string, float>> Graph::BetweenessCentrality(){
