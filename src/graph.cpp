@@ -122,24 +122,24 @@ std::map<std::string, std::pair< std::string, float>> Graph::DijkIATA( std::stri
         std::cout << start + " is not a valid airport code in the countries selected." << std::endl;
         return std::map<std::string, std::pair<std::string, float>>();
     }
+
     std::map< std::string, std::pair< std::string, float>> map;
-    std::vector< std::string> airports;
-    int i = 0;
-    for (auto airport_iter = connectionsIATA_.begin(); airport_iter !=  connectionsIATA_.end(); airport_iter++) {
-        //iterate through keys of connections_ map, populating shortest route map with worstcase data;
-         std::string current_airport = (airport_iter->first);
-        map[current_airport] = std::pair<std::string, float>("", INFINITY);
-        airports.push_back(current_airport);
-        ++i;
+    DijkHeap priority;
+    for (auto airport_iter = connectionsIATA_.begin(); airport_iter != connectionsIATA_.end(); airport_iter++) {
+        priority.add(airport_iter->first, INFINITY);
+        map[airport_iter->first] = std::pair<std::string, float>("", INFINITY);
     }
-    map[start] = std::pair< std::string, float>("", 0);
-    while(!airports.empty()) {
-          std::string closest_airport = RemoveSmallestIATA(map, airports);
-        for (auto airport : AirportIntersectionIATA(connectionsIATA_.find(closest_airport)->second, airports)) {
-            float possible_distance = map[closest_airport].second + DistanceIATA(closest_airport, airport);
-            if (possible_distance < map[airport].second) {
-                map[airport].first = closest_airport;
-                map[airport].second = possible_distance;
+    priority.updateElem(start, 0);
+    map[start] = std::pair<std::string, float>({"",0});
+
+    while(!priority.is_empty()) {
+        std::string min = priority.pop();
+        for (std::string neighbor : connectionsIATA_.at(min)) {
+            float new_dist = map[min].second + DistanceIATA(min, neighbor);
+            if (new_dist < map[neighbor].second) {
+                map[neighbor].first = min;
+                map[neighbor].second = new_dist;
+                priority.updateElem(neighbor, new_dist);
             }
         }
     }

@@ -135,7 +135,79 @@ class Graph {
 
 
     std::pair<std::string, float> BetweenessCentrality(std::string origin, bool only_complete_airports);
+    
     private:
+
+    //Used for the dijkstra function for quick access to highest priority elements
+    class DijkHeap {
+        public:
+            DijkHeap() {
+                IATAVector.push_back(std::pair<std::string, float>({"", 0}));
+            }
+            void add(std::string iata, float distance) {
+                IATAVector.push_back(std::pair<std::string, float>({iata, distance}));
+                IATAtoIndex[iata] = IATAVector.size() - 1;
+                heapifyUp(IATAVector.size() - 1);
+            }
+            void updateElem(std::string iata, float new_distance) {
+                size_t index = IATAtoIndex[iata];
+                IATAVector[index].second = new_distance;
+                heapifyDown(index);
+                heapifyUp(index);
+            }
+            std::string pop() {
+                IATAtoIndex.erase(IATAVector[1].first);
+                if (IATAVector.size() < 2) {
+                    return "";
+                }
+                std::string temp = IATAVector[1].first;
+                IATAVector[1] = IATAVector[IATAVector.size() - 1];
+                IATAVector.pop_back();
+                heapifyDown(1);
+                return temp;
+            }
+            bool is_empty() {
+                return IATAVector.size() < 2;
+            }
+        private:
+            size_t leftChild(size_t current_ind) {return current_ind * 2;}
+            size_t rightChild(size_t current_ind) {return current_ind * 2 + 1;}
+            size_t parent(size_t current_ind) {return current_ind / 2;}
+            bool hasChild(size_t current_ind) {return current_ind * 2 < IATAVector.size();}
+
+            std::vector<std::pair<std::string, float>> IATAVector;
+            std::map<std::string, size_t> IATAtoIndex;
+            
+            void heapifyUp(size_t current_ind) {
+                if (current_ind == 1) {
+                    return;
+                }
+                size_t parent_ind = parent(current_ind);
+                if (IATAVector[current_ind].second < IATAVector[parent_ind].second) {
+                    std::swap(IATAVector[current_ind], IATAVector[parent_ind]);
+                    IATAtoIndex[IATAVector[parent_ind].first] = parent_ind;
+                    IATAtoIndex[IATAVector[current_ind].first] = current_ind;
+                    heapifyUp(parent_ind);
+                }
+
+            }
+            void heapifyDown(size_t current_ind) {
+                if (hasChild(current_ind)) {
+                    size_t next_child = 0;
+                    if (current_ind * 2 + 1 >= IATAVector.size()) {
+                        next_child = leftChild(current_ind);
+                    } else {
+                        next_child = IATAVector[leftChild(current_ind)].second < IATAVector[rightChild(current_ind)].second ? leftChild(current_ind) : rightChild(current_ind);
+                    }
+                    if (IATAVector[next_child].second < IATAVector[current_ind].second) {
+                        std::swap(IATAVector[current_ind], IATAVector[next_child]);
+                        IATAtoIndex[IATAVector[current_ind].first] = current_ind;
+                        IATAtoIndex[IATAVector[next_child].first] = next_child;
+                        heapifyDown(next_child);
+                    }
+                }
+            }
+    };
 
     //returns a map, each Airport maps to a pair. The first value is the Airports parent, the second value is the distance from the start airport
     //Input: IATA string of starting airport
