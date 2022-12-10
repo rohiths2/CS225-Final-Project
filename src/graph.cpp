@@ -303,48 +303,18 @@ float Graph::getCentralityOf(std::string airportIATA) {
 }
 
 
-//Checks if there is a common airport shared between the Connections and Airports vector arguments
-std::vector< std::string> Graph::AirportIntersectionIATA(std::vector<std::string>& connections, std::vector< std::string> airports) {
-    std::vector< std::string> in_both;
-
-    for (std::string airport1 : connections) {
-        for ( std::string airport2 : airports) {
-            if (airport1 == airport2) {
-                if (!vectContains(in_both, airport2)) {
-                    in_both.push_back(airport2);
-                }
-            }
-        }
-    }
-    return in_both;
-}
-
-//Finds the airport with the smallest distance value, removes it from the airports vector, and returns that airport's string IATA
-const std::string Graph::RemoveSmallestIATA(std::map< std::string, std::pair< std::string, float>>& map, std::vector< std::string>& airports) {
-    size_t smallest_idx = 0;
-    float smallest_value = 9999999;
-    for (size_t i = 0; i < airports.size(); ++i) {
-        if (map.find(airports[i]) != map.end()) {
-            if (map.find(airports[i])->second.second < smallest_value) {
-                smallest_value = map.find(airports[i])->second.second;
-                smallest_idx = i;
-            }
-        }
-    }
-     std::string toreturn = airports[smallest_idx];
-    airports.erase(airports.begin()+smallest_idx, airports.begin()+smallest_idx+1);
-    return toreturn;
-}
-
 //Public function to call Dijkstra's algorithm multiple times to find which shortest path ends with the destination airport
-std::vector< std::string> Graph::shortestPathIATA(std::string& start, std::string& destination) {
+std::vector<std::string> Graph::shortestPathIATA(std::string& start, std::string& destination) {
     std::vector< std::string> shortest_path = {start};
-    std::map< std::string, std::pair< std::string, float>> shortest_map = DijkIATA(start);
+    std::map<std::string, std::pair< std::string, float>> shortest_map = DijkIATA(start);
     if (shortest_map.begin() == shortest_map.end()) {
         //If the map is empty, most likely caused by start and destination not being connectable
         return shortest_path;
     }
     std::string current = destination;
+    if (shortest_map[current].first == "") {
+        return shortest_path;
+    }
     while (current != start) {
         shortest_path.insert(shortest_path.begin() + 1, current);
         current = shortest_map[current].first; //Sets current to parent
