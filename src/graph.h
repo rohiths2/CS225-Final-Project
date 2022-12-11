@@ -122,7 +122,7 @@ class Graph {
 
     float getCentralityOf(std::string airportIATA);
 
-
+    auto testHeap() {return DijkHeap();}
 
     // std::pair<std::string, float> BetweenessCentrality(std::string origin, bool only_complete_airports);
     private:
