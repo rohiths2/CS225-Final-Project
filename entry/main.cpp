@@ -179,20 +179,32 @@ void user_control(Graph& graph, std::string filename) {
       dest[i] = toupper(dest[i]);
     }
     std::vector<std::string> shortest_path = graph.shortestPathIATA(source, dest);
-    std::cout << std::endl;
-    std::cout << "Shortest Path from " << source << " to " << dest << ": " << std::endl;
-    output << "Shortest Path from " << source << " to " << dest << ": \n";
-    output << "\n";
-    for (auto s : shortest_path) {
-      std::cout << s << " (" << graph.getAirportFromIATA_(s).name_ << ")" << std::endl;
-      output << s << " (" << graph.getAirportFromIATA_(s).name_ << ") \n";
+    if (shortest_path.size() < 2) {
+      std::cout << "There is no path connecting " << source << " to " << dest << std::endl;
+    } else {
+      std::cout << std::endl;
+      std::cout << "Shortest Path from " << source << " to " << dest << ": " << std::endl;
+      output << "Shortest Path from " << source << " to " << dest << ": \n";
+      output << "\n";
+      for (auto s : shortest_path) {
+        std::cout << s << " (" << graph.getAirportFromIATA_(s).name_ << ")" << std::endl;
+        output << s << " (" << graph.getAirportFromIATA_(s).name_ << ") \n";
+      }
     }
-
     std::cout << std::endl;
+
   } else if (option == '5') {
     std::cout << "Betweenness Centrality (Johnson's Algorhithm)" << std::endl;
+    std::cout << "This is Fairly Resource Intensive, as is the nature of Betweeness Centrality" << std::endl;
     graph.populateConnectionsIATA();
-    auto vect = graph.BetweenessCentrality();
+    std::string dest;
+    std::cout << "Type the 3-letter IATA code for the desired airport:" << std::endl;
+    std::cin >> dest;
+    for (size_t i = 0; i < dest.size(); ++i) {
+      dest[i] = toupper(dest[i]);
+    }
+
+    auto vect = graph.BetweenessCentrality(dest); // we should cut this off for clarity's sake
     for (auto part : vect) {
       std::cout << part.first << " --- " << part.second << std::endl;
     }

@@ -95,7 +95,8 @@ class Graph {
     //Getter for BFS function: used for testing
     std::vector<std::string> getBFSoutput() {
         return BFS_output;
-    }
+    } 
+
 
     //Getter for distance function: used for testing
     float getDistanceIATA(std::string& place1, std::string& place2) {
@@ -105,16 +106,6 @@ class Graph {
     //     return Distance(place1, place2);
     // }
 
-    //Getter for AirportIntersectionIATA function: used for testing
-    std::vector< std::string> GetAirInt(std::vector<std::string>& connections,  std::vector< std::string> airports) {
-        return AirportIntersectionIATA(connections, airports);
-    }
-
-    //Getter for remove smallest: used for testing
-    const std::string getRemoveSmallest(std::map< std::string, std::pair< std::string, float>>& map, std::vector< std::string> airports) {
-        return RemoveSmallestIATA(map, airports);
-    }
-
 
     //Uses Dijkstra's algorithm to find the shortest path, returns a vector where first value is start and last value is destination
     //Input: IATA Strings of Starting and Ending airports
@@ -123,26 +114,100 @@ class Graph {
 
      // Betweeness centrality, returns a vector of IATA strings and their Centralities. MAY BE RESOURCE HEAVY ONCE IMPL.
     std::vector<std::pair<std::string, float>> BetweenessCentrality();
-    std::pair<std::string, float> BetweenessCentrality(std::string origin);
-    float getCentralityOf(std::string originIATA, std::string airportIATA);
+
+    // Generates a map of IATAs and their BetweenessCentralities originating from a certain input. 
+    // May be resource intensive.
+   std::map<std::string, float> BetweenessCentrality(std::string input);
+
+
+    float getCentralityOf(std::string airportIATA);
+
+
+
+    // std::pair<std::string, float> BetweenessCentrality(std::string origin, bool only_complete_airports);
     private:
+
+    //Used by the dijkstra function for quick access to highest priority elements
+    class DijkHeap {
+        public:
+            //Creates an empty heap with the root at index 1
+            DijkHeap() {
+                IATAVector.push_back(std::pair<std::string, float>({"", 0}));
+            }
+            //Adds a iata and distance pair to the heap and determines their priority
+            void add(std::string iata, float distance) {
+                IATAVector.push_back(std::pair<std::string, float>({iata, distance}));
+                IATAtoIndex[iata] = IATAVector.size() - 1;
+                heapifyUp(IATAVector.size() - 1);
+            }
+            //Changes the distance associated with a iata and updates its priority
+            void updateElem(std::string iata, float new_distance) {
+                size_t index = IATAtoIndex[iata];
+                IATAVector[index].second = new_distance;
+                heapifyDown(index);
+                heapifyUp(index);
+            }
+            //Returns that highest priority element and removes it from the heap
+            std::string pop() {
+                IATAtoIndex.erase(IATAVector[1].first);
+                if (IATAVector.size() < 2) {
+                    return "";
+                }
+                std::string temp = IATAVector[1].first;
+                IATAVector[1] = IATAVector[IATAVector.size() - 1];
+                IATAVector.pop_back();
+                heapifyDown(1);
+                return temp;
+            }
+            //Returns true if the heap is empty, except for the element in index 0
+            bool is_empty() {
+                return IATAVector.size() < 2;
+            }
+        private:
+            size_t leftChild(size_t current_ind) {return current_ind * 2;}
+            size_t rightChild(size_t current_ind) {return current_ind * 2 + 1;}
+            size_t parent(size_t current_ind) {return current_ind / 2;}
+            bool hasChild(size_t current_ind) {return current_ind * 2 < IATAVector.size();}
+
+            std::vector<std::pair<std::string, float>> IATAVector;
+            std::map<std::string, size_t> IATAtoIndex;
+            
+            void heapifyUp(size_t current_ind) {
+                if (current_ind == 1) {
+                    return;
+                }
+                size_t parent_ind = parent(current_ind);
+                if (IATAVector[current_ind].second < IATAVector[parent_ind].second) {
+                    std::swap(IATAVector[current_ind], IATAVector[parent_ind]);
+                    IATAtoIndex[IATAVector[parent_ind].first] = parent_ind;
+                    IATAtoIndex[IATAVector[current_ind].first] = current_ind;
+                    heapifyUp(parent_ind);
+                }
+
+            }
+            void heapifyDown(size_t current_ind) {
+                if (hasChild(current_ind)) {
+                    size_t next_child = 0;
+                    if (current_ind * 2 + 1 >= IATAVector.size()) {
+                        next_child = leftChild(current_ind);
+                    } else {
+                        next_child = IATAVector[leftChild(current_ind)].second < IATAVector[rightChild(current_ind)].second ? leftChild(current_ind) : rightChild(current_ind);
+                    }
+                    if (IATAVector[next_child].second < IATAVector[current_ind].second) {
+                        std::swap(IATAVector[current_ind], IATAVector[next_child]);
+                        IATAtoIndex[IATAVector[current_ind].first] = current_ind;
+                        IATAtoIndex[IATAVector[next_child].first] = next_child;
+                        heapifyDown(next_child);
+                    }
+                }
+            }
+    };
 
     //returns a map, each Airport maps to a pair. The first value is the Airports parent, the second value is the distance from the start airport
     //Input: IATA string of starting airport
     //Output: Map of Strings to Pair<String, Float>, as described above
     std::map<std::string, std::pair< std::string, float>> DijkIATA( std::string& start);
 
-    //Helper for Dijk, finds, removes and returns the airport string with the lowest distance in the inputed vector of Airport strings
-    //Input: map of airport strings to the closest connected airport and the distance between them, vector of airport strings
-    //Output: The string of the airport IATA that was just removed from the vector
-    const std::string RemoveSmallestIATA(std::map< std::string, std::pair< std::string, float>>& map, std::vector< std::string>& airports);
-    
-
-    //Helper for Dijk, returns the intersection of the two sets as a vector of Airports
-    //Input: 2 vectors of airport strings created in Dijkstra's algorithm
-    //Output: Vector of strings representing all airports that are seen in both input vector arguments
-    std::vector<std::string> AirportIntersectionIATA(std::vector<std::string>& connections,  std::vector< std::string> airports);
-    
 
     //Find an approximate distance between two airports
     //Input: 2 IATA strings representing two airports

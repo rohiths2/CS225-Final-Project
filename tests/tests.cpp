@@ -15,7 +15,6 @@ bool vectContains(std::string s, std::vector<std::string> v) {
   }
   return false;
 }
-
 using namespace std;
 DataParser d;
 
@@ -150,75 +149,49 @@ TEST_CASE("Test distance function", "[part=1]") {
   REQUIRE((int(g.getDistanceIATA(lhr, bom)) >= 4480 && int(g.getDistanceIATA(lhr, bom)) <= 4490));
 }
 
-TEST_CASE("Airport Intersection 1", "[part=1]") {
+TEST_CASE("Dijk ordered heap test", "[part=1]") {
   Graph g = Graph(d);
-  g.populateConnectionsIATA();
-  std::vector<std::string> connections = {"a", "c", "e", "g"};
-  std::vector<std::string> connections2 = {"b", "c", "g", "z"};
-  std::vector<std::string> answer = {"c", "g"};
-  std::vector< std::string> AirInt = g.GetAirInt(connections, connections2);
-  int i = 0;
-  for (auto s : AirInt) {
-    REQUIRE(s == answer[i]);
-    ++i;
+  auto heap = g.testHeap();
+  std::vector<std::string> alphabet = {"a", "b", "c", "d", "e", "f"};
+  std::vector<float> distances = {1, 2, 3, 4, 5, 6};
+  for (size_t index = 0; index < alphabet.size(); index++) {
+    heap.add(alphabet[index], distances[index]);
+  }
+  for (size_t index = 0; index < alphabet.size(); index++) {
+    REQUIRE(alphabet[index] == heap.pop());
   }
 }
 
-TEST_CASE("Airport Intersection 2", "[part=1]") {
+TEST_CASE("Dijk unordered heap test", "[part=1]") {
   Graph g = Graph(d);
-  g.populateConnectionsIATA();
-  std::vector<std::string> connections = {"a", "c", "e", "g"};
-  std::vector<std::string> connections2 = {"b", "v", "u", "o"};
-  std::vector< std::string> airports;
-  std::vector< std::string> AirInt = g.GetAirInt(connections, connections2);
-  REQUIRE(AirInt.size() == 0);
-}
-
-TEST_CASE("Airport Intersection 3", "[part=1]") {
-  Graph g = Graph(d);
-  g.populateConnectionsIATA();
-  std::vector<std::string> connections = g.getConnectionsIATA().at("SBH");
-  std::cout << std::endl;
-  std::vector<std::string> connections2 = {"SXM", "SAB", "ORD"};
-  std::vector<std::string> answer = {"SXM", "SAB"};
-  std::vector< std::string> AirInt = g.GetAirInt(connections, connections2);
-  int i = 0;
-  for (auto s : AirInt) {
-    REQUIRE(s == answer[i]);
-    ++i;
+  auto heap = g.testHeap();
+  std::vector<std::string> alphabet = {"a", "b", "c", "d", "e", "f"};
+  std::vector<float> distances = {5, 1, 8, 3, 7, 2};
+  for (size_t index = 0; index < alphabet.size(); index++) {
+    heap.add(alphabet[index], distances[index]);
   }
+  REQUIRE(heap.pop() == "b");
+  REQUIRE(heap.pop() == "f");
+  REQUIRE(heap.pop() == "d");
+  REQUIRE(heap.pop() == "a");
+  REQUIRE(heap.pop() == "e");
+  REQUIRE(heap.pop() == "c");
 }
 
-TEST_CASE("Test Remove Smallest", "[part=1]") {
+TEST_CASE("Dijk heap test, update element", "[part=1]") {
   Graph g = Graph(d);
-  std::string a = "a";
-  std::string b = "b";
-  std::string c = "c";
-  std::vector< std::string> airports;
-  airports.push_back(a);
-  airports.push_back(b);
-  airports.push_back(c);
-  std::map< std::string, std::pair< std::string, float>> map;
-  map.insert(std::pair< std::string, std::pair< std::string, float>>(a, std::pair< std::string, float>(a, 0)));
-  map.insert(std::pair< std::string, std::pair< std::string, float>>(b, std::pair< std::string, float>(b, 1)));
-  map.insert(std::pair< std::string, std::pair< std::string, float>>(c, std::pair< std::string, float>(c, 2)));
-  REQUIRE((g.getRemoveSmallest(map, airports)) == "a");
-}
-
-TEST_CASE("Test Remove Smallest 2", "[part=1]") {
-  Graph g = Graph(d);
-  std::string a = "a";
-  std::string b = "b";
-  std::string c = "c";
-  std::vector< std::string> airports;
-  airports.push_back(a);
-  airports.push_back(b);
-  airports.push_back(c);
-  std::map< std::string, std::pair< std::string, float>> map;
-  map.insert(std::pair< std::string, std::pair< std::string, float>>(a, std::pair< std::string, float>(a, 6)));
-  map.insert(std::pair< std::string, std::pair< std::string, float>>(b, std::pair< std::string, float>(b, 3)));
-  map.insert(std::pair< std::string, std::pair< std::string, float>>(c, std::pair< std::string, float>(c, 3)));
-  REQUIRE((g.getRemoveSmallest(map, airports)) == "b");
+  auto heap = g.testHeap();
+  std::vector<std::string> alphabet = {"a", "b", "c", "d", "e", "f"};
+  std::vector<float> distances = {5, 1, 8, 3, 7, 2};
+  for (size_t index = 0; index < alphabet.size(); index++) {
+    heap.add(alphabet[index], distances[index]);
+  }
+  for (size_t index = 0; index < alphabet.size(); index++) {
+    heap.updateElem(alphabet[index], float(index));
+  }
+  for (size_t index = 0; index < alphabet.size(); index++) {
+    REQUIRE(alphabet[index] == heap.pop());
+  }
 }
 
 TEST_CASE("Test Dijkstra's Algorithm Small", "[part=1]") {
@@ -290,22 +263,4 @@ TEST_CASE("Test Dijkstra's Algorithm Large/International 2", "[part=2]") {
   REQUIRE(b[0] == "EWR");
   REQUIRE((b[1] == "SFO" || b[1] == "LAX"));
   REQUIRE(b[2] == "SYD");
-}
-/**
- * Betweeness centrality test cases
-**/
-bool centralityLessThanOne(float cent) {
-  return (cent >= 0 && cent <= 1);
-}
-
-TEST_CASE("Test Betweeness Centrality Algorithm With Local Start", "[part=1]") {
-  // Write test case for betweenCent of Champaign airport
-  Graph g = Graph(d);
-  g.populateConnectionsIATA();
-  std::string str1 = "CMI";
-}
-
-TEST_CASE("Test Betweeness Centraility Algorithm With International Start", "[part=1]") {
-  // Write test case for betweenCnet of OHare airport
-  
 }
