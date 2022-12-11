@@ -203,17 +203,21 @@ void user_control(Graph& graph, std::string filename) {
     for (size_t i = 0; i < dest.size(); ++i) {
       dest[i] = toupper(dest[i]);
     }
-
+    std::ofstream outdata;
+    outdata.open("../tests/btw.txt");
     auto vect = graph.BetweenessCentrality(dest); // we should cut this off for clarity's sake
     for (auto part : vect) {
-      std::cout << part.first << " --- " << part.second << std::endl;
+      if (part.second != 0) {
+        outdata << part.first << " --- " << part.second << std::endl;
+      }
     }
+    outdata.close();
   } else {
     std::cout << "Invalid input option" << std::endl;
   }
 
   char z;
-  std::cout << "Your output result is shown above. You may need to scroll up if the output is large." << std::endl;
+  std::cout << "See ../tests/btw.txt for output" << std::endl;
     output << "\n";
   output.close();
   std::cout << "Type in anything and press enter to run the program again. Press CTRL+C to stop." << std::endl;
