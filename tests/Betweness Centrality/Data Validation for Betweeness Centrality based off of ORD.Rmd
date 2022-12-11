@@ -1,0 +1,60 @@
+---
+title: "Data Validation for Betweeness Centrality based off of ORD"
+author: "Michael Garbus mgarbus2"
+date: "2022-12-12"
+output: pdf_document
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Rationale
+
+As most methods using Betweeness Centrality use a variation of Brandes' Algorithim (Brandes' has made multiple papers for multiple algorithms regarding calculation of Betweeness Centrality) which leads to variations in the exact value, and because some tools simply lack documentation (such as https://github.com/franktakes/teexgraph) and others apply a normalization (https://graph-tool.skewed.de/static/doc/centrality.html#graph_tool.centrality.betweenness) (to be fair, this is recommended in Brandes' later papers and books), it is a little difficult to get an exact 1:1 verification of our Betweeness Centrality, especially since our Betweeness Centrality is implemented for a specific input airport. Because of this, we created our own test file as shown below. We expect to get a very similar, albeit scaled, value of the number of paths for a specific airport divided by the total number of routes. 
+
+
+
+
+```{r cache = TRUE}
+#install.packages('tidyverse')
+require(tidyverse)
+library(tidyverse)
+airports = read_csv("routes.dat", col_names = c("Airline",
+'ID',
+'Source',
+'SourceID',
+'Destination',
+'DestinationID',
+'Codeshare',
+"Stops",
+"Equipment") )
+
+airports %>% filter(Source %in% "ORD") %>% group_by(Destination) %>% count() %>% arrange(-n)
+
+
+total_flights = airports %>% filter(Source %in% "ORD") %>% 
+  group_by(Destination) %>% count() %>% arrange(-n) 
+
+sum(total_flights$n)
+
+```
+
+This is the number of total flights, Not the number of total paths. We expect to get a number somewhat similar to this, but a LOT smaller, sort of a similar ratio.
+
+
+For example, $1/558 = 0.001792115$, and our Betweness Centrality is $0.00016469$ for single path centrality. This is a ratio of around 11x, and is expected and indicates we are getting correct values. 
+
+
+
+# Test File
+    
+```{r cache = TRUE}
+
+ORD_Routes <- airports %>% filter(Source %in% "ORD") %>% group_by(Destination)
+
+write_csv(ORD_Routes, "ORD_Routes.dat") #how the test file is written.
+
+```
+

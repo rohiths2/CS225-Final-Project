@@ -112,15 +112,10 @@ class Graph {
     //Output: Vector of IATA strings containing the shortest path from the start to destination airport in the correct order
     std::vector<std::string> shortestPathIATA(std::string& start, std::string& destination);
 
-     // Betweeness centrality, returns a vector of IATA strings and their Centralities. MAY BE RESOURCE HEAVY ONCE IMPL.
-    std::vector<std::pair<std::string, float>> BetweenessCentrality();
-
     // Generates a map of IATAs and their BetweenessCentralities originating from a certain input. 
-    // May be resource intensive.
+    // May be resource intensive. Uses //https://www.tandfonline.com/doi/epdf/10.1080/0022250X.2001.9990249?needAccess=true&role=button
    std::map<std::string, float> BetweenessCentrality(std::string input);
 
-
-    float getCentralityOf(std::string airportIATA);
 
     auto testHeap() {return DijkHeap();}
 
@@ -220,12 +215,6 @@ class Graph {
 
     //Private adjacency list of Airport types, NOT IATA strings
     std::map<Airport, std::vector<Airport>> connections_;
-    
-    // Assigns central_ the centrality of each node
-    void Centrality(std::vector<std::vector<std::string>> paths);
-
-    // Stores centrality data on a given traversal
-    std::map<std::string, float> central_;
     
     /**
      * Stores only data relevant to CS225 Final Project

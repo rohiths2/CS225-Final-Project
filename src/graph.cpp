@@ -220,9 +220,7 @@ std::map<std::string, float> Graph::BetweenessCentrality(std::string input){
     // cant directly use the connectionsIATA_ map due to an "out of range" error. The fix is not too resource costly
     // but its curious nonetheless.
     for (std::string name : IATAVals){
-
-
-        between_cents[name] = 0.0; //({name, 0.0});
+        between_cents[name] = 0.0; 
         distances.insert({name, -1.0});
         visitations.insert({name, 0.0});
         paths.insert({name, std::vector<std::string>()}); 
@@ -238,41 +236,31 @@ std::map<std::string, float> Graph::BetweenessCentrality(std::string input){
     distances[input] = 0; // should be useless. 
 
     while (!q.empty()) {
-        std::cout << "here" << std::endl;
         std::string current = q.front();
         s.push(current);
         q.pop();
 
         // if neighbors exist 
         if (connectionsIATA_.find(current) != connectionsIATA_.end()) {
-        std::cout << "248" << std::endl;
             // for each neighbor... 
             for (auto neighbor : connectionsIATA_.find(current)->second) {
-                std::cout << "251" << std::endl;
-                std::cout << neighbor << std::endl;
                 if (neighbor == "FKI" || neighbor == "YAT" || neighbor == "SVR" ){ 
-                    // Why are these failing? Incomplete airports? Confusing!
+                    // Island airports.  Theoretically, it *should* be okay to include these,
+                    // but the values are noninteresting, and make compute worse.
                     continue;
                 }
                 if (distances[neighbor] == -1 ){ // if not visited. Can be changed to infinity, etc.
-                    std::cout << "253" << std::endl;
                     distances[neighbor] = distances[current] + 1;
                     q.push(neighbor);
-                    std::cout << "255" << std::endl;
                 }
 
                 if (distances[neighbor] == distances[current] + 1){
-                    std::cout << "260" << std::endl;
+                    
                     sigmas[neighbor] = sigmas[neighbor] + 1; 
-
-                    std::cout << "264" << std::endl;
                     std::vector<std::string> npaths = paths[neighbor];
                     npaths.push_back(current);
-                    std::cout << "266" << std::endl;
-
                     paths[neighbor] = npaths; // neighbor visited current
-                    std::cout << "SIGMAS SIZE" << sigmas.size() << std::endl;
-                    
+                                        
                 }
             }
         }
@@ -290,32 +278,6 @@ std::map<std::string, float> Graph::BetweenessCentrality(std::string input){
         }
     }
     return between_cents;
-}
-
-
-
-void Graph::Centrality(std::vector<std::vector<std::string>> paths) {
-    //https://www.tandfonline.com/doi/epdf/10.1080/0022250X.2001.9990249?needAccess=true&role=button
-    std::map<std::string, float> centralityMap;
-    const size_t numPaths = paths.size();
-    for (size_t i = 0; i < numPaths; i++) {
-        for (size_t j = 0; j < paths[i].size(); j++) {
-            centralityMap[paths[i][j]] = 0.0;
-        }
-    }
-    for (size_t i = 0; i < numPaths; i++) {
-        for (size_t j = 0; j < paths[i].size(); j++) {
-            centralityMap[paths[i][j]] += 1.0;  
-        }
-    }
-    for (auto & pair : centralityMap) {
-        pair.second /= numPaths;
-    }
-    central_ = centralityMap;
-}
-
-float Graph::getCentralityOf(std::string airportIATA) {
-    return central_[airportIATA];
 }
 
 
