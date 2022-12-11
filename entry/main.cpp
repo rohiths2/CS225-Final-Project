@@ -195,8 +195,16 @@ void user_control(Graph& graph, std::string filename) {
 
   } else if (option == '5') {
     std::cout << "Betweenness Centrality (Johnson's Algorhithm)" << std::endl;
+    std::cout << "This is Fairly Resource Intensive, as is the nature of Betweeness Centrality" << std::endl;
     graph.populateConnectionsIATA();
-    auto vect = graph.BetweenessCentrality();
+    std::string dest;
+    std::cout << "Type the 3-letter IATA code for the desired airport:" << std::endl;
+    std::cin >> dest;
+    for (size_t i = 0; i < dest.size(); ++i) {
+      dest[i] = toupper(dest[i]);
+    }
+
+    auto vect = graph.BetweenessCentrality(dest); // we should cut this off for clarity's sake
     for (auto part : vect) {
       std::cout << part.first << " --- " << part.second << std::endl;
     }

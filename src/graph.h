@@ -115,20 +115,16 @@ class Graph {
      // Betweeness centrality, returns a vector of IATA strings and their Centralities. MAY BE RESOURCE HEAVY ONCE IMPL.
     std::vector<std::pair<std::string, float>> BetweenessCentrality();
 
+    // Generates a map of IATAs and their BetweenessCentralities originating from a certain input. 
+    // May be resource intensive.
+   std::map<std::string, float> BetweenessCentrality(std::string input);
 
-   std::map<std::string, float> Graph::BetweenessCentrality(std::string input);
-
-    // std::pair<std::string, float> BetweenessCentrality(std::string origin);
 
     float getCentralityOf(std::string airportIATA);
 
 
 
-    std::pair<std::string, float> BetweenessCentrality(std::string origin, bool only_complete_airports);
-    
-    //Returns a heap for testing
-    auto testHeap() {return DijkHeap();}
-
+    // std::pair<std::string, float> BetweenessCentrality(std::string origin, bool only_complete_airports);
     private:
 
     //Used by the dijkstra function for quick access to highest priority elements

@@ -188,16 +188,6 @@ std::vector<std::pair<std::string, std::string>> Graph::btwBFS(std::string origi
     return retVec;
 }
 
-std::pair<std::string, float> Graph::BetweenessCentrality(std::string origin, bool only_complete_airports) {
-
-  
-    // read in retVec 
-    // std::vector<std::pair<std::string, std::string>> 
-    // for (std::string airport : mapIATA) {
-        
-    // }
-}
-
 /***
  * @ TODO: Fix their BTW for improper input.
 */
@@ -218,15 +208,23 @@ std::map<std::string, float> Graph::BetweenessCentrality(std::string input){
     std::cout << input + " is assumed to be a complete airport. Please only use complete airports in inputs for Betweeness Centrality." << std::endl;
 
 
-    for (auto it = connectionsIATA_.begin(); it != connectionsIATA_.end(); it++){
-        std::string name = it->first;
-        // no btw yet 
-        between_cents.insert({name, 0});
+    std::vector<std::string> IATAVals;
 
-        distances.insert({name, -1});
-        // no visits yet 
-        visitations.insert({name, 0});
-        // no paths yet 
+
+    for (auto it = connectionsIATA_.begin(); it != connectionsIATA_.end(); it++){
+
+        std::string name = it->first;
+        IATAVals.push_back(name);
+    }
+    
+    // cant directly use the connectionsIATA_ map due to an "out of range" error. The fix is not too resource costly
+    // but its curious nonetheless.
+    for (std::string name : IATAVals){
+
+
+        between_cents[name] = 0.0; //({name, 0.0});
+        distances.insert({name, -1.0});
+        visitations.insert({name, 0.0});
         paths.insert({name, std::vector<std::string>()}); 
     }
 
@@ -237,27 +235,44 @@ std::map<std::string, float> Graph::BetweenessCentrality(std::string input){
         std::cout << "You have included an airport that does not appear to be complete, does not exist, or is an island. Please make sure your airport exists" << std::endl;
         return between_cents;
     } 
-    distances.at(input) = 0; // should be useless. 
-
+    distances[input] = 0; // should be useless. 
 
     while (!q.empty()) {
+        std::cout << "here" << std::endl;
         std::string current = q.front();
         s.push(current);
         q.pop();
 
         // if neighbors exist 
         if (connectionsIATA_.find(current) != connectionsIATA_.end()) {
+        std::cout << "248" << std::endl;
             // for each neighbor... 
             for (auto neighbor : connectionsIATA_.find(current)->second) {
-                if (distances.at(neighbor) == -1 ){ // if not visited. Can be changed to infinity, etc. 
-                    distances.at(neighbor) = distances.at(current) + 1;
-                    q.push(neighbor);
+                std::cout << "251" << std::endl;
+                std::cout << neighbor << std::endl;
+                if (neighbor == "FKI" || neighbor == "YAT" || neighbor == "SVR" ){ 
+                    // Why are these failing? Incomplete airports? Confusing!
+                    continue;
                 }
-                if (distances.at(neighbor) == distances.at(current) + 1){
-                    sigmas.at(neighbor) = sigmas.at(neighbor) + 1; // or sigmas at current. sigmas.at(current);
-                                                                   // Since we are only looking at one 
-                                                                   // input's paths this should be fime  
-                    paths.at(neighbor).push_back(current); // neighbor visited current
+                if (distances[neighbor] == -1 ){ // if not visited. Can be changed to infinity, etc.
+                    std::cout << "253" << std::endl;
+                    distances[neighbor] = distances[current] + 1;
+                    q.push(neighbor);
+                    std::cout << "255" << std::endl;
+                }
+
+                if (distances[neighbor] == distances[current] + 1){
+                    std::cout << "260" << std::endl;
+                    sigmas[neighbor] = sigmas[neighbor] + 1; 
+
+                    std::cout << "264" << std::endl;
+                    std::vector<std::string> npaths = paths[neighbor];
+                    npaths.push_back(current);
+                    std::cout << "266" << std::endl;
+
+                    paths[neighbor] = npaths; // neighbor visited current
+                    std::cout << "SIGMAS SIZE" << sigmas.size() << std::endl;
+                    
                 }
             }
         }
@@ -265,12 +280,13 @@ std::map<std::string, float> Graph::BetweenessCentrality(std::string input){
     while (!s.empty()){
         std::string visited = s.top();
         s.pop();
-        for (auto i : paths.at(visited)){
-            sigmas.at(i) = sigmas.at(i) + getCentrality(visited); 
-            
+        for (auto i : paths[visited]){
+            sigmas[i] = sigmas[i] + (paths[i].size()) * ((1 + sigmas[visited]) );
+                                                             // or paths.at(visited), but paths.size should proper
+                                                             // / (double)paths.size()
         }
         if (visited != input){
-            between_cents.at(visited) =  between_cents.at(visited) + sigmas.at(visited);
+            between_cents[visited] = (between_cents[visited] + sigmas[visited] / (double)paths.size()); // moving div oper.
         }
     }
     return between_cents;
