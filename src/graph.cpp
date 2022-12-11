@@ -209,7 +209,8 @@ void Graph::Centrality(std::vector<std::vector<std::string>> paths) {
     central_ = centralityMap;
 }
 
-float Graph::getCentralityOf(std::string airportIATA) {
+float Graph::getCentralityOf(std::string originIATA, std::string airportIATA) {
+    BetweenessCentrality(originIATA);
     return central_[airportIATA];
 }
 

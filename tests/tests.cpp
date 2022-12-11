@@ -15,6 +15,7 @@ bool vectContains(std::string s, std::vector<std::string> v) {
   }
   return false;
 }
+
 using namespace std;
 DataParser d;
 
@@ -289,4 +290,22 @@ TEST_CASE("Test Dijkstra's Algorithm Large/International 2", "[part=2]") {
   REQUIRE(b[0] == "EWR");
   REQUIRE((b[1] == "SFO" || b[1] == "LAX"));
   REQUIRE(b[2] == "SYD");
+}
+/**
+ * Betweeness centrality test cases
+**/
+bool centralityLessThanOne(float cent) {
+  return (cent >= 0 && cent <= 1);
+}
+
+TEST_CASE("Test Betweeness Centrality Algorithm With Local Start", "[part=1]") {
+  // Write test case for betweenCent of Champaign airport
+  Graph g = Graph(d);
+  g.populateConnectionsIATA();
+  std::string str1 = "CMI";
+}
+
+TEST_CASE("Test Betweeness Centraility Algorithm With International Start", "[part=1]") {
+  // Write test case for betweenCnet of OHare airport
+  
 }
