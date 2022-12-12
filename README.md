@@ -52,7 +52,7 @@ There are 3 ways to install the program:
 2. Given any airport (IATA code as input), return a list of all possible connections (other airports that offer direct flights to a user's inputed airport)
 3. Performing a Breadth-First Search between any two airports (given their IATA codes as inputs), or a Breadh-First Traversal given a starting airport IATA code as an input
 4. Using Dijkstra's Algorithm, finding the shortest flight path between any two airports (given their IATA codes as inputs), considering the least number of connections and the smallest distance between airports
-5. Using Betweenness Centrality (Brandes's Algorithm) to determine which airports a traveler will likely have a layover in, after computing posible shortest paths from an airport. 
+5. Using Betweenness Centrality (Brandes's Algorithm) to determine which airports a traveler will likely have a layover in, after computing posible shortest paths from an airport. ***The output of this Betweenness Centrality function is found in /tests/btw.txt. Open the document and find (CTRL+F) for IATA codes with large values (greater than zero)***
 
 ## Running the Program:
 Make sure the terminal is visible in VSCode and the CS225-Final-Project directory is opened. To run the program the first time, enter the following commands in the terminal (these 3 commands only need to be done the first time the program runs):
@@ -79,7 +79,9 @@ Then, type the relative path for the Routes data file name. **OR just type "defa
 
 The terminal will ask to enter IATA codes for airports. These are the 3-letter identification codes. So for O'Hare, it is "ORD". For Champaign, it is "CMI". It doesn't matter if you enter it uppercase/lowercase unless specified otherwise in the terminal. 
 
-Wait for the desired algorithm to run (should finish within just a few seconds, except for Dijkstra's algorithm, which takes around 30 seconds on average, and longer for international queries). 
+Wait for the desired algorithm to run (should finish within just a few seconds). 
+
+***Note: If you ran the Betweenness Centrality, see the Betweenness Centrality output description in the Output section below.***
 
 ## Output
 
@@ -90,6 +92,10 @@ Output is displayed in the terminal AND in the output.txt file (CS225-Final-Proj
 - ***Text File Output:*** The output of the algorithms is ALSO found in the "output.txt" file in the build folder (/build/output.txt). Scroll down to find the most recent output. You will see the text "Opened Output File" indicating the start of each program run. To clear the output file, just navigate to output.txt, and use backspace or delete to remove text. 
 
 To run the program again, type in anything and press enter. To stop running the program, press CTRL+C. 
+
+### NOTE: Betweenness Centrality Output
+Output for the Betweenness Centrality function is found in /tests/btw.txt (NOT in output.txt) due to the large size of the Betweenness Centrality output list.
+Open this file, do Find (Ctrl+F) for a layover destination IATA code (e.g. "LAX"). If this value is greater than zero, it is very likely to encounter a layover at this airport. 
 
 ## Testing the Program:
 This application includes Catch Test Cases in the /tests/tests.cpp folder. To run all small-size and medium-size tests (tests for correct data parsing, BFS output, Dijkstra's output, and Betweenness Centrality output with airports from a single country), enter the following commands in the terminal:
@@ -105,8 +111,6 @@ To run ALL tests (including the large test cases involving airports from multipl
 `make test`
 
 `./test`
-
-Large/international test cases may take up to one minute for each large/international test case.
 
 ## File Structure:
 src folder:
@@ -138,6 +142,9 @@ tests folder:
   tests.cpp file:
   - contains Catch Test Cases which proves that each algorithm works correctly
   - go to the Testing section of the readme for instructions on how to run the tests
+  
+  btw.txt:
+  - contains full Betweenness Centrality output. Shows the airport's IATA code, with a float (a large number, above 0, means that it is fairly likely to encounter a layover to the corresponding airport)
   
 entry folder:
   

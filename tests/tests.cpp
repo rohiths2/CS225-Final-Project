@@ -293,3 +293,59 @@ TEST_CASE("Test Betweeness Centrality Algorithm for International Non-US Airport
   g.populateConnectionsIATA();
   auto vect = g.BetweenessCentrality("PEK");
 }
+
+TEST_CASE("Betweenness Centrality 1", "[part=1]") {
+  Graph g = Graph(d);
+  g.populateConnectionsIATA();
+  std::string dest = "ORD";
+  auto vector = g.BetweenessCentrality(dest);
+  float lax = 0;
+  for (auto a : vector) {
+    if (a.first == "LAX") {
+      lax = a.second;
+    }
+  }
+  REQUIRE(lax > 1);
+}
+
+TEST_CASE("Betweenness Centrality 2", "[part=1]") {
+  Graph g = Graph(d);
+  g.populateConnectionsIATA();
+  std::string dest = "ATL";
+  auto vector = g.BetweenessCentrality(dest);
+  float ewr = 0;
+  for (auto a : vector) {
+    if (a.first == "EWR") {
+      ewr = a.second;
+    }
+  }
+  REQUIRE(ewr > 1);
+  float ord = 0;
+  for (auto a : vector) {
+    if (a.first == "ORD") {
+      ord = a.second;
+    }
+  }
+  REQUIRE(ord > 1);
+}
+
+TEST_CASE("Betweenness Centrality International", "[part=2]") {
+  Graph g = Graph(d);
+  g.populateConnectionsIATA();
+  std::string dest = "LHR";
+  auto vector = g.BetweenessCentrality(dest);
+  float ewr = 0;
+  for (auto a : vector) {
+    if (a.first == "JFK") {
+      ewr = a.second;
+    }
+  }
+  REQUIRE(ewr > 1);
+  float ord = 0;
+  for (auto a : vector) {
+    if (a.first == "LAX") {
+      ord = a.second;
+    }
+  }
+  REQUIRE(ord > 1);
+}

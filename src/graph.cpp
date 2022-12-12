@@ -205,7 +205,7 @@ std::map<std::string, float> Graph::BetweenessCentrality(std::string input){
         return between_cents;
     }
 
-    std::cout << input + " is assumed to be a complete airport. Please only use complete airports in inputs for Betweeness Centrality." << std::endl;
+    std::cout << input + " is assumed to be a complete airport." << std::endl;
 
 
     std::vector<std::string> IATAVals;
