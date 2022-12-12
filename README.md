@@ -63,14 +63,6 @@ Running this program works just like the MPs and Labs in this class. Steps to ru
 
 To run the program the first time (these steps only need to be done the first time the program runs):
 
-#### Deleting the Build Folder (ONLY if there already is a CS225-Final-Project/build folder)
-
-***If there is already a ../CS225-Final-Project/build folder*** (a sub-folder called build INSIDE the CS225-Final-Project folder), right click the ../CS225-Final-Project/build folder (the build folder INSIDE the CS225-Final-Project folder), and ***click Delete Permanently to delete this build folder***. 
-
-![](https://github.com/rohiths2/CS225-Final-Project/blob/main/Images%20of%20Examples/build.JPG)
-
-***If there is NOT already a ../CS225-Final-Project/build folder*** (a sub-folder called build INSIDE the CS225-Final-Project folder), simply continue on to the step below
-
 Enter the following commands in the terminal 
 
 `mkdir build`
