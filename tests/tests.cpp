@@ -264,3 +264,67 @@ TEST_CASE("Test Dijkstra's Algorithm Large/International 2", "[part=2]") {
   REQUIRE((b[1] == "SFO" || b[1] == "LAX"));
   REQUIRE(b[2] == "SYD");
 }
+
+
+TEST_CASE("Betweenness Centrality 1", "[part=1]") {
+  Graph g = Graph(d);
+  g.populateConnectionsIATA();
+  std::string dest = "ORD";
+  auto vector = g.BetweenessCentrality(dest);
+  float las = 0;
+  for (auto a : vector) {
+    if (a.first == "LAS") {
+      las = a.second;
+    }
+  }
+  REQUIRE(las > 0);
+  float lax = 0;
+  for (auto a : vector) {
+    if (a.first == "LAX") {
+      lax = a.second;
+    }
+  }
+  REQUIRE(lax > 0);
+}
+
+TEST_CASE("Betweenness Centrality 2", "[part=1]") {
+  Graph g = Graph(d);
+  g.populateConnectionsIATA();
+  std::string dest = "ATL";
+  auto vector = g.BetweenessCentrality(dest);
+  float ewr = 0;
+  for (auto a : vector) {
+    if (a.first == "EWR") {
+      ewr = a.second;
+    }
+  }
+  REQUIRE(ewr > 0);
+  float ord = 0;
+  for (auto a : vector) {
+    if (a.first == "ORD") {
+      ord = a.second;
+    }
+  }
+  REQUIRE(ord > 0);
+}
+
+TEST_CASE("Betweenness Centrality International", "[part=2]") {
+  Graph g = Graph(d);
+  g.populateConnectionsIATA();
+  std::string dest = "LHR";
+  auto vector = g.BetweenessCentrality(dest);
+  float ewr = 0;
+  for (auto a : vector) {
+    if (a.first == "JFK") {
+      ewr = a.second;
+    }
+  }
+  REQUIRE(ewr > 0);
+  float ord = 0;
+  for (auto a : vector) {
+    if (a.first == "LAX") {
+      ord = a.second;
+    }
+  }
+  REQUIRE(ord > 0);
+}

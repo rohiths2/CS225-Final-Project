@@ -194,7 +194,7 @@ void user_control(Graph& graph, std::string filename) {
     std::cout << std::endl;
 
   } else if (option == '5') {
-    std::cout << "Betweenness Centrality (Johnson's Algorhithm)" << std::endl;
+    std::cout << "Betweenness Centrality (Brandes's Algorhithm)" << std::endl;
     std::cout << "This is Fairly Resource Intensive, as is the nature of Betweeness Centrality" << std::endl;
     graph.populateConnectionsIATA();
     std::string dest;
@@ -205,6 +205,8 @@ void user_control(Graph& graph, std::string filename) {
     }
     std::ofstream outdata;
     outdata.open("../tests/btw.txt");
+    outdata << "Betweenness Centrality for " + dest << "\n";
+    outdata << "\n";
     auto vect = graph.BetweenessCentrality(dest); // we should cut this off for clarity's sake
     for (auto part : vect) {
       if (part.second != 0) {
@@ -215,9 +217,8 @@ void user_control(Graph& graph, std::string filename) {
   } else {
     std::cout << "Invalid input option" << std::endl;
   }
-
   char z;
-  std::cout << "See ../tests/btw.txt for output" << std::endl;
+  std::cout << "See ../tests/btw.txt for Betweenness Centrality output" << std::endl;
     output << "\n";
   output.close();
   std::cout << "Type in anything and press enter to run the program again. Press CTRL+C to stop." << std::endl;
