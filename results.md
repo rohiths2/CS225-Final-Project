@@ -115,10 +115,17 @@ Our Dijkstra's implementation includes sub-functions that calculate the distance
 
 ## Results: Betweenness Centrality Algorithm
 ### Example Output: Snippet for Betwenness Output from ATL in "/tests/btw.txt" file:
+The 3-letter code on the left represents the airport (connected to the preferred destination, in this case, ATL).'
+
+The number (Float) on the right represents the likelihood of encountering that airport as a connection.
+
+Higher numbers mean more likely to have layovers at the corresponding airport. 
+
 ![alt text](https://github.com/rohiths2/CS225-Final-Project/blob/main/Images%20of%20Examples/BtwCen1.JPG)
 
 ### Conclusion: (Betweenness Centrality from ATL)
 ATL (Atlanta) is a major airport located in the U.S. (one of the largest). Therefore, our betweenness centrality function should return relatively large values for other large, major airports in the same country (U.S.) as you are more likely to have a layover in those airports. As seen in the image, LAX (Los Angeles) and LAS (Las Vegas)--2 other large airports in the same country--have values of 35 and 3 respectively, while other airports just have values a little over zero. Our program predicts correctly that LAS and LAX are likely layovers from ATL, proving that our algorithm works as expected.
 
-
+### Conclusion: Betweenness Centrality International
+Similarly, doing a betweenness centrality from LHR (an airport in another country, Europe) leads to airports JFK (New York) and LAX (Los Angeles) being connections. Since these airports are popular and are international airports, this output makes sense and proves our algorithm works as expected.
 
