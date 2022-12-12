@@ -35,17 +35,6 @@ Written Report (contains Results information): linked here: https://github.com/r
 
 ## Description:
 This application allows for multiple functions using airports from the OpenFlights airport/route database. These include finding the details of an airport, listing all other airports that have flights connecting to a certain airport, performing a Breadth-First Traversal (BFS) between two airports, finding the shortest connection path between two airports (minimizing both the number of stopovers and the length between one airport to the next) through Dijkstra's algorithm, and finding the likelihood of a person encountering a certain location as a layover between two airports (Betweenness Centrality using Brandes's algorithm). 
- 
-## Installing the Program:
-There are 3 ways to install the program:
-
-1. Clone the repository by clicking the green Code button on the repository's home page, copying the HTTPS link, and pasting it into the code editor (e.g. VSCode).
-
-2. Alternatively, you can download the Git repository as a zip folder and open that folder in VSCode locally with the Docker container running.
-
-3. Another way to clone the Git repository is by entering the following command in the VSCode terminal:
-
-`git clone https://github.com/rohiths2/CS225-Final-Project.git`
 
 ## Features:
 1. Given any airport's IATA code (3-letter abbreviation) as an input, show the details (Name, City, Country, Latitude, and Longitude) for the airport as the output.
@@ -53,6 +42,20 @@ There are 3 ways to install the program:
 3. Performing a Breadth-First Search between any two airports (given their IATA codes as inputs), or a Breadh-First Traversal given a starting airport IATA code as an input
 4. Using Dijkstra's Algorithm, finding the shortest flight path between any two airports (given their IATA codes as inputs), considering the least number of connections and the smallest distance between airports
 5. Using Betweenness Centrality (Brandes's Algorithm) to determine which airports a traveler will likely have a layover in, after computing posible shortest paths from an airport. ***The output of this Betweenness Centrality function is found in /tests/btw.txt. Open the document and find (CTRL+F) for IATA codes with large values (greater than zero)***
+ 
+## Installing the Program:
+There are 3 ways you can install the program. Choose ONE of the 3 possible ways below. Make sure the Docker container is running.
+
+1. Clone the Git repository is by entering the following command in the VSCode terminal:
+
+`git clone https://github.com/rohiths2/CS225-Final-Project.git`
+
+1. OR, you can clone the repository by clicking the green Code button on the repository's home page, copying the HTTPS link, and pasting it into the code editor (e.g. VSCode).
+
+2. OR, you can download the Git repository as a zip folder and open that folder in VSCode locally with the Docker container running.
+
+***After installing the program, go to the "Running the Program" section***
+
 
 ## Running the Program:
 Make sure the terminal is visible in VSCode and the CS225-Final-Project directory is opened.
