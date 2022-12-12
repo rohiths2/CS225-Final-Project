@@ -1,23 +1,15 @@
 # CS 225 Final Project: Finding Best Connection Path Between Airports
 
 ## Table of Contents:
-Group Members
-
-Documentation
-
-Description
-
-Installing the Program
-
-Features
-
-Running the Program
-
-Output
-
-Testing the Program
-
-File Structure
+- Group Members
+- Documentation
+- Description
+- Features
+- Installing the Program
+- Running the Program
+- Output
+- Testing the Program
+- File Structure
 
 ## Group Members: 
 
