@@ -218,7 +218,7 @@ void user_control(Graph& graph, std::string filename) {
     std::cout << "Invalid input option" << std::endl;
   }
   char z;
-  std::cout << "See ../tests/btw.txt for Betweenness Centrality output" << std::endl;
+  std::cout << "See ../Betweeness Centrality/tests/btw.txt for Betweenness Centrality output" << std::endl;
     output << "\n";
   output.close();
   std::cout << "Type in anything and press enter to run the program again. Press CTRL+C to stop." << std::endl;

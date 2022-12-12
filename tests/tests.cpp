@@ -285,13 +285,16 @@ TEST_CASE("Test Betweeness Centrality Algorithm for Small Non-US Airport Origins
   Graph g = Graph(d);
   g.populateConnectionsIATA();
   auto vect = g.BetweenessCentrality("BWK");
-  REQUIRE(vect["change these"] > vect["change"]);
+  REQUIRE(vect["ZAG"] > vect["ORD"]);
+  REQUIRE(vect["ZRH"] > vect["ORD"]);
+  REQUIRE(vect["ZRH"] > vect["PPT"]);
 }
 
 TEST_CASE("Test Betweeness Centrality Algorithm for International Non-US Airport Origins", "[part=2]") {
   Graph g = Graph(d);
   g.populateConnectionsIATA();
   auto vect = g.BetweenessCentrality("PEK");
+  REQUIRE(vect["ORD"] > vect["CNY"]);
 }
 
 TEST_CASE("Betweenness Centrality 1", "[part=1]") {
