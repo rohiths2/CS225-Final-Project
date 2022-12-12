@@ -66,15 +66,21 @@ Enter the following commands in the terminal
 
 `cmake .. `
 
-### Executing the program EVERY time
+### Compiling (building) the program
 
-Then, to run the program, enter these commands in the terminal:
+To build the program, enter the following command in the terminal:
 
 `make`
 
+"make" should be run the first time, and also every other time the code is edited/modified. This compiles the program
+
+### Executing the program
+
+Then, to run the program, enter this command in the terminal:
+
 `./main`
 
-These above commands should be entered every time you execute the program (even after just the first time)
+"./main" should be run every time (not just the first time) in order to start a new instance of the program
 
 ### Using the program (follow the terminal instructions)
 
@@ -82,7 +88,7 @@ Type the relative path for the Airports data file name. **OR just type "default"
 
 Then, type the relative path for the Routes data file name. **OR just type "default (no quotes) to use the default routes.dat file from OpenFlights (this is recommended)**. Then press enter.
 
-(NOTE: If you're using a different file than the included airports.dat/routes.dat, then make sure the file is located in the CS225-Final-Project folder. Example file path: `"../lib/airports.dat"`)
+(NOTE: If you're using a different file than the included airports.dat/routes.dat, then make sure the file is located somewhere in the CS225-Final-Project folder. Example file path: `"../lib/airports.dat"`)
 
 ***Follow the prompts given in the terminal.*** Type either 1, 2, 3, 4, or 5 depending on what you want the program to do ((1) find details about an airport, (2) display connected airports, (3) run BFS, (4) run Dijkstra's, or (5) run Betweenness Centrality)
 
