@@ -264,3 +264,32 @@ TEST_CASE("Test Dijkstra's Algorithm Large/International 2", "[part=2]") {
   REQUIRE((b[1] == "SFO" || b[1] == "LAX"));
   REQUIRE(b[2] == "SYD");
 }
+
+TEST_CASE("Test Betweeness Centrality Algorithm for Small US Airport Origins", "[part=1]") {
+  Graph g = Graph(d);
+  g.populateConnectionsIATA();
+  auto vect = g.BetweenessCentrality("HVN");
+  REQUIRE(vect["ORD"] > vect["ONT"]);
+  REQUIRE(vect["PEK"] > vect["PIT"]);
+}
+
+TEST_CASE("Test Betweeness Centrality Algorithm for International US Airport Origins", "[part=2]") {
+  Graph g = Graph(d);
+  g.populateConnectionsIATA();
+  auto vect = g.BetweenessCentrality("ORD");
+  REQUIRE(vect["LAX"] > vect["ONT"]);
+  REQUIRE(vect["PEK"] > vect["CMX"]);
+}
+
+TEST_CASE("Test Betweeness Centrality Algorithm for Small Non-US Airport Origins", "[part=1]") {
+  Graph g = Graph(d);
+  g.populateConnectionsIATA();
+  auto vect = g.BetweenessCentrality("BWK");
+  REQUIRE(vect["change these"] > vect["change"]);
+}
+
+TEST_CASE("Test Betweeness Centrality Algorithm for International Non-US Airport Origins", "[part=2]") {
+  Graph g = Graph(d);
+  g.populateConnectionsIATA();
+  auto vect = g.BetweenessCentrality("PEK");
+}
