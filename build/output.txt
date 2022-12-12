@@ -5,14 +5,4 @@ Opened Output File
 Opened Output File
 
 Opened Output File
-Betweenness Centrality: Top 3 Layover Destinations from ORD
-1. ZZV (Zanesville Municipal Airport)
-2. ZZU (Mzuzu Airport)
-3. ZYL (Osmany International Airport)
-
-Opened Output File
-
-Opened Output File
-
-Opened Output File
 
