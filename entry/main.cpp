@@ -56,7 +56,8 @@ void user_control(Graph& graph, std::string filename) {
     } else {
       std::cout << "Invalid input" << std::endl;
     }
-
+    std::cout << std::endl;
+    std::cout << "See ../build/output.txt for output. Or scroll up on the terminal for output." << std::endl;
     std::cout << std::endl;
 
   //List the connected airports to a certain airport written into standard input
@@ -82,6 +83,9 @@ void user_control(Graph& graph, std::string filename) {
     }
     std::cout << std::endl;
     output << "\n";
+    std::cout << "See ../build/output.txt for output. Or scroll up on the terminal for output." << std::endl;
+    std::cout << std::endl;
+    
   //Performs a BFS Traversal from a Starting and Ending airport
   } else if (option == '3') {
     output << "\n";
@@ -92,7 +96,7 @@ void user_control(Graph& graph, std::string filename) {
 
     std::cout << "Would you like to do a BFS Search between two airports, or a Breadth-First Traversal (no end point)?" << std::endl;
     std::cout << "Type the number 1 or 2 depending on the choice, then press enter" << std::endl;
-    std::cout << "1: Breadth-First Search between two airports. " << std::endl;
+    std::cout << "1: Breadth-First Search between two airports (source and destination). " << std::endl;
     std::cout << "2: Breadth-First Traversal (no end point--may take a longer time)" << std::endl;
     std::cin >> searchOrTraversal;
     std::string source;
@@ -103,7 +107,7 @@ void user_control(Graph& graph, std::string filename) {
       for (size_t i = 0; i < source.size(); ++i) {
         source[i] = toupper(source[i]);
       }
-      std::cout << "Type the destination airport's 3-letter (IATA) code:" << std::endl;
+      std::cout << "Type the destination/ending airport's 3-letter (IATA) code:" << std::endl;
       std::cin >> dest;
       for (size_t i = 0; i < dest.size(); ++i) {
         dest[i] = toupper(dest[i]);
@@ -145,6 +149,8 @@ void user_control(Graph& graph, std::string filename) {
         std::cout << "Invalid input" << std::endl;
     }
     std::cout << std::endl;
+    std::cout << "See ../build/output.txt for BFS/Dijkstra's output. Or scroll up on the terminal for output." << std::endl;
+    std::cout << std::endl;
 
   //Performs a Dijkstra's algorithm and lists the shortest path from a source and destination airport
   //Allows the user to only involve a certain country in this algorithm to make calculations faster
@@ -155,9 +161,14 @@ void user_control(Graph& graph, std::string filename) {
     std::cout << "Are the two airports located in the same country? If so, type the country, and if not, type no" << std::endl;
     std::cout << "(capitalize the first letter of each word when typing the country)" << std::endl;
     std::cout << "Typing US (all uppercase) also means United States" << std::endl;
+    std::cout << "Typing UK (all uppercase) also means United Kingdom" << std::endl;
+    std::cout << "Typing no means that the two airports are in different countries (international)" << std::endl;
     std::cin >> country;
     if (country == "US") {
       country = "United States";
+    }
+    if (country == "UK") {
+      country = "United Kingdom";
     }
     if (country == "no") {
         graph.populateConnectionsIATA();
@@ -192,6 +203,8 @@ void user_control(Graph& graph, std::string filename) {
       }
     }
     std::cout << std::endl;
+    std::cout << "See ../build/output.txt for BFS/Dijkstra's output. Or scroll up on the terminal for output." << std::endl;
+    std::cout << std::endl;
 
   } else if (option == '5') {
     std::cout << "Betweenness Centrality (Brandes's Algorhithm)" << std::endl;
@@ -214,14 +227,17 @@ void user_control(Graph& graph, std::string filename) {
       }
     }
     outdata.close();
+    std::cout << std::endl;
+    std::cout << "For Betweeness Centrality, see ../tests/btw.txt for Betweenness Centrality output" << std::endl;
+    std::cout << std::endl;
+    std::cout << "EXPLANATION: The larger the float value (on the right column), the more likely you are to have a layover at the corresponding airport (on the left column). Any float value greater than 1 indicates a high likelihood of having a layover at the corresponding airport" << std::endl;
   } else {
     std::cout << "Invalid input option" << std::endl;
   }
   char z;
-  std::cout << "See ../Betweeness Centrality/tests/btw.txt for Betweenness Centrality output" << std::endl;
     output << "\n";
   output.close();
-  std::cout << "Type in anything and press enter to run the program again. Press CTRL+C to stop." << std::endl;
+  std::cout << "Type in any character and press enter to run the program again. Press CTRL+C to stop." << std::endl;
   std::cin >> z;
 }
 
@@ -235,13 +251,13 @@ int main() {
   std::string airport_file;
   std::string routes_file;
   std::cout << std::endl;
-  std::cout << "Type the Airports data file path and press enter. OR type ''default'' (no quotes) to use the default airports.dat file (recommended for testing)" << std::endl;
+  std::cout << "Type ''default'' (no quotes) to use the OpenFlights Airports.dat file as input (recommended), OR type a custom file path with Airports input data, and then press enter" << std::endl;
   std::cin >> airport_file;
   std::cout << std::endl;
   if (airport_file == "default") {
     airport_file = "../lib/airports.dat";
   }
-  std::cout << "Type the Routes data file path and press enter. OR type ''default'' (no quotes) to use the default routes.dat file (recommended for testing)" << std::endl;
+  std::cout << "Type ''default'' (no quotes) to use the OpenFlights Routes.dat file as input (recommended), OR type a custom file path with Routes input data, and then press enter" << std::endl;
   std::cin >> routes_file;
   std::cout << std::endl;
   if (routes_file == "default") {
