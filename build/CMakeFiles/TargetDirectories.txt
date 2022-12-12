@@ -1,7 +1,0 @@
-/workspaces/cs225/.devcontainer/release-f22/CS225-Final-Project/build/CMakeFiles/test.dir
-/workspaces/cs225/.devcontainer/release-f22/CS225-Final-Project/build/CMakeFiles/main.dir
-/workspaces/cs225/.devcontainer/release-f22/CS225-Final-Project/build/CMakeFiles/edit_cache.dir
-/workspaces/cs225/.devcontainer/release-f22/CS225-Final-Project/build/CMakeFiles/rebuild_cache.dir
-/workspaces/cs225/.devcontainer/release-f22/CS225-Final-Project/build/src/CMakeFiles/src.dir
-/workspaces/cs225/.devcontainer/release-f22/CS225-Final-Project/build/src/CMakeFiles/edit_cache.dir
-/workspaces/cs225/.devcontainer/release-f22/CS225-Final-Project/build/src/CMakeFiles/rebuild_cache.dir
