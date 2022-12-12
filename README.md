@@ -146,7 +146,7 @@ graph.h, graph.cpp:
 contains the Graph class with the following parts:
 - the adjacency list (map<string, vector<string>>) representing each airport's connections (direct destinations)
 - a BFS function to run a Breadth-First Traversal or Breadth-First Search between two airports
-- the Shortest Path feature (Dijkstra's algorithm implementation and sub-functions, used to find Intersection in airport sets and Distance between airports)
+- the Shortest Path feature (Dijkstra's algorithm implementation and sub-functions, used to find the priority airport within a heap and Distance between airports)
 - Betweenness Centralty feature function
 
 build folder:
