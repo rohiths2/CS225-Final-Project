@@ -271,20 +271,13 @@ TEST_CASE("Betweenness Centrality 1", "[part=1]") {
   g.populateConnectionsIATA();
   std::string dest = "ORD";
   auto vector = g.BetweenessCentrality(dest);
-  float las = 0;
-  for (auto a : vector) {
-    if (a.first == "LAS") {
-      las = a.second;
-    }
-  }
-  REQUIRE(las > 0);
   float lax = 0;
   for (auto a : vector) {
     if (a.first == "LAX") {
       lax = a.second;
     }
   }
-  REQUIRE(lax > 0);
+  REQUIRE(lax > 1);
 }
 
 TEST_CASE("Betweenness Centrality 2", "[part=1]") {
@@ -298,14 +291,14 @@ TEST_CASE("Betweenness Centrality 2", "[part=1]") {
       ewr = a.second;
     }
   }
-  REQUIRE(ewr > 0);
+  REQUIRE(ewr > 1);
   float ord = 0;
   for (auto a : vector) {
     if (a.first == "ORD") {
       ord = a.second;
     }
   }
-  REQUIRE(ord > 0);
+  REQUIRE(ord > 1);
 }
 
 TEST_CASE("Betweenness Centrality International", "[part=2]") {
@@ -319,12 +312,12 @@ TEST_CASE("Betweenness Centrality International", "[part=2]") {
       ewr = a.second;
     }
   }
-  REQUIRE(ewr > 0);
+  REQUIRE(ewr > 1);
   float ord = 0;
   for (auto a : vector) {
     if (a.first == "LAX") {
       ord = a.second;
     }
   }
-  REQUIRE(ord > 0);
+  REQUIRE(ord > 1);
 }
