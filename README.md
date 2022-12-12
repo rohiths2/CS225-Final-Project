@@ -55,7 +55,23 @@ There are 3 ways to install the program:
 5. Using Betweenness Centrality (Brandes's Algorithm) to determine which airports a traveler will likely have a layover in, after computing posible shortest paths from an airport. ***The output of this Betweenness Centrality function is found in /tests/btw.txt. Open the document and find (CTRL+F) for IATA codes with large values (greater than zero)***
 
 ## Running the Program:
-Make sure the terminal is visible in VSCode and the CS225-Final-Project directory is opened. To run the program the first time, enter the following commands in the terminal (these 3 commands only need to be done the first time the program runs):
+Make sure the terminal is visible in VSCode and the CS225-Final-Project directory is opened.
+
+Running this program works just like the MPs and Labs in this class. Steps to run the program are listed below.
+
+### CMake Setup: ONLY for the FIRST TIME opening the program
+
+To run the program the first time (these steps only need to be done the first time the program runs):
+
+#### Deleting the Build Folder (ONLY if there already is a CS225-Final-Project/build folder)
+
+***If there is already a ../CS225-Final-Project/build folder*** (a sub-folder called build INSIDE the CS225-Final-Project folder), right click the ../CS225-Final-Project/build folder (the build folder INSIDE the CS225-Final-Project folder), and ***click Delete Permanently to delete this build folder***. 
+
+![](https://github.com/rohiths2/CS225-Final-Project/blob/main/Images%20of%20Examples/build.JPG)
+
+***If there is NOT already a ../CS225-Final-Project/build folder*** (a sub-folder called build INSIDE the CS225-Final-Project folder), simply continue on to the step below
+
+Enter the following commands in the terminal 
 
 `mkdir build`
 
@@ -63,13 +79,19 @@ Make sure the terminal is visible in VSCode and the CS225-Final-Project director
 
 `cmake .. `
 
+### Executing the program EVERY time
+
 Then, to run the program, enter these commands in the terminal:
 
 `make`
 
 `./main`
 
-Then, type the relative path for the Airports data file name. **OR just type "default" (no quotes) to use the default airports.dat file from OpenFlights (this is recommended)**. Then press enter.
+These above commands should be entered every time you execute the program (even after just the first time)
+
+### Using the program (follow the terminal instructions)
+
+Type the relative path for the Airports data file name. **OR just type "default" (no quotes) to use the default airports.dat file from OpenFlights (this is recommended)**. Then press enter.
 
 Then, type the relative path for the Routes data file name. **OR just type "default (no quotes) to use the default routes.dat file from OpenFlights (this is recommended)**. Then press enter.
 
