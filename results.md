@@ -127,5 +127,5 @@ Higher numbers mean more likely to have layovers at the corresponding airport.
 ATL (Atlanta) is a major airport located in the U.S. (one of the largest). Therefore, our betweenness centrality function should return relatively large values for other large, major airports in the same country (U.S.) as you are more likely to have a layover in those airports. As seen in the image, LAX (Los Angeles) and LAS (Las Vegas)--2 other large airports in the same country--have values of 35 and 3 respectively, while other airports just have values a little over zero. Our program predicts correctly that LAS and LAX are likely layovers from ATL, proving that our algorithm works as expected.
 
 ### Conclusion: Betweenness Centrality International
-Similarly, doing a betweenness centrality from LHR (an airport in another country, Europe) leads to airports JFK (New York) and LAX (Los Angeles) being connections. Since these airports are popular and are international airports, this output makes sense and proves our algorithm works as expected.
+Similarly, doing a betweenness centrality from LHR (an airport in another country, Europe) leads to airports JFK (New York) and LAX (Los Angeles) having large float/likelihood values. Since these airports are popular and are international airports, this output makes sense and proves our algorithm works as expected.
 
