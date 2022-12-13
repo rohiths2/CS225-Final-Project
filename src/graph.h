@@ -91,7 +91,6 @@ class Graph {
     //set only_complete_airports to true to skip airports with incomplete info
     void BFS(std::string origin, std::string ending, bool only_complete_airports);
 
-    std::vector<std::pair<std::string, std::string>> btwBFS(std::string origin, std::string ending, bool only_complete_airports);
     //Getter for BFS function: used for testing
     std::vector<std::string> getBFSoutput() {
         return BFS_output;
