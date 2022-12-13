@@ -146,47 +146,6 @@ std::map<std::string, std::pair< std::string, float>> Graph::DijkIATA( std::stri
     return map;
 }
 
-std::vector<std::pair<std::string, std::string>> Graph::btwBFS(std::string origin, std::string ending, bool only_complete_airports) {
-    std::vector<std::pair<std::string, std::string>> retVec;
-    if (connectionsIATA_.find(origin) == connectionsIATA_.end()) {
-        std::cout << origin + " is not a valid airport code in the countries selected." << std::endl;
-        return retVec;
-    }
-    if (connectionsIATA_.find(ending) == connectionsIATA_.end()) {
-        std::cout << ending + " is not a valid airport code in the countries selected." << std::endl;
-        return retVec;
-    }
-    if (!only_complete_airports){
-        std::cout << "Needs complete airports" << std::endl;
-        return retVec; // would be better to throw exception.
-    }
-    std::queue<std::string> q;
-    BFS_visited.push_back(origin);
-    q.push(origin);
-    while (!q.empty()) {
-        std::string prev = q.front();
-        std::string current = q.front();
-        Airport ap = getAirportFromIATA_(current); 
-       if (only_complete_airports == false || ap.usable_ == "1") {
-            std::cout << current << " --- Name: " << ap.name_ << " --- City: " << ap.city_ << "--- Location: (" << ap.latitude_ << ", " << ap.longitude_ << ")" << std::endl; 
-            BFS_output.push_back(current);
-       }
-        if (current == ending) {
-            return retVec;
-        }
-        q.pop();
-        if (connectionsIATA_.find(current) != connectionsIATA_.end()) {
-            for (auto neighbor : connectionsIATA_.find(current)->second) {
-                if (!(vectContains(BFS_visited, neighbor))) {
-                    retVec.push_back(std::make_pair(prev, neighbor));
-                    BFS_visited.push_back(neighbor);
-                    q.push(neighbor);
-                }
-            }
-        }    
-    }
-    return retVec;
-}
 
 std::map<std::string, float> Graph::BetweenessCentrality(std::string input){
     std::map<std::string, float> between_cents; // implies between cents of input.
