@@ -188,11 +188,6 @@ std::vector<std::pair<std::string, std::string>> Graph::btwBFS(std::string origi
     return retVec;
 }
 
-/***
- * @ TODO: Fix their BTW for improper input.
-*/
-
-
 std::map<std::string, float> Graph::BetweenessCentrality(std::string input){
     std::map<std::string, float> between_cents; // implies between cents of input.
     std::map<std::string, float> distances;
